@@ -1,9 +1,10 @@
-import Image from "next/image";
+'use client'
+import { signIn } from "next-auth/react";
 
 export default function Home() {
   return (
     <>
-    <h1>Hello world</h1>
+    <button className="px-3 py-2 bg-black text-white" onClick={() => signIn("google")}>Google signin</button>
     </>
   );
 }
