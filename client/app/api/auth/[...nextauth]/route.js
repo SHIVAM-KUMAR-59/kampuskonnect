@@ -117,6 +117,7 @@ export const authOptions = {
             `${process.env.BACKEND_URL}/api/v1/auth/student/register`,
             {
               name,
+              profileImage: profile?.picture,
               email,
               googleSignup: true,
             }
@@ -136,6 +137,7 @@ export const authOptions = {
             {
               name,
               email,
+              profileImage: profile?.picture,
               googleSignup: true,
             }
           );
