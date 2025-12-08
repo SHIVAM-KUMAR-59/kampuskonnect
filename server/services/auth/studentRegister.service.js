@@ -1,23 +1,43 @@
-import Student from '../../models/student.model.js'
-import { ApiError, handleServerError } from '../../utils/error.util.js';
-import { isValidEmail } from '../../utils/regex.util.js';
+import { UserRole } from "../../config/enums.config.js";
+import Student from "../../models/student.model.js";
+import { ApiError, handleServerError } from "../../utils/error.util.js";
+import { generateAuthToken } from "../../utils/jwt.util.js";
+import { isValidEmail } from "../../utils/regex.util.js";
 
 const studentRegisterService = async (name, email) => {
-    try {
-
-        if(!isValidEmail(email)) {
-            throw new ApiError(400, "Invalid email format");
-        }
-        const existingStudent = await Student.findOne({ email });
-        if(existingStudent) {
-            throw new ApiError(400, "User with this email already exists");
-        }
-        
-        const student = await Student.create({ name, username: email, email });
-        return student
-    }catch (err) {
-        handleServerError(err)
+  try {
+    if (!isValidEmail(email)) {
+      throw new ApiError(400, "Invalid email format");
     }
-}
+    const existingStudent = await Student.findOne({ email });
+    if (existingStudent) {
+      throw new ApiError(400, "User with this email already exists");
+    }
 
-export default studentRegisterService
+    const student = new Student({
+      name,
+      username: email,
+      email,
+    });
+
+    const token = await generateAuthToken(student._id, UserRole.STUDENT);
+    if (!token) {
+      throw new ApiError(500, "Failed to generate authentication token");
+    }
+
+    await student.save();
+    return {
+      user: {
+        id: student._id,
+        name: student.name,
+        email: student.email,
+      },
+      token,
+    };
+  } catch (err) {
+    console.log(err);
+    handleServerError(err);
+  }
+};
+
+export default studentRegisterService;

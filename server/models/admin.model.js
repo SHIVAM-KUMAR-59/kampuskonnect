@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { UserRole } from "../config/enums.config.js";
 
 const adminSchema = new mongoose.Schema(
   {
@@ -24,6 +25,11 @@ const adminSchema = new mongoose.Schema(
     privileges: {
       editUsers: { type: Boolean, default: true },
       verifyAlumni: { type: Boolean, default: true },
+    },
+    role: {
+      type: String,
+      default: UserRole.ADMIN,
+      immutable: true,
     },
   },
   {

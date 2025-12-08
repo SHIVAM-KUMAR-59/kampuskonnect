@@ -17,7 +17,13 @@ export const VerificationStatus = {
 };
 
 export const RequestStatus = {
-  PENDING: "pending",
-  ACCEPTED: "accepted",
-  REJECTED: "rejected",
+  PENDING: "PENDING",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+};
+
+export const UserRole = {
+  STUDENT: "STUDENT",
+  ALUMNI: "ALUMNI",
+  ADMIN: "ADMIN",
 };

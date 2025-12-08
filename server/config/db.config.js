@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import { DB_URL } from "./init.config.js";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.DB_URL, {
+    await mongoose.connect(DB_URL, {
       serverSelectionTimeoutMS: 5000,
       tls: true,
       tlsAllowInvalidCertificates: false,

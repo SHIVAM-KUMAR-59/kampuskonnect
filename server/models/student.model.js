@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Branch } from "../config/enums.config.js";
+import { Branch, UserRole } from "../config/enums.config.js";
 
 const studentSchema = new mongoose.Schema(
   {
@@ -25,6 +25,11 @@ const studentSchema = new mongoose.Schema(
       type: String,
       minLength: 8,
       select: false,
+    },
+    role: {
+      type: String,
+      default: UserRole.STUDENT,
+      immutable: true,
     },
     branch: {
       type: String,

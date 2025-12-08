@@ -1,10 +1,10 @@
-import { Router } from 'express'
-import authRoutes from './auth.route.js'
-import errorHandlerMiddleware from '../middleware/error.middleware.js'
+import { Router } from "express";
+import authRoutes from "./auth.route.js";
+import errorHandlerMiddleware from "../middleware/error.middleware.js";
 
-const router = Router()
+const router = Router();
 
-router.use('/auth', authRoutes)
-router.use(errorHandlerMiddleware)
+router.use("/auth", authRoutes);
+router.use(errorHandlerMiddleware);
 
-export default router
+export default router;
