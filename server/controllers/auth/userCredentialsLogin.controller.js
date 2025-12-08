@@ -6,7 +6,7 @@ const userCredentialsLoginController = async (req, res, next) => {
         if(!email || !password) {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
-        if (name.trim() === "" || password.trim() === "") {
+        if (email.trim() === "" || password.trim() === "") {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
 

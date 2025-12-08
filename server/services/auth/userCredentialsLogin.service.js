@@ -19,6 +19,10 @@ const userCredentialsLoginService = async (email, password) => {
             throw new ApiError(404, "User with this email does not exist");
         }
 
+        if (!existingUser.password) {
+            throw new ApiError(400, "User does not have a password");
+        }
+
         // validate password
         const isPasswordValid = await comparePassword(password, existingUser.password);
 
