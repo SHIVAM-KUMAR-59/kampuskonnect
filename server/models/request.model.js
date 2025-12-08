@@ -1,25 +1,28 @@
 import mongoose from "mongoose";
 import { RequestStatus } from "../config/enums.config.js";
 
-const requestSchema = new mongoose.Schema({
-  sender: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Student",
-    required: true
+const requestSchema = new mongoose.Schema(
+  {
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+    },
+    receiver: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Alumni",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: Object.values(RequestStatus),
+      default: RequestStatus.PENDING,
+    },
   },
-  receiver: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Alumni",
-    required: true
-  },
-  status: {
-    type: String,
-    enum: Object.values(RequestStatus),
-    default: RequestStatus.PENDING
+  {
+    timestamps: true,
   }
-}, {
-  timestamps: true
-});
+);
 
 const Request = mongoose.model("Request", requestSchema);
 
