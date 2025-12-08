@@ -2,7 +2,6 @@ import studentRegisterService from "../../services/auth/studentRegister.service.
 
 const studentRegisterController = async (req, res, next) => {
   try {
-    console.log("Hit")
     const { name, email, profileImage } = req.body;
     if (!name || !email) {
       return res.status(400).json({ message: "All fields are required", success: false });
@@ -12,7 +11,6 @@ const studentRegisterController = async (req, res, next) => {
       return res.status(400).json({ message: "All fields are required", success: false });
     }
     const student = await studentRegisterService(name, email.trim(), profileImage);
-    console.log("Sending")
     return res.status(200).json({ student, success: true });
   } catch (err) {
     next(err);
