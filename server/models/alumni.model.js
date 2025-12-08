@@ -29,6 +29,10 @@ const alumniSchema = new mongoose.Schema(
       minLength: 8,
       select: false,
     },
+    bio: {
+      type: String,
+      maxLength: 200,
+    },
     role: {
       type: String,
       default: UserRole.ALUMNI,
