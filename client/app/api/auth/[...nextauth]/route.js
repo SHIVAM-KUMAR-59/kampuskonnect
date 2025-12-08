@@ -58,18 +58,21 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
-        if (!credentials.email || !credentials.password) return null;
+        if (!credentials.email || !credentials.password) {
+          throw new Error("Email and password are required");
+        }
 
         try {
           const res = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`, {
             email: credentials.email,
             password: credentials.password,
           });
-          console.log(res)
 
           const data = res.data;
 
-          if (!data?.user.token) return null;
+          if (!data?.user?.token) {
+            throw new Error("Invalid response from server");
+          }
 
           return {
             id: data.user.user.id,
@@ -79,7 +82,12 @@ export const authOptions = {
             token: data.user.token,
           };
         } catch (err) {
-          throw new Error("Invalid email or password");
+          // Forward the actual error message from backend
+          const errorMessage = err.response?.data?.message || 
+                              err.response?.data?.error || 
+                              err.message || 
+                              "Invalid email or password";
+          throw new Error(errorMessage);
         }
       },
     }),
@@ -106,8 +114,7 @@ export const authOptions = {
               googleLogin: true 
             }
           );
-          console.log(res)
-          // Handle login response structure
+
           account.user = res.data.user.user;
           account.token = res.data.user.token;
           return true;
@@ -124,9 +131,7 @@ export const authOptions = {
               googleSignup: true,
             }
           );
-          console.log(res);
 
-          // Handle student registration response structure
           account.user = res.data.student.user;
           account.token = res.data.student.token;
           return true;
@@ -144,8 +149,6 @@ export const authOptions = {
             }
           );
 
-          // Handle alumni registration response structure
-          // Assuming similar structure: { alumni: { user: {...}, token: "..." }, success: true }
           account.user = res.data.alumni.user;
           account.token = res.data.alumni.token;
           return true;
@@ -154,13 +157,17 @@ export const authOptions = {
         return true;
       } catch (err) {
         console.error("SignIn error:", err);
-        throw new Error(err.response?.data?.message || "Authentication failed");
+        // Forward the actual error message from backend
+        const errorMessage = err.response?.data?.message || 
+                            err.response?.data?.error || 
+                            err.message || 
+                            "Authentication failed";
+        throw new Error(errorMessage);
       }
     },
 
     async jwt({ token, account, user }) {
       if (account?.user) {
-        console.log(account)
         token.role = account.user.role;
         token.id = account.user._id || account.user.id;
         token.email = account.user.email;
@@ -172,6 +179,7 @@ export const authOptions = {
         token.id = user.id;
         token.email = user.email;
         token.username = user.username;
+        token.role = user.role;
         token.accessToken = user.token;
       }
       
