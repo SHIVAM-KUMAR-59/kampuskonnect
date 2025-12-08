@@ -3,6 +3,10 @@ import { Branch, UserRole, VerificationStatus } from "../config/enums.config.js"
 
 const alumniSchema = new mongoose.Schema(
   {
+    profileImage: {
+      type: String,
+      default: null
+    },
     name: {
       type: String,
       required: true,

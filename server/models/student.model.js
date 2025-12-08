@@ -3,6 +3,10 @@ import { Branch, UserRole } from "../config/enums.config.js";
 
 const studentSchema = new mongoose.Schema(
   {
+    profileImage: {
+      type: String,
+      default: null
+    },
     name: {
       type: String,
       required: true,

@@ -4,7 +4,7 @@ import { ApiError, handleServerError } from "../../utils/error.util.js";
 import { generateAuthToken } from "../../utils/jwt.util.js";
 import { isValidEmail } from "../../utils/regex.util.js";
 
-const studentRegisterService = async (name, email) => {
+const studentRegisterService = async (name, email, profileImage) => {
   try {
     if (!isValidEmail(email)) {
       throw new ApiError(400, "Invalid email format");
@@ -15,6 +15,7 @@ const studentRegisterService = async (name, email) => {
     }
 
     const student = new Student({
+      profileImage,
       name,
       username: email,
       email,
@@ -29,6 +30,7 @@ const studentRegisterService = async (name, email) => {
     return {
       user: {
         id: student._id,
+        profileImage: student.profileImage,
         name: student.name,
         email: student.email,
       },

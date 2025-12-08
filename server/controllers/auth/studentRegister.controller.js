@@ -3,7 +3,7 @@ import studentRegisterService from "../../services/auth/studentRegister.service.
 const studentRegisterController = async (req, res, next) => {
   try {
     console.log("Hit")
-    const { name, email } = req.body;
+    const { name, email, profileImage } = req.body;
     if (!name || !email) {
       return res.status(400).json({ message: "All fields are required", success: false });
     }
@@ -11,7 +11,7 @@ const studentRegisterController = async (req, res, next) => {
     if (name.trim() === "" || email.trim() === "") {
       return res.status(400).json({ message: "All fields are required", success: false });
     }
-    const student = await studentRegisterService(name.trim(), email.trim());
+    const student = await studentRegisterService(name, email.trim(), profileImage);
     console.log("Sending")
     return res.status(200).json({ student, success: true });
   } catch (err) {
