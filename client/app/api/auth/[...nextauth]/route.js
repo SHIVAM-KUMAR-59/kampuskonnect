@@ -61,20 +61,22 @@ export const authOptions = {
         if (!credentials.email || !credentials.password) return null;
 
         try {
-          const res = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
+          const res = await axios.post(`${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`, {
             email: credentials.email,
             password: credentials.password,
           });
+          console.log(res)
 
           const data = res.data;
 
-          if (!data?.token) return null;
+          if (!data?.user.token) return null;
 
           return {
-            id: data.user.id,
-            email: data.user.email,
-            username: data.user.username,
-            token: data.token,
+            id: data.user.user.id,
+            email: data.user.user.email,
+            username: data.user.user.username,
+            role: data.user.user.role,
+            token: data.user.token,
           };
         } catch (err) {
           throw new Error("Invalid email or password");
@@ -98,16 +100,16 @@ export const authOptions = {
         // Google Login
         if (account.provider === "google-login") {
           const res = await axios.post(
-            `${process.env.BACKEND_URL}/api/v1/auth/login`,
+            `${process.env.BACKEND_URL}/api/v1/auth/user/google/login`,
             { 
               email, 
               googleLogin: true 
             }
           );
-
+          console.log(res)
           // Handle login response structure
-          account.user = res.data.user;
-          account.token = res.data.token;
+          account.user = res.data.user.user;
+          account.token = res.data.user.token;
           return true;
         }
 
@@ -122,9 +124,9 @@ export const authOptions = {
               googleSignup: true,
             }
           );
+          console.log(res);
 
           // Handle student registration response structure
-          // Response: { student: { user: {...}, token: "..." }, success: true }
           account.user = res.data.student.user;
           account.token = res.data.student.token;
           return true;
@@ -158,6 +160,8 @@ export const authOptions = {
 
     async jwt({ token, account, user }) {
       if (account?.user) {
+        console.log(account)
+        token.role = account.user.role;
         token.id = account.user._id || account.user.id;
         token.email = account.user.email;
         token.username = account.user.username || account.user.name;
@@ -178,6 +182,7 @@ export const authOptions = {
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.username = token.username;
+      session.user.role = token.role;
       session.accessToken = token.accessToken;
       return session;
     },

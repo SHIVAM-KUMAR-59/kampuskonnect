@@ -33,6 +33,7 @@ const studentRegisterService = async (name, email, profileImage) => {
         profileImage: student.profileImage,
         name: student.name,
         email: student.email,
+        role: UserRole.STUDENT,
       },
       token,
     };
