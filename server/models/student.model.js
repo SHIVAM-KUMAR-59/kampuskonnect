@@ -25,6 +25,11 @@ const studentSchema = new mongoose.Schema(
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
     },
+    phoneNumber: {
+      type: String,
+      minLength: 10,
+      maxLength: 10
+    },
     password: {
       type: String,
       minLength: 8,

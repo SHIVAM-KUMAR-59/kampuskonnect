@@ -18,6 +18,11 @@ const adminSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    phoneNumber: {
+      type: String,
+      minLength: 10,
+      maxLength: 10
+    },
     password: {
       type: String,
       minLength: 8,
