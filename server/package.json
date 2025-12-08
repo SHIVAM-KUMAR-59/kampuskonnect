@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write \"**/*.js\""
+    "format": "prettier --write \"**/*.js\"",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
     "prettier": "^3.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
