@@ -54,6 +54,7 @@ const alumniSchema = new mongoose.Schema({
   verificationStatus: {
     type: String,
     enum: Object.values(VerificationStatus),
+    default: VerificationStatus.APPLIED
   },
   isVerified: {
     type: Boolean,

@@ -15,3 +15,9 @@ export const VerificationStatus = {
     APPROVED: "APPROVED",
     REJECTED: "REJECTED"
 }
+
+export const RequestStatus = {
+  PENDING: "pending",
+  ACCEPTED: "accepted",
+  REJECTED: "rejected"
+};
