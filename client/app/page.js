@@ -66,7 +66,7 @@ export default function Home() {
         {urlError && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
             <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
               <p className="text-sm text-red-700">{decodeURIComponent(urlError)}</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function Home() {
             {error && !urlError && (
               <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                  <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
                   <p className="text-sm text-red-700">{error}</p>
                 </div>
               </div>
