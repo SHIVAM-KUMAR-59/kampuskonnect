@@ -1,5 +1,5 @@
 
-import Admin from '../model/admin.model.js';
+import Admin from '../models/admin.model.js';
 import Alumni from '../models/alumni.model.js';
 import Student from '../models/student.model.js';
 import { decodeAuthToken } from '../util/jwt.util.js';
