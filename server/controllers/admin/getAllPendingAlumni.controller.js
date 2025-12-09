@@ -1,4 +1,4 @@
-import getAllPendingAlumniService from "../../services/admin/getAllPendingAlumni.service";
+import getAllPendingAlumniService from "../../services/admin/getAllPendingAlumni.service.js";
 
 const getAllPendingAlumniController = async (req, res, next) => {
   try {
