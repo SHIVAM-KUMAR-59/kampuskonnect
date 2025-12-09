@@ -23,11 +23,11 @@ const authMiddleware = async (req, res, next) => {
 
     let user;
     if (decoded.token.role === "STUDENT") {
-        user = await Student.findById(decoded.token.id)
+        user = await Student.findById(decoded.token.id).select('+password')
     } else if (decoded.token.role === "ALUMNI") {
-        user = await Alumni.findById(decoded.token.id)
+        user = await Alumni.findById(decoded.token.id).select('+password')
     } else if (decoded.token.role === "ADMIN") {
-        user = await Admin.findById(decoded.token.id)
+        user = await Admin.findById(decoded.token.id).select('+password')
     }
     else {
         return res.status(401).json({ success: false, message: 'Unauthorized - Invalid token' });
