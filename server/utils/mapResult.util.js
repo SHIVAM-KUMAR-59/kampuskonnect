@@ -13,7 +13,6 @@ export const mapAlumni = (alumni) => {
   };
 };
 
-
 export const mapStudent = (student) => {
   return {
     id: student._id,
@@ -26,8 +25,8 @@ export const mapStudent = (student) => {
     alumniConnections: student.alumniConnections,
     createdAt: student.createdAt,
     updatedAt: student.updatedAt,
-  }
-}
+  };
+};
 
 export const mapAdmin = (admin) => {
   return {
@@ -38,6 +37,6 @@ export const mapAdmin = (admin) => {
     email: admin.email,
     role: admin.role,
     createdAt: admin.createdAt,
-    updatedAt: admin.updatedAt
-  }
-}
+    updatedAt: admin.updatedAt,
+  };
+};

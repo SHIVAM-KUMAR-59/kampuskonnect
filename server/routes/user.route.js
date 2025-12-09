@@ -9,7 +9,7 @@ import getCurrentUserController from "../controllers/user/getCurrentUser.control
 const router = Router();
 
 router.use(authMiddleware);
-router.get("/:id", getCurrentUserController)
+router.get("/:id", getCurrentUserController);
 router.post("/password/create", reqBodyMiddleware, createPasswordController);
 router.patch("/password/update", reqBodyMiddleware, updatePasswordController);
 router.delete("/:id", deleteUserController);
