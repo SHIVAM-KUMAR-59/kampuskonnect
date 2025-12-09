@@ -7,9 +7,9 @@ import deleteUserController from "../controllers/user/deleteUser.controller.js";
 
 const router = Router();
 
-router.use(authMiddleware)
+router.use(authMiddleware);
 router.post("/password/create", reqBodyMiddleware, createPasswordController);
-router.patch("/password/update", reqBodyMiddleware, updatePasswordController)
-router.delete("/:id", deleteUserController)
+router.patch("/password/update", reqBodyMiddleware, updatePasswordController);
+router.delete("/:id", deleteUserController);
 
 export default router;

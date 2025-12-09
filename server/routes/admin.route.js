@@ -5,8 +5,8 @@ import adminMiddleware from "../middleware/admin.middleware.js";
 
 const router = Router();
 
-router.use(authMiddleware)
-router.use(adminMiddleware)
+router.use(authMiddleware);
+router.use(adminMiddleware);
 router.get("/alumni/pending", getAllPendingAlumniController);
 
 export default router;

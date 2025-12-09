@@ -5,7 +5,7 @@ const studentSchema = new mongoose.Schema(
   {
     profileImage: {
       type: String,
-      default: null
+      default: null,
     },
     name: {
       type: String,
@@ -28,7 +28,7 @@ const studentSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
       minLength: 10,
-      maxLength: 10
+      maxLength: 10,
     },
     password: {
       type: String,

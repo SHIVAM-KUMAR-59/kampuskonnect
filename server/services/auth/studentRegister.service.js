@@ -10,7 +10,7 @@ const studentRegisterService = async (name, email, profileImage) => {
       throw new ApiError(400, "Invalid email format");
     }
 
-    if (!email.endsWith('@kiit.ac.in')) {
+    if (!email.endsWith("@kiit.ac.in")) {
       throw new ApiError(400, "Only KIIT email addresses are allowed");
     }
     const existingStudent = await Student.findOne({ email });

@@ -9,7 +9,7 @@ const router = Router();
 
 router.post("/student/register", reqBodyMiddleware, studentRegisterController);
 router.post("/alumni/register", reqBodyMiddleware, alumniRegisterController);
-router.post('/user/credentials/login', reqBodyMiddleware, userCredentialsLoginController)
-router.post('/user/google/login', reqBodyMiddleware, userGoogleLoginController)
+router.post("/user/credentials/login", reqBodyMiddleware, userCredentialsLoginController);
+router.post("/user/google/login", reqBodyMiddleware, userGoogleLoginController);
 
 export default router;
