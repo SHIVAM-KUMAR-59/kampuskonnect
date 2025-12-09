@@ -8,7 +8,7 @@ const deleteUserController = async (req, res, next) => {
       return res.status(400).json({ message: "User id is required", success: false });
     }
 
-    const isValidId = isValidObjectId(id)
+    const isValidId = isValidObjectId(id);
     if (!isValidId) {
       return res.status(400).json({ message: "Invalid user id", success: false });
     }

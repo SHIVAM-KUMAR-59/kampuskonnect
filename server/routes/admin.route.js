@@ -9,6 +9,6 @@ const router = Router();
 router.use(authMiddleware);
 router.use(adminMiddleware);
 router.get("/alumni/pending", getAllPendingAlumniController);
-router.patch("/alumni/status", handlePendingAlumniController)
+router.patch("/alumni/status", handlePendingAlumniController);
 
 export default router;
