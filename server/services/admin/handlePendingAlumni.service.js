@@ -17,6 +17,9 @@ const handlePendingAlumniService = async (action, alumniId) => {
     }
 
     alumni.verificationStatus = action;
+    if (action === VerificationStatus.APPROVED) {
+      alumni.isVerified = true;
+    }
     await alumni.save();
     return true;
   } catch (err) {
