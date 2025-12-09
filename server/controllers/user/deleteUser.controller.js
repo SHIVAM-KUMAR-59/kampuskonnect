@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import deleteUserService from "../../services/user/deleteUser.service.js";
+import { isValidObjectId } from "../../utils/common.util.js";
 
 const deleteUserController = async (req, res, next) => {
   try {
@@ -7,11 +7,10 @@ const deleteUserController = async (req, res, next) => {
     if (!id) {
       return res.status(400).json({ message: "User id is required", success: false });
     }
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid user ID format",
-      });
+
+    const isValidId = isValidObjectId(id)
+    if (!isValidId) {
+      return res.status(400).json({ message: "Invalid user id", success: false });
     }
     const deleted = await deleteUserService(req.user, id);
     if (!deleted) {
