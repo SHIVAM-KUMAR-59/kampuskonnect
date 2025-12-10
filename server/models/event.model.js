@@ -14,6 +14,10 @@ const eventSchema = new mongoose.Schema(
       minLength: 10,
       maxLength: 1000,
     },
+    registrationFee: {
+      type: Number,
+      default: 0,
+    },
     mode: {
       type: String,
       required: true,
