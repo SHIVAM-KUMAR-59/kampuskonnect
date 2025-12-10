@@ -27,3 +27,8 @@ export const UserRole = {
   ALUMNI: "ALUMNI",
   ADMIN: "ADMIN",
 };
+
+export const EventMode = {
+  ONLINE: "ONLINE",
+  OFFLINE: "OFFLINE",
+};
