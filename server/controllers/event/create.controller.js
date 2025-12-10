@@ -7,18 +7,16 @@ const createEventController = async (req, res, next) => {
     if (!eventData) {
       return res.status(400).json({ message: "Insufficient data provided", success: false });
     }
-    if(!eventData.name || eventData.name.trim() === "") {
-        return res.status(400).json({ message: "Event name is required", success: false });
+    if (!eventData.name || eventData.name.trim() === "") {
+      return res.status(400).json({ message: "Event name is required", success: false });
     }
 
     const event = await createEventService(eventData, req.user);
 
-    return res
-      .status(201)
-      .json({ message: "Event created successfully", event });
+    return res.status(201).json({ message: "Event created successfully", event });
   } catch (error) {
     next(error);
   }
 };
 
-export default createEventController
+export default createEventController;
