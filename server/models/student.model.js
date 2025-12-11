@@ -39,6 +39,9 @@ const studentSchema = new mongoose.Schema(
       type: String,
       maxLength: 200,
     },
+    linkedinUrl: {
+      type: String,
+    },
     role: {
       type: String,
       default: UserRole.STUDENT,
