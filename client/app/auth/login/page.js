@@ -41,12 +41,21 @@ export default function LoginPage() {
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
           {/* LOGO */}
           <div className="flex justify-center mb-4">
-            <Image src="/kiit-logo.webp" width={340} height={180} alt="KIIT Logo" />
+            <Image
+              src="/kiit-logo.png"
+              width={380}
+              height={180}
+              alt="KIIT Logo"
+            />
           </div>
 
           {/* TITLE */}
-          <h1 className="mt-4 text-2xl font-semibold text-center text-neutral-800">Welcome Back</h1>
-          <p className="text-center text-neutral-500 mb-6">Login to continue</p>
+          <h1 className="text-2xl font-semibold text-center text-neutral-800">
+            Welcome Back
+          </h1>
+          <p className="text-center text-neutral-500 mb-6">
+            Login to continue
+          </p>
 
           {/* LOGIN FORM */}
           <form onSubmit={handleLogin} className="space-y-4">
