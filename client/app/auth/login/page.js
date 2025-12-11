@@ -33,39 +33,23 @@ export default function LoginPage() {
     <div className="w-full h-screen flex">
       {/* LEFT IMAGE PANEL */}
       <div className="w-1/2 relative hidden md:block">
-        <Image
-          src="/login-bg.jpg"
-          alt="Campus"
-          fill
-          className="object-cover"
-        />
+        <Image src="/login-bg.jpg" alt="Campus" fill className="object-cover" />
       </div>
 
       {/* RIGHT FORM PANEL */}
       <div className="w-full md:w-1/2 bg-[#F8F9F8] flex items-center justify-center px-6">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-
           {/* LOGO */}
           <div className="flex justify-center mb-4">
-            <Image
-              src="/kiit-logo.webp"
-              width={340}
-              height={180}
-              alt="KIIT Logo"
-            />
+            <Image src="/kiit-logo.webp" width={340} height={180} alt="KIIT Logo" />
           </div>
 
           {/* TITLE */}
-          <h1 className="mt-4 text-2xl font-semibold text-center text-neutral-800">
-            Welcome Back
-          </h1>
-          <p className="text-center text-neutral-500 mb-6">
-            Login to continue
-          </p>
+          <h1 className="mt-4 text-2xl font-semibold text-center text-neutral-800">Welcome Back</h1>
+          <p className="text-center text-neutral-500 mb-6">Login to continue</p>
 
           {/* LOGIN FORM */}
           <form onSubmit={handleLogin} className="space-y-4">
-
             {/* EMAIL INPUT */}
             <div>
               <label className="text-sm text-neutral-600">Email Address</label>
@@ -96,9 +80,7 @@ export default function LoginPage() {
             </div>
 
             {/* ERROR MESSAGE */}
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             {/* LOGIN BUTTON */}
             <button
@@ -107,7 +89,6 @@ export default function LoginPage() {
             >
               {loading ? "Logging in..." : "Login"}
             </button>
-
           </form>
 
           {/* SIGNUP LINK */}
@@ -117,7 +98,6 @@ export default function LoginPage() {
               Sign Up
             </a>
           </p>
-
         </div>
       </div>
     </div>
