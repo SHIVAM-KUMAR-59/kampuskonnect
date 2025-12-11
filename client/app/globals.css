@@ -6,3 +6,7 @@ body {
   box-sizing: border-box;
   font-family: "Geist Sans", sans-serif;
 }
+
+@theme {
+  --color-primary: #17D05A;
+}
