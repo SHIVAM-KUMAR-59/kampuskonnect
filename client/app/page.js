@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { signIn } from "next-auth/react";
 import { LogIn, UserPlus, GraduationCap, Briefcase, Mail, AlertCircle } from "lucide-react";
 import { useState } from "react";
@@ -41,7 +41,7 @@ export default function Home() {
   const handleGoogleSignIn = async (provider, type) => {
     setGoogleLoading(type);
     setError("");
-    
+
     try {
       await signIn(provider, { callbackUrl: "/dashboard" });
     } catch (err) {
@@ -215,8 +215,18 @@ export default function Home() {
                 </div>
               </div>
               {googleLoading !== "student" && (
-                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               )}
             </button>
@@ -243,8 +253,18 @@ export default function Home() {
                 </div>
               </div>
               {googleLoading !== "alumni" && (
-                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               )}
             </button>
