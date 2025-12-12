@@ -4,19 +4,21 @@ import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Eye, EyeClosed, KeyRound, Mail } from "lucide-react";
+import { useToast } from "@/context/ToastContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const [googleLoading, setGoogleLoading] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const { success, error } = useToast()
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -25,21 +27,23 @@ export default function LoginPage() {
     });
 
     if (res?.error) {
-      setError("Invalid email or password");
+      error(res.error || "Login failed. Please try again.");
       setLoading(false);
     } else {
-      window.location.href = "/dashboard";
+      success("Logged in successfully!");
+      setInterval(() => {
+        window.location.href = "/dashboard";
+      }, 2000)
     }
   };
 
   const handleGoogleSignIn = async (provider, type) => {
     setGoogleLoading(type);
-    setError("");
 
     try {
       await signIn(provider, { callbackUrl: "/dashboard" });
     } catch (err) {
-      setError("Failed to initiate Google sign in");
+      error("Failed to initiate Google sign in");
       setGoogleLoading(null);
     }
   };
@@ -113,8 +117,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* ERROR MESSAGE */}
-            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             {/* LOGIN BUTTON */}
             <button
