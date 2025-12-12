@@ -52,11 +52,11 @@ export default function LoginPage() {
       </div>
 
       {/* RIGHT FORM PANEL */}
-      <div className="w-full md:w-1/2 bg-[#F8F9F8] flex items-center justify-center px-6">
+      <div className="w-full md:w-1/2 bg-background flex items-center justify-center px-6">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
           {/* LOGO */}
           <div className="flex justify-center mb-4">
-            <Image src="/kiit-logo.png" width={380} height={180} alt="KIIT Logo" />
+            <Image src="/kiit-logo.png" width={320} height={20} alt="KIIT Logo" />
           </div>
 
           {/* TITLE */}
