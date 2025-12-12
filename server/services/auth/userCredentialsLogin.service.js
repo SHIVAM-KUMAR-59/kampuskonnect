@@ -20,7 +20,7 @@ const userCredentialsLoginService = async (email, password) => {
     }
 
     if (!existingUser.password) {
-      throw new ApiError(400, "User does not have a password");
+      throw new ApiError(400, "User does not have a password set.");
     }
 
     // validate password

@@ -8,5 +8,6 @@ body {
 }
 
 @theme {
+  --color-background: #F8F9F8;
   --color-primary: #17D05A;
 }
