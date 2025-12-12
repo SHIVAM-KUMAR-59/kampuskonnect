@@ -43,7 +43,7 @@ export default function LoginPage() {
     try {
       await signIn(provider, { callbackUrl: "/dashboard" });
     } catch (err) {
-      error("Failed to initiate Google sign in");
+      error("Google sign-in failed. Please try again.");
       setGoogleLoading(null);
     }
   };
