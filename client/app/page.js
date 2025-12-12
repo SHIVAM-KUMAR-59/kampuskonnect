@@ -12,8 +12,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [googleLoading, setGoogleLoading] = useState(null); // 'login', 'student', 'alumni', or null
 
-  // Get error from URL (for Google OAuth errors)
-  const urlError = searchParams.get("error");
+  const urlError = searchParams.get('error');
 
   const handleCredentialsLogin = async (e) => {
     e.preventDefault();
