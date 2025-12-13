@@ -115,7 +115,7 @@ export const authOptions = {
             email,
             googleLogin: true,
           });
-          
+
           account.user = res.data.user.user;
           account.token = res.data.user.token;
           return true;
@@ -129,7 +129,7 @@ export const authOptions = {
             email,
             googleSignup: true,
           });
-          
+
           account.user = res.data.student.user;
           account.token = res.data.student.token;
           return true;
@@ -143,7 +143,7 @@ export const authOptions = {
             profileImage: profile?.picture,
             googleSignup: true,
           });
-          
+
           account.user = res.data.alumni.user;
           account.token = res.data.alumni.token;
           return true;
@@ -192,7 +192,6 @@ export const authOptions = {
     },
 
     async session({ session, token }) {
-      console.log("Session callback token:", token);
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.username = token.username;
