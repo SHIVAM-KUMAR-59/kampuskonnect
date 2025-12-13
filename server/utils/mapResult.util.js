@@ -52,3 +52,13 @@ export const mapAdmin = (admin) => {
     updatedAt: admin.updatedAt,
   };
 };
+
+export const mapRequest = (request) => {
+  return {
+    id: request._id,
+    sender: mapStudent(request.sender),
+    note: request.note,
+    status: request.status,
+    createdAt: request.createdAt,
+  };
+};
