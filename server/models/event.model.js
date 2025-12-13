@@ -14,17 +14,20 @@ const eventSchema = new mongoose.Schema(
       minLength: 10,
       maxLength: 1000,
     },
+    bannerImage: {
+      type: String,
+    },
     registrationFee: {
       type: Number,
       default: 0,
     },
     mode: {
       type: String,
+      enum: Object.values(EventMode),
       required: true,
     },
     venue: {
       type: String,
-      enum: Object.values(EventMode),
     },
     date: {
       type: Date,
