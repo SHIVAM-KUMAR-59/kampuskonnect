@@ -5,6 +5,7 @@ import updateAlumniProfileController from "../controllers/user/alumni/updateProf
 import getConnectionRequestController from "../controllers/user/alumni/getConnectionRequest.controller.js";
 import alumniMiddleware from "../middleware/alumni.middleware.js";
 import handlePendingRequestController from "../controllers/user/alumni/handlePendingRequest.controller.js";
+import getAllConnectionsController from "../controllers/user/alumni/getAllConnections.controller.js";
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.use(alumniMiddleware);
 router.put("/profile", reqBodyMiddleware, updateAlumniProfileController);
 router.get("/requests", getConnectionRequestController);
 router.patch("/requests/handle", reqBodyMiddleware, handlePendingRequestController);
+router.get("/connections", getAllConnectionsController);
 
 export default router;

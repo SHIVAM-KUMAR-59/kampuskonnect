@@ -9,6 +9,10 @@ const handlePendingRequestService = async (action, requestId, user) => {
       throw new ApiError(400, "Invalid action");
     }
 
+    if (user.studentConnections.includes(requestId)) {
+      throw new ApiError(400, "You are already connected with this user");
+    }
+
     const request = await Request.findById(requestId);
     if (!request) {
       throw new ApiError(404, "Request not found");

@@ -1,4 +1,4 @@
-import { ApiError, handleServerError } from "../../../utils/error.util.js";
+import { handleServerError } from "../../../utils/error.util.js";
 import Request from "../../../models/request.model.js";
 import { RequestStatus, UserRole } from "../../../config/enums.config.js";
 import { mapRequest } from "../../../utils/mapResult.util.js";
