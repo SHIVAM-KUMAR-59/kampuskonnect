@@ -1,10 +1,22 @@
 "use client";
+import api from "@/utils/axios";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Page = () => {
   const { data: session, status } = useSession();
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/user");
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   if (status === "loading") {
     return <p>Loading..</p>;
   }
@@ -13,6 +25,7 @@ const Page = () => {
     return <p>You are not logged in</p>;
   }
   console.log(session);
+
   return (
     <div>
       <p>Name: {session.user.name}</p>
