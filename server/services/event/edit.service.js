@@ -7,7 +7,7 @@ const editEventService = async (eventId, eventData, userId) => {
   try {
     // Find the event
     const event = await Event.findById(eventId);
-    
+
     if (!event) {
       throw new ApiError(404, "Event not found");
     }
