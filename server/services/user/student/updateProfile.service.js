@@ -10,10 +10,10 @@ const updateStudentProfileService = async (user, updateData) => {
     // Name validation
     if (name !== undefined) {
       if (typeof name !== "string" || name.trim().length === 0) {
-        throw new ApiError("Name must be a non-empty string");
+        throw new ApiError(400, "Name must be a non-empty string");
       }
       if (name.trim().length > 100) {
-        throw new ApiError("Name must be less than 100 characters");
+        throw new ApiError(400, "Name must be less than 100 characters");
       }
       user.name = name.trim();
     }
@@ -21,15 +21,15 @@ const updateStudentProfileService = async (user, updateData) => {
     // Email validation
     if (email !== undefined) {
       if (typeof email !== "string" || email.trim().length === 0) {
-        throw new ApiError("Email must be a non-empty string");
+        throw new ApiError(400, "Email must be a non-empty string");
       }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        throw new ApiError("Invalid email format");
+        throw new ApiError(400, "Invalid email format");
       }
       // KIIT email validation (ends with @kiit.ac.in)
       if (!email.endsWith("@kiit.ac.in")) {
-        throw new ApiError("Email must be a valid KIIT email address");
+        throw new ApiError(400, "Email must be a valid KIIT email address");
       }
       user.username = email.toLowerCase().trim();
       user.email = email.toLowerCase().trim();
@@ -39,11 +39,11 @@ const updateStudentProfileService = async (user, updateData) => {
     if (phoneNumber !== undefined) {
       if (phoneNumber !== null && phoneNumber !== "") {
         if (typeof phoneNumber !== "string") {
-          throw new ApiError("Phone number must be a string");
+          throw new ApiError(400, "Phone number must be a string");
         }
         const phoneRegex = /^[6-9]\d{9}$/; // Indian phone number
         if (!phoneRegex.test(phoneNumber.replace(/\s+/g, ""))) {
-          throw new ApiError("Invalid phone number format");
+          throw new ApiError(400, "Invalid phone number format");
         }
         user.phoneNumber = phoneNumber.trim();
       } else {
@@ -55,10 +55,10 @@ const updateStudentProfileService = async (user, updateData) => {
     if (bio !== undefined) {
       if (bio !== null && bio !== "") {
         if (typeof bio !== "string") {
-          throw new ApiError("Bio must be a string");
+          throw new ApiError(400, "Bio must be a string");
         }
         if (bio.trim().length > 500) {
-          throw new ApiError("Bio must be less than 500 characters");
+          throw new ApiError(400, "Bio must be less than 500 characters");
         }
         user.bio = bio.trim();
       } else {
@@ -70,11 +70,11 @@ const updateStudentProfileService = async (user, updateData) => {
     if (linkedinUrl !== undefined) {
       if (linkedinUrl !== null && linkedinUrl !== "") {
         if (typeof linkedinUrl !== "string") {
-          throw new ApiError("LinkedIn URL must be a string");
+          throw new ApiError(400, "LinkedIn URL must be a string");
         }
         const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
         if (!linkedinRegex.test(linkedinUrl.trim())) {
-          throw new ApiError("Invalid LinkedIn URL format");
+          throw new ApiError(400, "Invalid LinkedIn URL format");
         }
         user.linkedinUrl = linkedinUrl.trim();
       } else {
@@ -85,7 +85,7 @@ const updateStudentProfileService = async (user, updateData) => {
     // Branch validation
     if (branch !== undefined) {
       if (typeof branch !== "string" || branch.trim().length === 0) {
-        throw new ApiError("Branch must be a non-empty string");
+        throw new ApiError(400, "Branch must be a non-empty string");
       }
       user.branch = branch.trim();
     }
@@ -93,19 +93,19 @@ const updateStudentProfileService = async (user, updateData) => {
     // Interests validation
     if (interests !== undefined) {
       if (!Array.isArray(interests)) {
-        throw new ApiError("Interests must be an array");
+        throw new ApiError(400, "Interests must be an array");
       }
       if (interests.length === 0) {
-        throw new Error("At least one interest must be selected");
+        throw new ApiError(400, "At least one interest must be selected");
       }
       if (interests.length > 5) {
-        throw new ApiError("Maximum 5 interests allowed");
+        throw new ApiError(400, "Maximum 5 interests allowed");
       }
       // Check if all interests are valid strings
       if (
         !interests.every((interest) => typeof interest === "string" && interest.trim().length > 0)
       ) {
-        throw new Error("All interests must be non-empty strings");
+        throw new ApiError(400, "All interests must be non-empty strings");
       }
       user.interests = interests.map((interest) => interest.trim());
     }
@@ -116,10 +116,10 @@ const updateStudentProfileService = async (user, updateData) => {
       const currentYear = new Date().getFullYear();
 
       if (isNaN(year)) {
-        throw new ApiError("Graduation year must be a valid number");
+        throw new ApiError(400, "Graduation year must be a valid number");
       }
       if (year < currentYear || year > currentYear + 10) {
-        throw new ApiError(
+        throw new ApiError(400, 
           `Graduation year must be between ${currentYear} and ${currentYear + 10}`
         );
       }
