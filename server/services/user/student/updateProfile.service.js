@@ -1,4 +1,3 @@
-import { Branch } from "../../../config/enums.config.js";
 import { ApiError, handleServerError } from "../../../utils/error.util.js";
 import { mapStudent } from "../../../utils/mapResult.util.js";
 
@@ -119,7 +118,8 @@ const updateStudentProfileService = async (user, updateData) => {
         throw new ApiError(400, "Graduation year must be a valid number");
       }
       if (year < currentYear || year > currentYear + 10) {
-        throw new ApiError(400, 
+        throw new ApiError(
+          400,
           `Graduation year must be between ${currentYear} and ${currentYear + 10}`
         );
       }
