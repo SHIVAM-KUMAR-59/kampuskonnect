@@ -50,7 +50,6 @@ const matchAlumniService = async (studentId, criteria = {}) => {
       .sort({ experience: -1 })
       .limit(criteria.limit || 50);
 
-
     const alumniWithScores = matchedAlumni.map((alumni) => {
       const alumniObj = alumni.toObject();
 
@@ -65,7 +64,7 @@ const matchAlumniService = async (studentId, criteria = {}) => {
     });
 
     alumniWithScores.sort((a, b) => b.matchScore - a.matchScore);
-    
+
     const alumnis = alumniWithScores.map((alumni) => {
       return mapAlumni(alumni);
     });

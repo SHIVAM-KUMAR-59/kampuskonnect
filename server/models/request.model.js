@@ -13,6 +13,11 @@ const requestSchema = new mongoose.Schema(
       ref: "Alumni",
       required: true,
     },
+    note: {
+      type: String,
+      minLength: 3,
+      maxLength: 500,
+    },
     status: {
       type: String,
       enum: Object.values(RequestStatus),
