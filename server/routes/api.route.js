@@ -6,9 +6,11 @@ import eventRoutes from "./event.route.js";
 import studentRoutes from "./student.route.js";
 import alumniRoutes from "./alumni.route.js";
 import errorHandlerMiddleware from "../middleware/error.middleware.js";
+import logger from "../middleware/logger.middleware.js";
 
 const router = Router();
 
+router.use(logger);
 router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
 router.use("/student", studentRoutes);
