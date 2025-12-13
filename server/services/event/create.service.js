@@ -1,6 +1,7 @@
 import Event from "../../models/event.model.js";
 import { ApiError, handleServerError } from "../../utils/error.util.js";
 import { EventMode } from "../../config/enums.config.js";
+import { mapEvent } from "../../utils/mapResult.util.js";
 
 const createEventService = async (eventData, user) => {
   try {
@@ -17,9 +18,31 @@ const createEventService = async (eventData, user) => {
       endTime,
     } = eventData;
 
-    if (name.length < 2) {
-      throw new ApiError(400, "Event name must be at least 2 characters long");
-    }
+    // Add this check at the beginning
+if (!name || name.trim() === "") {
+  throw new ApiError(400, "Event name is required");
+}
+
+if (name.trim().length < 2) {
+  throw new ApiError(400, "Event name must be at least 2 characters long");
+}
+
+// For date validation, also check if date is in the past
+const eventDate = new Date(date);
+const deadlineDate = new Date(deadline);
+const now = new Date();
+
+if (eventDate < now) {
+  throw new ApiError(400, "Event date cannot be in the past");
+}
+
+if (deadlineDate < now) {
+  throw new ApiError(400, "Deadline cannot be in the past");
+}
+
+if (deadlineDate >= eventDate) {
+  throw new ApiError(400, "Deadline must be before event date");
+}
 
     if (
       !description ||
@@ -93,8 +116,9 @@ const createEventService = async (eventData, user) => {
       createdBy: user,
     });
 
-    return event;
+    return mapEvent(event);
   } catch (err) {
+    console.log(err)
     handleServerError(err);
   }
 };

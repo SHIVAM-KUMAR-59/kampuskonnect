@@ -62,3 +62,22 @@ export const mapRequest = (request) => {
     createdAt: request.createdAt,
   };
 };
+
+export const mapEvent = (event) => {
+  return {
+    id: event._id,
+    name: event.name,
+    description: event.description,
+    bannerImage: event.bannerImage,
+    registrationFee: event.registrationFee,
+    mode: event.mode,
+    venue: event.venue,
+    date: event.date,
+    deadline: event.deadline,
+    duration: event.duration,
+    startTime: event.startTime,
+    endTime: event.endTime,
+    createdAt: event.createdAt,
+    updatedAt: event.updatedAt,
+  };
+}
