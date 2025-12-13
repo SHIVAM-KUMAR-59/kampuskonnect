@@ -11,8 +11,6 @@ const matchAlumniService = async (studentId, criteria = {}) => {
       throw new ApiError(404, "Student not found");
     }
 
-    console.log("Student interests:", student.interests);
-
     let query = {
       verificationStatus: "APPROVED",
     };
@@ -22,8 +20,6 @@ const matchAlumniService = async (studentId, criteria = {}) => {
     } else if (student.interests && student.interests.length > 0) {
       query.skills = { $in: student.interests };
     }
-
-    console.log("Query:", JSON.stringify(query, null, 2));
 
     // Additional filters from criteria
     if (criteria.branch) {
@@ -54,9 +50,6 @@ const matchAlumniService = async (studentId, criteria = {}) => {
       .sort({ experience: -1 })
       .limit(criteria.limit || 50);
 
-    if (matchedAlumni.length > 0) {
-      console.log("First alumni skills:", matchedAlumni[0].skills);
-    }
 
     const alumniWithScores = matchedAlumni.map((alumni) => {
       const alumniObj = alumni.toObject();
@@ -79,7 +72,6 @@ const matchAlumniService = async (studentId, criteria = {}) => {
 
     return alumnis;
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };
