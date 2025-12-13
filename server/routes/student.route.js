@@ -6,6 +6,6 @@ import updateStudentProfileController from "../controllers/user/student/updatePr
 const router = Router();
 
 router.use(authMiddleware);
-router.put("/profile", reqBodyMiddleware, updateStudentProfileController)
+router.put("/profile", reqBodyMiddleware, updateStudentProfileController);
 
 export default router;
