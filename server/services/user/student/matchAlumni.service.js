@@ -1,6 +1,7 @@
 import { ApiError, handleServerError } from "../../../utils/error.util.js";
 import Alumni from "../../../models/alumni.model.js";
 import Student from "../../../models/student.model.js";
+import { mapAlumni } from "../../../utils/mapResult.util.js";
 
 const matchAlumniService = async (studentId, criteria = {}) => {
   try {
@@ -72,8 +73,12 @@ const matchAlumniService = async (studentId, criteria = {}) => {
     });
 
     alumniWithScores.sort((a, b) => b.matchScore - a.matchScore);
-
-    return alumniWithScores;
+    
+    const alumnis = alumniWithScores.map((alumni) => {
+      return mapAlumni(alumni);
+    });
+    
+    return alumnis;
   } catch (err) {
     console.log(err);
     handleServerError(err);
