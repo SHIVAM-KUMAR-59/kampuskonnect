@@ -54,11 +54,13 @@ const alumniSchema = new mongoose.Schema(
     skills: {
       type: [String],
       enum: Object.values(Domains),
+      default: [], // Allow empty array by default
       validate: {
         validator: function (arr) {
-          return arr.length >= 1 && arr.length <= 10;
+          // Allow empty array OR 1-10 items
+          return arr.length === 0 || (arr.length >= 1 && arr.length <= 10);
         },
-        message: "Please select between 1 and 10 skills.",
+        message: "Please select between 1 and 10 skills, or leave empty.",
       },
     },
     city: {

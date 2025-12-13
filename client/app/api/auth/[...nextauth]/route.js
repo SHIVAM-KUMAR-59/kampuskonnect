@@ -115,7 +115,7 @@ export const authOptions = {
             email,
             googleLogin: true,
           });
-
+          console.log("Login data", res.data);
           account.user = res.data.user.user;
           account.token = res.data.user.token;
           return true;
@@ -129,7 +129,7 @@ export const authOptions = {
             email,
             googleSignup: true,
           });
-
+          console.log("Student google", res.data);
           account.user = res.data.student.user;
           account.token = res.data.student.token;
           return true;
@@ -143,7 +143,7 @@ export const authOptions = {
             profileImage: profile?.picture,
             googleSignup: true,
           });
-
+          console.log("Alumni google", res.data);
           account.user = res.data.alumni.user;
           account.token = res.data.alumni.token;
           return true;
@@ -162,27 +162,37 @@ export const authOptions = {
       }
     },
 
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger }) {
+      // Initial sign in - account exists
       if (account?.user) {
-        token.role = account.user.role;
-        token.id = account.user._id || account.user.id;
-        token.email = account.user.email;
-        token.username = account.user.username || account.user.name;
-        token.accessToken = account.token;
+        return {
+          ...token,
+          role: account.user.role,
+          id: account.user._id || account.user.id,
+          email: account.user.email,
+          username: account.user.username || account.user.name,
+          accessToken: account.token,
+        };
       }
 
+      // Credentials provider - user exists
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.username = user.username;
-        token.role = user.role;
-        token.accessToken = user.token;
+        return {
+          ...token,
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          role: user.role,
+          accessToken: user.token,
+        };
       }
 
+      // Subsequent calls - return existing token as-is
       return token;
     },
 
     async session({ session, token }) {
+      console.log("Session callback token:", token);
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.username = token.username;

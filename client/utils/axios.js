@@ -3,7 +3,7 @@ import axios from "axios";
 import { getSession, signOut } from "next-auth/react";
 
 const api = axios.create({
-  baseURL: BASE_API_URL,
+  baseURL: `http://localhost:8000/api/v1`,
   headers: {
     "Content-Type": "application/json",
   },
