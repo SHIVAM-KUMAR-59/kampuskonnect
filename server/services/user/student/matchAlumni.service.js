@@ -51,7 +51,6 @@ const matchAlumniService = async (studentId, criteria = {}) => {
     }
 
     const matchedAlumni = await Alumni.find(query)
-      .select("-password -refreshToken")
       .sort({ experience: -1 })
       .limit(criteria.limit || 50);
 
@@ -77,7 +76,7 @@ const matchAlumniService = async (studentId, criteria = {}) => {
     const alumnis = alumniWithScores.map((alumni) => {
       return mapAlumni(alumni);
     });
-    
+
     return alumnis;
   } catch (err) {
     console.log(err);
