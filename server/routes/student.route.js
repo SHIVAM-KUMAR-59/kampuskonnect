@@ -5,6 +5,7 @@ import updateStudentProfileController from "../controllers/user/student/updatePr
 import matchAlumniController from "../controllers/user/student/matchAlumni.controller.js";
 import sendConnectionRequestController from "../controllers/user/student/sendConnectionRequest.controller.js";
 import studentMiddleware from "../middleware/student.middleware.js";
+import getAllConnectionsController from "../controllers/user/student/getAllConnections.controller.js";
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.use(studentMiddleware);
 router.put("/profile", reqBodyMiddleware, updateStudentProfileController);
 router.get("/match", matchAlumniController);
 router.post("/connect/:id", sendConnectionRequestController);
+router.get("/connections", getAllConnectionsController);
 
 export default router;
