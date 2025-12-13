@@ -115,7 +115,7 @@ export const authOptions = {
             email,
             googleLogin: true,
           });
-          console.log("Login data", res.data);
+          
           account.user = res.data.user.user;
           account.token = res.data.user.token;
           return true;
@@ -129,7 +129,7 @@ export const authOptions = {
             email,
             googleSignup: true,
           });
-          console.log("Student google", res.data);
+          
           account.user = res.data.student.user;
           account.token = res.data.student.token;
           return true;
@@ -143,7 +143,7 @@ export const authOptions = {
             profileImage: profile?.picture,
             googleSignup: true,
           });
-          console.log("Alumni google", res.data);
+          
           account.user = res.data.alumni.user;
           account.token = res.data.alumni.token;
           return true;
