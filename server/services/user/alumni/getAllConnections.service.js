@@ -8,7 +8,7 @@ const getAllConnectionsService = async (userId) => {
     if (!user) {
       throw new ApiError("User not found");
     }
-    console.log(user);
+
     const connections = user.studentConnections.map((connection) => {
       return mapStudent(connection);
     });
