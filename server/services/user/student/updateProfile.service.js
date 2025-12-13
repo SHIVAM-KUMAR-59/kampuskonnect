@@ -1,3 +1,4 @@
+import { isValidDomain } from "../../../config/enums.config.js";
 import { ApiError, handleServerError } from "../../../utils/error.util.js";
 import { mapStudent } from "../../../utils/mapResult.util.js";
 
@@ -105,6 +106,18 @@ const updateStudentProfileService = async (user, updateData) => {
         !interests.every((interest) => typeof interest === "string" && interest.trim().length > 0)
       ) {
         throw new ApiError(400, "All interests must be non-empty strings");
+      }
+
+      // Check if all interests are valid domains
+      let validDomains = true;
+      for (const interest of interests) {
+        if (!isValidDomain(interest.trim())) {
+          validDomains = false;
+          break;
+        }
+      }
+      if (!validDomains) {
+        throw new ApiError(400, `One or more interests/domains are invalid`);
       }
       user.interests = interests.map((interest) => interest.trim());
     }

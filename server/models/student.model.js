@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Branch, UserRole } from "../config/enums.config.js";
+import { Branch, Domains, UserRole } from "../config/enums.config.js";
 
 const studentSchema = new mongoose.Schema(
   {
@@ -53,7 +53,13 @@ const studentSchema = new mongoose.Schema(
     },
     interests: {
       type: [String],
-      default: [],
+      enum: Object.values(Domains),
+      validate: {
+        validator: function (arr) {
+          return arr.length >= 1 && arr.length <= 20;
+        },
+        message: "Please select between 1 and 20 skills",
+      },
     },
     graduationYear: {
       type: Number,

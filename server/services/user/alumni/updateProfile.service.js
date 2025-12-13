@@ -1,3 +1,4 @@
+import { isValidDomain } from "../../../config/enums.config.js";
 import { ApiError, handleServerError } from "../../../utils/error.util.js";
 import { mapAlumni } from "../../../utils/mapResult.util.js";
 
@@ -125,6 +126,18 @@ const updateAlumniProfileService = async (user, updatedData) => {
       if (skills.some((skill) => skill.trim().length > 50)) {
         throw new ApiError(400, "Each skill must be less than 50 characters");
       }
+
+      // Check if all skills are valid domains
+      let validDomains = true;
+      for (const skill of skills) {
+        if (!isValidDomain(skill.trim())) {
+          validDomains = false;
+          break;
+        }
+      }
+      if (!validDomains) {
+        throw new ApiError(400, `One or more skills/domains are invalid`);
+      }
       user.skills = skills.map((skill) => skill.trim());
     }
 
@@ -162,6 +175,7 @@ const updateAlumniProfileService = async (user, updatedData) => {
     await user.save();
     return mapAlumni(user);
   } catch (err) {
+    console.log(err);
     handleServerError(err);
   }
 };
