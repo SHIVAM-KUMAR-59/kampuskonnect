@@ -80,4 +80,4 @@ export const mapEvent = (event) => {
     createdAt: event.createdAt,
     updatedAt: event.updatedAt,
   };
-}
+};

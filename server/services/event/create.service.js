@@ -19,30 +19,30 @@ const createEventService = async (eventData, user) => {
     } = eventData;
 
     // Add this check at the beginning
-if (!name || name.trim() === "") {
-  throw new ApiError(400, "Event name is required");
-}
+    if (!name || name.trim() === "") {
+      throw new ApiError(400, "Event name is required");
+    }
 
-if (name.trim().length < 2) {
-  throw new ApiError(400, "Event name must be at least 2 characters long");
-}
+    if (name.trim().length < 2) {
+      throw new ApiError(400, "Event name must be at least 2 characters long");
+    }
 
-// For date validation, also check if date is in the past
-const eventDate = new Date(date);
-const deadlineDate = new Date(deadline);
-const now = new Date();
+    // For date validation, also check if date is in the past
+    const eventDate = new Date(date);
+    const deadlineDate = new Date(deadline);
+    const now = new Date();
 
-if (eventDate < now) {
-  throw new ApiError(400, "Event date cannot be in the past");
-}
+    if (eventDate < now) {
+      throw new ApiError(400, "Event date cannot be in the past");
+    }
 
-if (deadlineDate < now) {
-  throw new ApiError(400, "Deadline cannot be in the past");
-}
+    if (deadlineDate < now) {
+      throw new ApiError(400, "Deadline cannot be in the past");
+    }
 
-if (deadlineDate >= eventDate) {
-  throw new ApiError(400, "Deadline must be before event date");
-}
+    if (deadlineDate >= eventDate) {
+      throw new ApiError(400, "Deadline must be before event date");
+    }
 
     if (
       !description ||
@@ -118,7 +118,7 @@ if (deadlineDate >= eventDate) {
 
     return mapEvent(event);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     handleServerError(err);
   }
 };

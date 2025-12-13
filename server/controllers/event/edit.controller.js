@@ -6,9 +6,9 @@ const editEventController = async (req, res, next) => {
     const userId = req.user.id;
 
     if (!eventId) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: "Event ID is required" 
+        message: "Event ID is required",
       });
     }
 
