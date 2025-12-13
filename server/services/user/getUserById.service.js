@@ -5,9 +5,8 @@ import Student from "../../models/student.model.js";
 import { ApiError, handleServerError } from "../../utils/error.util.js";
 import { mapAdmin, mapAlumni, mapStudent } from "../../utils/mapResult.util.js";
 
-const getCurrentUser = async (user) => {
+const getUserByIdService = async (userId) => {
   try {
-    const userId = user.id;
     const [student, alumni, admin] = await Promise.all([
       Student.findById(userId).populate("alumniConnections"),
       Alumni.findById(userId).populate("studentConnections"),
@@ -15,16 +14,16 @@ const getCurrentUser = async (user) => {
     ]);
 
     const existingUser = student || alumni || admin;
-    if (!user) {
+    if (!existingUser) {
       throw new ApiError(404, "User not found");
     }
 
     let result;
-    if (user.role === UserRole.STUDENT) {
+    if (existingUser.role === UserRole.STUDENT) {
       result = mapStudent(existingUser);
-    } else if (user.role === UserRole.ALUMNI) {
+    } else if (existingUser.role === UserRole.ALUMNI) {
       result = mapAlumni(existingUser);
-    } else if (user.role === UserRole.ADMIN) {
+    } else if (existingUser.role === UserRole.ADMIN) {
       result = mapAdmin(existingUser);
     } else {
       throw new ApiError(400, "Invalid user role");
@@ -37,4 +36,4 @@ const getCurrentUser = async (user) => {
   }
 };
 
-export default getCurrentUser;
+export default getUserByIdService;

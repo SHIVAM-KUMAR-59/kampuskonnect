@@ -13,7 +13,25 @@ export const mapAlumni = (alumni) => {
     branch: alumni.branch,
     skills: alumni.skills,
     role: alumni.role,
-    studentConnections: alumni.studentConnections,
+    studentConnections: alumni.studentConnections
+      ? alumni.studentConnections[0] &&
+        typeof alumni.studentConnections[0] === "object" &&
+        alumni.studentConnections[0]._id
+        ? alumni.studentConnections.map((student) => {
+            return {
+              id: student._id,
+              profileImage: student.profileImage,
+              name: student.name,
+              email: student.email,
+              bio: student.bio,
+              interests: student.interests,
+              graduationYear: student.graduationYear,
+              branch: student.branch,
+              linkedinUrl: student.linkedinUrl,
+            };
+          })
+        : alumni.studentConnections
+      : [],
     verificationStatus: alumni.verificationStatus,
     createdAt: alumni.createdAt,
     updatedAt: alumni.updatedAt,
@@ -34,7 +52,26 @@ export const mapStudent = (student) => {
     graduationYear: student.graduationYear,
     role: student.role,
     interests: student.interests,
-    alumniConnections: student.alumniConnections,
+    alumniConnections: student.alumniConnections
+      ? student.alumniConnections[0] &&
+        typeof student.alumniConnections[0] === "object" &&
+        student.alumniConnections[0]._id
+        ? student.alumniConnections.map((alumni) => {
+            return {
+              id: alumni._id,
+              profileImage: alumni.profileImage,
+              name: alumni.name,
+              email: alumni.email,
+              bio: alumni.bio,
+              skills: alumni.skills,
+              currentCompany: alumni.currentCompany,
+              passoutYear: alumni.passoutYear,
+              branch: alumni.branch,
+              linkedinUrl: alumni.linkedinUrl,
+            };
+          })
+        : student.alumniConnections
+      : [],
     createdAt: student.createdAt,
     updatedAt: student.updatedAt,
   };
