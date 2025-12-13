@@ -27,12 +27,12 @@ app.use("/api/v1", routes);
 io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  socket.on("send_message", async (data) => {
-    const created = await createMessageService(data);
-    if (created) {
-      socket.broadcast.emit("receive_message", created);
-    }
-  });
+  // socket.on("send_message", async (data) => {
+  //   const created = await createMessageService(data);
+  //   if (created) {
+  //     socket.broadcast.emit("receive_message", created);
+  //   }
+  // });
 
   socket.on("disconnect", () => {
     console.log(`User disconnected: ${socket.id}`);
