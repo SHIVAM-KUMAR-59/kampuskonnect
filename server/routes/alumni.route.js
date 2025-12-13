@@ -12,6 +12,6 @@ router.use(authMiddleware);
 router.use(alumniMiddleware);
 router.put("/profile", reqBodyMiddleware, updateAlumniProfileController);
 router.get("/requests", getConnectionRequestController);
-router.patch("/requests/handle", reqBodyMiddleware, handlePendingRequestController)
+router.patch("/requests/handle", reqBodyMiddleware, handlePendingRequestController);
 
 export default router;

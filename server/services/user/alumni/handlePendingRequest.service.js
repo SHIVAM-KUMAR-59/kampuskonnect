@@ -22,7 +22,7 @@ const handlePendingRequestService = async (action, requestId, user) => {
 
     const sendingUser = await Student.findById(request.sender);
     if (!sendingUser) {
-        throw new ApiError(404, "User who sent the request is deleted");
+      throw new ApiError(404, "User who sent the request is deleted");
     }
 
     sendingUser.alumniConnections.push(user._id);
