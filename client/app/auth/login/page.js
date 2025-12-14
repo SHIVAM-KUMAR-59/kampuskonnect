@@ -50,14 +50,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-full h-screen flex">
+    <div className="w-full min-h-screen flex bg-background">
       {/* LEFT IMAGE PANEL */}
-      <div className="w-1/2 relative hidden md:block">
+      <div className="w-1/2 relative hidden lg:block">
         <Image src="/login-bg.jpg" alt="Campus" fill className="object-cover" />
       </div>
 
       {/* RIGHT FORM PANEL */}
-      <div className="w-full md:w-1/2 bg-background flex items-center justify-center px-6">
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 overflow-y-auto">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
           {/* LOGO */}
           <div className="flex justify-center mb-4">
@@ -69,11 +69,11 @@ export default function LoginPage() {
           <p className="text-center text-neutral-500 mb-6">Login to continue</p>
 
           {/* LOGIN FORM */}
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4 lg:space-y-3 xl:space-y-4">
             {/* EMAIL INPUT */}
             <div>
               <label className="text-sm text-neutral-600">Email Address</label>
-              <div className="flex items-center gap-2 border border-neutral-300 px-4 py-3 rounded-xl">
+              <div className="flex items-center gap-2 border border-neutral-300 px-4 py-3 lg:py-2 xl:py-3 rounded-xl">
                 <Mail className="text-neutral-500 h-4 w-4" />
                 <input
                   type="email"
@@ -88,7 +88,7 @@ export default function LoginPage() {
             {/* PASSWORD INPUT */}
             <div>
               <label className="text-sm text-neutral-600">Password</label>
-              <div className="flex items-center gap-2 border border-neutral-300 px-4 py-3 rounded-xl">
+              <div className="flex items-center gap-2 border border-neutral-300 px-4 py-3 lg:py-2 xl:py-3 rounded-xl">
                 <KeyRound className="text-neutral-500 h-4 w-4" />
                 <input
                   type={passwordVisible ? "text" : "password"}
