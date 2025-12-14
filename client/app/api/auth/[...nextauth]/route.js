@@ -92,7 +92,7 @@ export const authOptions = {
         }
 
         try {
-          const res = await axios.post(`${url}`, requestBody);
+          const res = await axios.post(url, requestBody);
 
           const data = res.data;
 
