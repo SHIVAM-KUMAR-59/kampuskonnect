@@ -8,7 +8,7 @@ const fetchChatByIdService = async (user, chatId) => {
     if (!chat) {
       throw new ApiError(404, "Chat not found");
     }
-    console.log(chat);
+
     if (
       chat.student._id.toString() !== user.id &&
       chat.alumni._id.toString() !== user.id &&
@@ -19,7 +19,6 @@ const fetchChatByIdService = async (user, chatId) => {
 
     return mapChat(chat);
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };
