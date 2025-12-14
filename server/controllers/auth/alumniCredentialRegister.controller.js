@@ -8,9 +8,7 @@ const alumniCredentialRegisterController = async (req, res, next) => {
     }
 
     const user = await alumniCredentialRegisterService(name, email.trim(), password, trim());
-    return res
-      .status(201)
-      .json({ success: true, message: "Alumni registered successfully", user });
+    return res.status(201).json({ success: true, message: "Alumni registered successfully", user });
   } catch (err) {
     next(err);
   }
