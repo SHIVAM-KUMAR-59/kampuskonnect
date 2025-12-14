@@ -136,6 +136,14 @@ export const mapChat = (chat) => {
       email: chat.alumni.email,
       bio: chat.alumni.bio,
     },
+    lastMessage: {
+      id: chat.lastMessage._id,
+      sender: chat.lastMessage.sender,
+      content: chat.lastMessage.content,
+      isRead: chat.lastMessage.isRead,
+      isEdited: chat.lastMessage.edited,
+      timestamp: chat.lastMessage.timestamp,
+    },
     createdAt: chat.createdAt,
     updatedAt: chat.updatedAt,
   };

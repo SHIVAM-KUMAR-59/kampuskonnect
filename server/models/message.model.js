@@ -8,16 +8,10 @@ const messageSchema = new mongoose.Schema(
       required: true,
     },
     sender: {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-      },
-      role: {
-        type: String,
-        enum: ["STUDENT", "ALUMNI"],
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
+
     content: {
       type: String,
       required: true,
