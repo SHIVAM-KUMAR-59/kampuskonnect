@@ -53,6 +53,7 @@ export const authOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
+        name: { label: "Name", type: "text" },
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
         role: { label: "Role", type: "text" },
@@ -60,29 +61,38 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
-        if (!credentials.email || !credentials.password || credentials.email.trim() === "" || credentials.password.trim() === "") {
+        if (
+          !credentials.email ||
+          !credentials.password ||
+          credentials.email.trim() === "" ||
+          credentials.password.trim() === ""
+        ) {
           throw new Error("Email and password are required");
         }
 
-        if(credentials.isSignup === true && credentials.role.toUpperCase() === "STUDENT") {
+        if (credentials.isSignup === true && !credentials.name) {
+          throw new Error("Name is required for signup");
+        }
+
+        if (credentials.isSignup === true && credentials.role.toUpperCase() === "STUDENT") {
           throw new Error("Use Google Signup for Student registration");
         }
 
         let url;
-        if (credentials.isSignup === "true") {
+        let requestBody = {
+          email: credentials.email,
+          password: credentials.password,
+        };
+
+        if (credentials.isSignup === true) {
           url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/register`;
+          requestBody.name = credentials.name;
         } else {
           url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentialslogin`;
         }
 
         try {
-          const res = await axios.post(
-            `${url}`,
-            {
-              email: credentials.email,
-              password: credentials.password,
-            }
-          );
+          const res = await axios.post(`${url}`, requestBody);
 
           const data = res.data;
 
