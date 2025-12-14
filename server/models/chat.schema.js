@@ -1,25 +1,15 @@
 import mongoose from "mongoose";
-import { UserRole } from "../config/enums.config.js";
-
-const participantSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    role: {
-      type: String,
-      enum: Object.values(UserRole),
-      required: true,
-    },
-  },
-  { _id: false }
-);
 
 const chatSchema = new mongoose.Schema(
   {
-    participants: {
-      type: [participantSchema],
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
+    },
+    alumni: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Alumni",
       required: true,
     },
     lastMessage: {
@@ -31,6 +21,8 @@ const chatSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+chatSchema.index({ student: 1, alumni: 1 }, { unique: true });
 
 const Chat = mongoose.model("Chat", chatSchema);
 
