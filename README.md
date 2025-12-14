@@ -1,4 +1,4 @@
-# Alumni Konnect
+# Kampus Konnect
 
 A comprehensive platform connecting KIIT alumni with current students for mentorship, networking, and career guidance.
 
@@ -15,7 +15,7 @@ A comprehensive platform connecting KIIT alumni with current students for mentor
 
 ## About
 
-Alumni Konnect is a digital platform designed to bridge the gap between KIIT alumni and current students. It facilitates meaningful connections, mentorship opportunities, and career guidance through a centralized web application.
+Kampus Konnect is a digital platform designed to bridge the gap between KIIT alumni and current students. It facilitates meaningful connections, mentorship opportunities, and career guidance through a centralized web application.
 
 ## Features
 
@@ -362,7 +362,7 @@ npm run dev -- -p 3001
 
 ## Project Structure
 ```
-alumni-konnect/
+kampuskonnect/
 ├── server/                 # Backend (Node.js + Express)
 │   ├── config/             # Configuration files
 │   ├── controllers/        # Request handlers
