@@ -11,7 +11,8 @@ const alumniRegisterController = async (req, res, next) => {
       return res.status(400).json({ message: "All fields are required", success: false });
     }
     const alumni = await alumniRegisterService(name, email.trim(), profileImage);
-    return res.status(200).json({ alumni, success: true });
+    console.log("Sending");
+    return res.status(201).json({ alumni, success: true });
   } catch (err) {
     next(err);
   }

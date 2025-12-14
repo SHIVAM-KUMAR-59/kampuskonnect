@@ -55,16 +55,29 @@ export const authOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        role: { label: "Role", type: "text" },
+        isSignup: { label: "isSignup", type: "boolean" },
       },
 
       async authorize(credentials) {
-        if (!credentials.email || !credentials.password) {
+        if (!credentials.email || !credentials.password || credentials.email.trim() === "" || credentials.password.trim() === "") {
           throw new Error("Email and password are required");
+        }
+
+        if(credentials.isSignup === true && credentials.role.toUpperCase() === "STUDENT") {
+          throw new Error("Use Google Signup for Student registration");
+        }
+
+        let url;
+        if (credentials.isSignup === "true") {
+          url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/register`;
+        } else {
+          url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentialslogin`;
         }
 
         try {
           const res = await axios.post(
-            `${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`,
+            `${url}`,
             {
               email: credentials.email,
               password: credentials.password,
