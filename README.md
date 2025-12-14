@@ -362,7 +362,7 @@ npm run dev -- -p 3001
 
 ## Project Structure
 ```
-alumni-konnect/
+kampuskonnect/
 ├── server/                 # Backend (Node.js + Express)
 │   ├── config/             # Configuration files
 │   ├── controllers/        # Request handlers
