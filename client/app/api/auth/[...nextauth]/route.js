@@ -70,11 +70,11 @@ export const authOptions = {
           throw new Error("Email and password are required");
         }
 
-        if (credentials.isSignup === true && !credentials.name) {
+        if (credentials.isSignup === "true" && !credentials.name) {
           throw new Error("Name is required for signup");
         }
 
-        if (credentials.isSignup === true && credentials.role.toUpperCase() === "STUDENT") {
+        if (credentials.isSignup === "true" && credentials.role.toUpperCase() === "STUDENT") {
           throw new Error("Use Google Signup for Student registration");
         }
 
@@ -83,29 +83,44 @@ export const authOptions = {
           email: credentials.email,
           password: credentials.password,
         };
+        console.log(credentials);
 
-        if (credentials.isSignup === true) {
+        if (credentials.isSignup === "true") {
           url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/register`;
           requestBody.name = credentials.name;
         } else {
           url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentialslogin`;
         }
 
+        console.log("Auth URL:", url);
+        console.log("Auth Request Body:", requestBody);
+
         try {
           const res = await axios.post(url, requestBody);
-
           const data = res.data;
 
-          if (!data?.user?.token) {
-            throw new Error("Invalid response from server");
+          console.log("Auth API Response:", data);
+
+          // Normalize alumni or user response
+          const authContainer = data.alumni || data.user;
+
+          if (!authContainer) {
+            throw new Error("No auth container found");
+          }
+
+          const authUser = authContainer.user;
+          const token = authContainer.token;
+
+          if (!authUser || !token) {
+            throw new Error("Invalid authentication response");
           }
 
           return {
-            id: data.user.user.id,
-            email: data.user.user.email,
-            username: data.user.user.username,
-            role: data.user.user.role,
-            token: data.user.token,
+            id: authUser.id,
+            email: authUser.email,
+            name: authUser.name,
+            role: authUser.role,
+            token,
           };
         } catch (err) {
           // Forward the actual error message from backend
