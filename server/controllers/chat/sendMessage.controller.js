@@ -11,7 +11,7 @@ const sendMessageController = async (req, res, next) => {
     }
 
     if (!isValidObjectId(chatId)) {
-      return res.status(400).json({ message: "Invalid Chat ID format" });
+      return res.status(400).json({ message: "Invalid message ID format" });
     }
 
     await sendMessageService(user, chatId, content);
