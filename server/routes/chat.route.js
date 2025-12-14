@@ -13,6 +13,6 @@ router.get("/", fetchAllChatsController);
 router.get("/:id", fetchChatByIdController);
 router.post("/", reqBodyMiddleware, createChatController);
 
-router.post("/message", reqBodyMiddleware, sendMessageController)
+router.post("/message", reqBodyMiddleware, sendMessageController);
 
 export default router;
