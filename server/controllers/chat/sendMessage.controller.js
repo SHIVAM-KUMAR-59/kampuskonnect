@@ -15,9 +15,7 @@ const sendMessageController = async (req, res, next) => {
     }
 
     await sendMessageService(user, chatId, content);
-    return res
-      .status(200)
-      .json({ success: true, message: "Message sent successfully" });
+    return res.status(200).json({ success: true, message: "Message sent successfully" });
   } catch (err) {
     next(err);
   }

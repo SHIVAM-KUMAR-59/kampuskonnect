@@ -4,11 +4,14 @@ import { mapChat } from "../../utils/mapResult.util.js";
 
 const fetchChatByIdService = async (user, chatId) => {
   try {
-    const chat = await Chat.findById(chatId).populate("student").populate("alumni").populate("lastMessage");
+    const chat = await Chat.findById(chatId)
+      .populate("student")
+      .populate("alumni")
+      .populate("lastMessage");
     if (!chat) {
       throw new ApiError(404, "Chat not found");
     }
-    console.log(chat);
+
     if (
       chat.student._id.toString() !== user.id &&
       chat.alumni._id.toString() !== user.id &&
