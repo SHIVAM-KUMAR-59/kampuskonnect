@@ -14,7 +14,10 @@ const fetchAllChatsService = async (user) => {
     const chats = await Chat.find(query)
       .populate("student", "name profileImage email")
       .populate("alumni", "name profileImage email")
-      .populate("lastMessage")
+      .populate({
+        path: "lastMessage",
+        match: { isDeleted: false },
+      })
       .sort({ updatedAt: -1 });
 
     return chats.map((chat) => mapChat(chat));

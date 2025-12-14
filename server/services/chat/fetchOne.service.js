@@ -7,7 +7,10 @@ const fetchChatByIdService = async (user, chatId) => {
     const chat = await Chat.findById(chatId)
       .populate("student")
       .populate("alumni")
-      .populate("lastMessage");
+      .populate({
+        path: "lastMessage",
+        match: { isDeleted: false },
+      });
     if (!chat) {
       throw new ApiError(404, "Chat not found");
     }
