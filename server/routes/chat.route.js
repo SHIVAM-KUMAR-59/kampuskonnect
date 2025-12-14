@@ -6,6 +6,7 @@ import fetchAllChatsController from "../controllers/chat/fetch.controller.js";
 import fetchChatByIdController from "../controllers/chat/fetchOne.controller.js";
 import sendMessageController from "../controllers/chat/sendMessage.controller.js";
 import updateMessageController from "../controllers/chat/updateMessage.controller.js";
+import deleteMessageController from "../controllers/chat/deleteMessage.controller.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.post("/", reqBodyMiddleware, createChatController);
 
 router.post("/message", reqBodyMiddleware, sendMessageController);
 router.patch("/message", reqBodyMiddleware, updateMessageController);
+router.delete("/message/:id", deleteMessageController);
 
 export default router;

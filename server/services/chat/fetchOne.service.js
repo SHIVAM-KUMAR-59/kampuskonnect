@@ -22,9 +22,11 @@ const fetchChatByIdService = async (user, chatId) => {
     ) {
       throw new ApiError(403, "You cannot access this chat");
     }
+    console.log(chat)
 
     return mapChat(chat);
   } catch (err) {
+    console.log(err);
     handleServerError(err);
   }
 };
