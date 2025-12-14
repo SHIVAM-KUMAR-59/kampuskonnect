@@ -2,12 +2,7 @@ import Chat from "../../models/chat.schema.js";
 import { ApiError, handleServerError } from "../../utils/error.util.js";
 import { mapChat } from "../../utils/mapResult.util.js";
 
-const createChatService = async (
-  currentUserId,
-  currentUserRole,
-  targetUserId,
-  targetUserRole
-) => {
+const createChatService = async (currentUserId, currentUserRole, targetUserId, targetUserRole) => {
   try {
     // Validate roles
     const validRoles = ["STUDENT", "ALUMNI"];
@@ -31,11 +26,9 @@ const createChatService = async (
     }
 
     // Assign correct IDs
-    const studentId =
-      currentUserRole === "STUDENT" ? currentUserId : targetUserId;
+    const studentId = currentUserRole === "STUDENT" ? currentUserId : targetUserId;
 
-    const alumniId =
-      currentUserRole === "ALUMNI" ? currentUserId : targetUserId;
+    const alumniId = currentUserRole === "ALUMNI" ? currentUserId : targetUserId;
 
     // Check if chat already exists
     let chat = await Chat.findOne({

@@ -138,5 +138,5 @@ export const mapChat = (chat) => {
     },
     createdAt: chat.createdAt,
     updatedAt: chat.updatedAt,
-  }
-}
+  };
+};
