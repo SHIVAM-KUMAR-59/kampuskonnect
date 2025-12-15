@@ -12,7 +12,7 @@ const alumniRegisterController = async (req, res, next) => {
     }
     const alumni = await alumniRegisterService(name, email.trim(), profileImage);
     console.log("Sending");
-    return res.status(200).json({ alumni, success: true });
+    return res.status(201).json({ alumni, success: true });
   } catch (err) {
     next(err);
   }

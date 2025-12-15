@@ -5,11 +5,13 @@ import updatePasswordController from "../controllers/user/updatePassword.control
 import authMiddleware from "../middleware/auth.middleware.js";
 import deleteUserController from "../controllers/user/deleteUser.controller.js";
 import getCurrentUserController from "../controllers/user/getCurrentUser.controller.js";
+import getUserByIdController from "../controllers/user/getUserById.controller.js";
 
 const router = Router();
 
 router.use(authMiddleware);
-router.get("/:id", getCurrentUserController);
+router.get("/", getCurrentUserController);
+router.get("/:id", getUserByIdController);
 router.post("/password/create", reqBodyMiddleware, createPasswordController);
 router.patch("/password/update", reqBodyMiddleware, updatePasswordController);
 router.delete("/:id", deleteUserController);

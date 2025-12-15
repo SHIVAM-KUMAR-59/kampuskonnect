@@ -33,6 +33,7 @@ const userGoogleLoginService = async (email) => {
       token,
     };
   } catch (err) {
+    console.log(err);
     handleServerError(err);
   }
 };

@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const { success, error } = useToast()
+  const { success, error } = useToast();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ export default function LoginPage() {
       redirect: false,
       email,
       password,
+      isSignup: false,
     });
 
     if (res?.error) {
@@ -33,7 +34,7 @@ export default function LoginPage() {
       success("Logged in successfully!");
       setInterval(() => {
         window.location.href = "/dashboard";
-      }, 2000)
+      }, 2000);
     }
   };
 
@@ -60,7 +61,7 @@ export default function LoginPage() {
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
           {/* LOGO */}
           <div className="flex justify-center mb-4">
-            <Image src="/kiit-logo.png" width={320} height={20} alt="KIIT Logo" />
+            <Image src="/kiit-logo.png" width={240} height={64} alt="KIIT Logo" />
           </div>
 
           {/* TITLE */}
@@ -96,15 +97,15 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {!passwordVisible && (
+                {passwordVisible && (
                   <Eye
-                    onClick={() => setPasswordVisible(true)}
+                    onClick={() => setPasswordVisible(false)}
                     className="text-neutral-500 h-5 w-5 cursor-pointer"
                   />
                 )}
-                {passwordVisible && (
+                {!passwordVisible && (
                   <EyeClosed
-                    onClick={() => setPasswordVisible(false)}
+                    onClick={() => setPasswordVisible(true)}
                     className="text-neutral-500 h-5 w-5 cursor-pointer"
                   />
                 )}
@@ -116,7 +117,6 @@ export default function LoginPage() {
                 </a>
               </div>
             </div>
-
 
             {/* LOGIN BUTTON */}
             <button
