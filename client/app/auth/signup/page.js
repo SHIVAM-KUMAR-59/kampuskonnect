@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { GraduationCap, User } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
+import PrimaryButton from "@/component/PrimaryButton";
 
 export default function SignupRolePage() {
   const [role, setRole] = useState(null);
@@ -97,14 +98,13 @@ export default function SignupRolePage() {
           </div>
 
           {/* CONTINUE BUTTON */}
-          <button
+          <PrimaryButton
+            text="Continue"
             onClick={handleContinue}
             disabled={!role}
-            className={`w-full mt-6 py-3 rounded-xl text-white font-medium transition
+            classname={`w-full mt-6 py-3 rounded-xl text-white font-medium transition
               ${role ? "bg-green-600 hover:bg-green-700" : "bg-green-300 cursor-not-allowed"}`}
-          >
-            Continue
-          </button>
+          />
 
           {/* LOGIN LINK */}
           <p className="text-center text-sm text-neutral-600 mt-4">
