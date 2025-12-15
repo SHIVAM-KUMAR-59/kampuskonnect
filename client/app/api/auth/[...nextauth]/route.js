@@ -63,9 +63,7 @@ export const authOptions = {
       async authorize(credentials) {
         if (
           !credentials.email ||
-          !credentials.password ||
-          credentials.email.trim() === "" ||
-          credentials.password.trim() === ""
+          !credentials.password
         ) {
           throw new Error("Email and password are required");
         }
@@ -86,10 +84,10 @@ export const authOptions = {
         console.log(credentials);
 
         if (credentials.isSignup === "true") {
-          url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/register`;
+          url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/credentials/register`;
           requestBody.name = credentials.name;
         } else {
-          url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentialslogin`;
+          url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`;
         }
 
         console.log("Auth URL:", url);
