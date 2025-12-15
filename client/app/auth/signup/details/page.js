@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Mail, Lock, Eye, EyeClosed } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function SignupDetailsPage() {
   const searchParams = useSearchParams();
@@ -43,8 +44,8 @@ export default function SignupDetailsPage() {
     router.push("/onboarding");
   };
 
-  const handleGoogleSignIn = () => {
-    router.push("/onboarding");
+  const handleGoogleSignIn = async () => {
+    await signIn("google-register-" + role, { callbackUrl: "/onboarding" });
   };
 
   return (

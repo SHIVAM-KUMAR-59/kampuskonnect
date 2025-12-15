@@ -24,6 +24,7 @@ export default function LoginPage() {
       redirect: false,
       email,
       password,
+      isSignup: false
     });
 
     if (res?.error) {
