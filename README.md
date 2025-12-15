@@ -11,6 +11,7 @@ A comprehensive platform connecting KIIT alumni with current students for mentor
 - [Installation Guide](#installation-guide)
 - [Environment Variables Setup](#environment-variables-setup)
 - [Running the Project](#running-the-project)
+- [Contributing to the Project](#contributing)
 - [Troubleshooting](#troubleshooting)
 
 ## About
@@ -271,6 +272,248 @@ You need to run both the backend and frontend at the same time. The easiest way 
 
 - Press `Ctrl + C` in each terminal window
 - This will stop both servers
+
+## Contributing
+
+Thank you for considering contributing to Alumni Konnect! Follow these steps to contribute to the project.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/kampuskonnect.git
+cd kampuskonnect
+```
+
+### 2. Create Your Branch
+
+Always create a new branch for your work. Use a descriptive name:
+```bash
+git checkout -b your-name/feature-name
+```
+
+**Branch naming convention:**
+- `your-name/feature-name` - For new features (e.g., `john/add-chat-feature`)
+- `your-name/fix-name` - For bug fixes (e.g., `sarah/fix-login-bug`)
+- `your-name/update-name` - For updates (e.g., `mike/update-readme`)
+
+**Examples:**
+```bash
+git checkout -b rahul/add-event-management
+git checkout -b priya/fix-connection-request
+git checkout -b amit/update-profile-page
+```
+
+### 3. Make Your Changes
+
+1. **Write your code**
+   - Follow the existing code style
+   - Keep your changes focused on one feature/fix
+   - Test your changes thoroughly
+
+2. **Add comments** where necessary to explain complex logic
+
+3. **Test your changes:**
+   - Make sure backend still runs without errors
+   - Make sure frontend displays correctly
+   - Test the specific feature you worked on
+
+### 4. Commit Your Changes
+
+**Stage your changes:**
+```bash
+git add .
+```
+
+**Commit with a clear message:**
+```bash
+git commit -m "Add: brief description of what you added/changed"
+```
+
+**Commit message format:**
+- `Add: description` - For new features
+- `Fix: description` - For bug fixes
+- `Update: description` - For updates to existing code
+- `Remove: description` - For removing code/features
+
+**Examples:**
+```bash
+git commit -m "Add: real-time messaging feature with Socket.io"
+git commit -m "Fix: connection request not sending properly"
+git commit -m "Update: improve alumni search filtering"
+git commit -m "Remove: deprecated authentication method"
+```
+
+### 5. Pull Latest Changes
+
+Before pushing, make sure you have the latest code from main branch:
+```bash
+git checkout main
+git pull origin main
+git checkout your-name/feature-name
+git merge main
+```
+
+**Resolve any conflicts if they appear:**
+- Open conflicted files in your code editor
+- Look for `<<<<<<<`, `=======`, `>>>>>>>` markers
+- Keep the correct code and remove the markers
+- Save the file
+- Run `git add .` and `git commit -m "Resolve merge conflicts"`
+
+### 6. Push Your Branch
+```bash
+git push origin your-name/feature-name
+```
+
+### 7. Create a Pull Request
+
+1. Go to the repository on GitHub
+2. You'll see a yellow banner saying "Compare & pull request" - click it
+3. **Fill in the PR template:**
+   - **Title:** Brief description of your changes
+   - **Description:** Explain what you did and why
+   - **Screenshots:** Add screenshots if you changed the UI
+   - **Testing:** Describe how you tested your changes
+
+**Example PR description:**
+```
+## Description
+Added real-time messaging feature using Socket.io for alumni-student communication.
+
+## Changes Made
+- Implemented Socket.io server setup
+- Created message model and API endpoints
+- Built chat UI components
+- Added typing indicators and read receipts
+
+## Testing Done
+- Tested messaging between two users
+- Verified real-time updates work correctly
+- Checked on Chrome and Firefox browsers
+
+## Screenshots
+[Attach screenshots here]
+```
+
+4. Click **"Create Pull Request"**
+
+### 8. Code Review Process
+
+1. **Wait for review** from team members or team lead
+2. **Address feedback** if requested:
+   - Make the requested changes
+   - Commit and push again to the same branch
+   - The PR will automatically update
+3. **Once approved**, your code will be merged into main branch
+
+### Important Guidelines
+
+**Do's:**
+- Keep commits small and focused
+- Write clear commit messages
+- Test your changes before pushing
+- Ask questions if you're unsure
+- Comment your code where necessary
+- Follow existing code patterns
+- Update documentation if needed
+
+**Don'ts:**
+- Don't commit directly to `main` branch
+- Don't commit `.env` or `.env.local` files
+- Don't commit `node_modules` folder
+- Don't make unrelated changes in the same branch
+- Don't push broken code
+- Don't copy-paste code without understanding it
+
+### Git Commands Cheat Sheet
+
+**Check current branch:**
+```bash
+git branch
+```
+
+**Check status of your changes:**
+```bash
+git status
+```
+
+**See what changed:**
+```bash
+git diff
+```
+
+**View commit history:**
+```bash
+git log
+```
+
+**Undo uncommitted changes:**
+```bash
+git checkout -- filename.js
+```
+
+**Switch to existing branch:**
+```bash
+git checkout branch-name
+```
+
+**Delete a local branch:**
+```bash
+git branch -d branch-name
+```
+
+**Pull latest changes from remote:**
+```bash
+git pull origin main
+```
+
+### Need Help with Git?
+
+**First time using Git?**
+- Git Basics: https://git-scm.com/book/en/v2/Getting-Started-Git-Basics
+- GitHub Guides: https://guides.github.com/
+
+**Common Issues:**
+
+**Forgot to create a branch and worked on main:**
+```bash
+# Stash your changes
+git stash
+
+# Create and checkout new branch
+git checkout -b your-name/feature-name
+
+# Apply your changes
+git stash pop
+```
+
+**Need to undo last commit (before push):**
+```bash
+git reset --soft HEAD~1
+```
+
+**Accidentally committed to wrong branch:**
+```bash
+# On wrong branch
+git log  # Copy the commit hash
+
+# Switch to correct branch
+git checkout correct-branch
+git cherry-pick commit-hash
+```
+
+**Merge conflicts help:**
+- Open the file in VS Code (it highlights conflicts nicely)
+- Choose which changes to keep
+- Remove the conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`)
+- Save, add, and commit
+
+### Questions?
+
+If you're stuck or have questions:
+1. Check this guide again
+2. Ask your team members
+3. Contact your team lead
+4. Create an issue on GitHub describing your problem
 
 ## Troubleshooting
 
