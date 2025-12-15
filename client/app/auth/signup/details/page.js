@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Mail, Lock, Eye, EyeClosed } from "lucide-react";
+import { UserRound, Mail, Lock, Eye, EyeClosed } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 export default function SignupDetailsPage() {
@@ -10,6 +10,7 @@ export default function SignupDetailsPage() {
   const router = useRouter();
   const role = searchParams.get("role"); // "student" | "alumni"
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,8 +32,8 @@ export default function SignupDetailsPage() {
         return;
       }
 
-      if (password.length < 6) {
-        setError("Password must be at least 6 characters.");
+      if (password.length < 8) {
+        setError("Password must be at least 8 characters.");
         return;
       }
 
@@ -42,6 +43,7 @@ export default function SignupDetailsPage() {
       }
 
       await signIn("credentials", {
+        name,
         email,
         password,
         role: "ALUMNI",
@@ -116,6 +118,20 @@ export default function SignupDetailsPage() {
         
           {role === "alumni" && (
             <div className="space-y-4">
+              {/* NAME */}
+              <div>
+                <label className="text-sm text-neutral-600">Full Name</label>
+                <div className="flex items-center gap-2 border border-neutral-300 px-4 py-3 rounded-xl">
+                  <UserRound  className="h-4 w-4 text-neutral-500" />
+                  <input
+                    type="text"
+                    className="w-full focus:outline-none"
+                    placeholder="Enter your full name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+              </div>
               {/* EMAIL */}
               <div>
                 <label className="text-sm text-neutral-600">Email Address</label>
