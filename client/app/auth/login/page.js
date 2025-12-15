@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { Eye, EyeClosed, KeyRound, Mail } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,14 @@ export default function LoginPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const { success, error } = useToast();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+  const err = searchParams.get("error");
+  if (err) {
+    error(decodeURIComponent(err));
+  }
+}, [searchParams]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

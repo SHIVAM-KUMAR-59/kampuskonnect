@@ -1,18 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GraduationCap, User } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useToast } from "@/context/ToastContext";
 
 export default function SignupRolePage() {
   const [role, setRole] = useState(null);
   const router = useRouter();
+  const { success, error } = useToast();
 
   const handleContinue = () => {
     if (!role) return;
     router.push(`/auth/signup/details?role=${role}`);
   };
+
+    const searchParams = useSearchParams();
+  
+    useEffect(() => {
+    const err = searchParams.get("error");
+    if (err) {
+      error(decodeURIComponent(err));
+    }
+  }, [searchParams]);
 
   return (
     <div className="w-full min-h-screen flex overflow-hidden">
