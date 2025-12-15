@@ -8,9 +8,9 @@ const userCredentialsLoginService = async (email, password) => {
   try {
     // Load both but pick whichever is not null
     const [student, alumni] = await Promise.all([
-      Student.findOne({ email }),
-      Alumni.findOne({ email }),
-    ]);
+      Student.findOne({ email }).select('+password'),
+      Alumni.findOne({ email }).select('+password'),
+    ])
 
     // Determine the actual user
     const existingUser = student || alumni;
@@ -44,6 +44,7 @@ const userCredentialsLoginService = async (email, password) => {
       token,
     };
   } catch (err) {
+    console.log(err)
     handleServerError(err);
   }
 };
