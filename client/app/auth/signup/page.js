@@ -16,9 +16,9 @@ export default function SignupRolePage() {
     router.push(`/auth/signup/details?role=${role}`);
   };
 
-    const searchParams = useSearchParams();
-  
-    useEffect(() => {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
     const err = searchParams.get("error");
     if (err) {
       error(decodeURIComponent(err));
