@@ -42,7 +42,7 @@ export default function SignupDetailsPage() {
         return;
       }
 
-      await signIn("credentials", {
+      const res = await signIn("credentials", {
         name,
         email,
         password,
@@ -50,6 +50,11 @@ export default function SignupDetailsPage() {
         isSignup: true,
         redirect: "/onboarding",
       });
+
+      if (res?.error) {
+        setError(res.error);
+      }
+      router.push("/onboarding");
     } catch (err) {
       setError("An error occurred during signup.");
     }
