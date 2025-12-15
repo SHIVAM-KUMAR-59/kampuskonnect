@@ -14,7 +14,6 @@ export default function OnboardingPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
       <div className="bg-white w-full max-w-xl rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-8">
-
         {/* HEADER */}
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-neutral-800 text-center">
@@ -51,9 +50,7 @@ export default function OnboardingPage() {
             </div>
 
             <div>
-              <label className="text-sm text-neutral-600">
-                Department / Branch
-              </label>
+              <label className="text-sm text-neutral-600">Department / Branch</label>
               <input
                 className="mt-1 w-full border border-neutral-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="e.g. Computer Science & Engineering"
@@ -86,9 +83,7 @@ export default function OnboardingPage() {
             ) : (
               <>
                 <div>
-                  <label className="text-sm text-neutral-600">
-                    Current Role
-                  </label>
+                  <label className="text-sm text-neutral-600">Current Role</label>
                   <input
                     className="mt-1 w-full border border-neutral-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="e.g. Software Engineer"
@@ -96,9 +91,7 @@ export default function OnboardingPage() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-neutral-600">
-                    Organization
-                  </label>
+                  <label className="text-sm text-neutral-600">Organization</label>
                   <input
                     className="mt-1 w-full border border-neutral-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="e.g. Google, Infosys"
@@ -112,9 +105,7 @@ export default function OnboardingPage() {
         {/* ================= STEP 3 ================= */}
         {step === 3 && (
           <div>
-            <label className="text-sm text-neutral-600">
-              Areas of Interest
-            </label>
+            <label className="text-sm text-neutral-600">Areas of Interest</label>
             <textarea
               className="mt-1 w-full border border-neutral-300 rounded-xl px-4 py-3 h-28 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="AI, Web Development, Finance, Research, Higher Studies..."
@@ -165,7 +156,6 @@ export default function OnboardingPage() {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );

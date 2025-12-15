@@ -19,11 +19,11 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-  const err = searchParams.get("error");
-  if (err) {
-    error(decodeURIComponent(err));
-  }
-}, [searchParams]);
+    const err = searchParams.get("error");
+    if (err) {
+      error(decodeURIComponent(err));
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
