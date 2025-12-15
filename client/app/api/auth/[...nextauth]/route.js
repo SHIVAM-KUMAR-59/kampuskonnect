@@ -53,36 +53,74 @@ export const authOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
+        name: { label: "Name", type: "text" },
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        role: { label: "Role", type: "text" },
+        isSignup: { label: "isSignup", type: "boolean" },
       },
 
       async authorize(credentials) {
-        if (!credentials.email || !credentials.password) {
+        if (
+          !credentials.email ||
+          !credentials.password ||
+          credentials.email.trim() === "" ||
+          credentials.password.trim() === ""
+        ) {
           throw new Error("Email and password are required");
         }
 
-        try {
-          const res = await axios.post(
-            `${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`,
-            {
-              email: credentials.email,
-              password: credentials.password,
-            }
-          );
+        if (credentials.isSignup === "true" && !credentials.name) {
+          throw new Error("Name is required for signup");
+        }
 
+        if (credentials.isSignup === "true" && credentials.role.toUpperCase() === "STUDENT") {
+          throw new Error("Use Google Signup for Student registration");
+        }
+
+        let url;
+        let requestBody = {
+          email: credentials.email,
+          password: credentials.password,
+        };
+        console.log(credentials);
+
+        if (credentials.isSignup === "true") {
+          url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/register`;
+          requestBody.name = credentials.name;
+        } else {
+          url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentialslogin`;
+        }
+
+        console.log("Auth URL:", url);
+        console.log("Auth Request Body:", requestBody);
+
+        try {
+          const res = await axios.post(url, requestBody);
           const data = res.data;
 
-          if (!data?.user?.token) {
-            throw new Error("Invalid response from server");
+          console.log("Auth API Response:", data);
+
+          // Normalize alumni or user response
+          const authContainer = data.alumni || data.user;
+
+          if (!authContainer) {
+            throw new Error("No auth container found");
+          }
+
+          const authUser = authContainer.user;
+          const token = authContainer.token;
+
+          if (!authUser || !token) {
+            throw new Error("Invalid authentication response");
           }
 
           return {
-            id: data.user.user.id,
-            email: data.user.user.email,
-            username: data.user.user.username,
-            role: data.user.user.role,
-            token: data.user.token,
+            id: authUser.id,
+            email: authUser.email,
+            name: authUser.name,
+            role: authUser.role,
+            token,
           };
         } catch (err) {
           // Forward the actual error message from backend
@@ -162,23 +200,32 @@ export const authOptions = {
       }
     },
 
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger }) {
+      // Initial sign in - account exists
       if (account?.user) {
-        token.role = account.user.role;
-        token.id = account.user._id || account.user.id;
-        token.email = account.user.email;
-        token.username = account.user.username || account.user.name;
-        token.accessToken = account.token;
+        return {
+          ...token,
+          role: account.user.role,
+          id: account.user._id || account.user.id,
+          email: account.user.email,
+          username: account.user.username || account.user.name,
+          accessToken: account.token,
+        };
       }
 
+      // Credentials provider - user exists
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.username = user.username;
-        token.role = user.role;
-        token.accessToken = user.token;
+        return {
+          ...token,
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          role: user.role,
+          accessToken: user.token,
+        };
       }
 
+      // Subsequent calls - return existing token as-is
       return token;
     },
 
@@ -194,7 +241,6 @@ export const authOptions = {
 
   pages: {
     signIn: "/auth/login",
-    error: "/auth/error",
   },
 };
 

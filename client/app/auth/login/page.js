@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const { success, error } = useToast()
+  const { success, error } = useToast();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ export default function LoginPage() {
       redirect: false,
       email,
       password,
+      isSignup: false,
     });
 
     if (res?.error) {
@@ -33,7 +34,7 @@ export default function LoginPage() {
       success("Logged in successfully!");
       setInterval(() => {
         window.location.href = "/dashboard";
-      }, 2000)
+      }, 2000);
     }
   };
 
@@ -116,7 +117,6 @@ export default function LoginPage() {
                 </a>
               </div>
             </div>
-
 
             {/* LOGIN BUTTON */}
             <button

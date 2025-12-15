@@ -5,13 +5,9 @@ import Student from "../../models/student.model.js";
 import { ApiError, handleServerError } from "../../utils/error.util.js";
 import { mapAdmin, mapAlumni, mapStudent } from "../../utils/mapResult.util.js";
 
-const getCurrentUser = async (userId, user) => {
-  console.log(user);
+const getCurrentUser = async (user) => {
   try {
-    if (user._id.toString() !== userId && user.role !== UserRole.ADMIN) {
-      throw new ApiError(401, "You are not authorized to access this user");
-    }
-
+    const userId = user.id;
     const [student, alumni, admin] = await Promise.all([
       Student.findById(userId).populate("alumniConnections"),
       Alumni.findById(userId).populate("studentConnections"),

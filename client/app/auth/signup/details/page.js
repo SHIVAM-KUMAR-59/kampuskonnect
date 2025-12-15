@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Mail, Lock, Eye, EyeClosed } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
-
+import { signIn } from "next-auth/react";
 export default function SignupDetailsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -22,32 +22,41 @@ export default function SignupDetailsPage() {
     if (!role) router.push("/auth/signup");
   }, [role, router]);
 
-  /* ================= HANDLERS ================= */
+   const handleAlumniContinue = async () => {
+    try {
+      setError("");
 
-  const handleAlumniContinue = () => {
-    setError("");
+      if (!email || !password || !confirmPassword) {
+        setError("All fields are required.");
+        return;
+      }
 
-    if (!email || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
+      if (password.length < 6) {
+        setError("Password must be at least 6 characters.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+
+      await signIn("credentials", {
+        email,
+        password,
+        role: "ALUMNI",
+        isSignup: true,
+        redirect: "/onboarding",
+      });
+    } catch (err) {
+      setError("An error occurred during signup.");
     }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    router.push("/onboarding");
   };
 
-  const handleGoogleSignIn = () => {
-    router.push("/onboarding");
+  const handleGoogleSignIn = async () => {
+    await signIn("google-register-" + role, { callbackUrl: "/onboarding" });
   };
+
 
   return (
     <div className="w-full min-h-screen flex overflow-hidden">
@@ -82,7 +91,7 @@ export default function SignupDetailsPage() {
               : "Sign up as an alumni"}
           </p>
 
-          {/* ================= STUDENT VIEW ================= */}
+        
           {role === "student" && (
             <div className="space-y-4">
               <button
@@ -104,7 +113,7 @@ export default function SignupDetailsPage() {
             </div>
           )}
 
-          {/* ================= ALUMNI VIEW ================= */}
+        
           {role === "alumni" && (
             <div className="space-y-4">
               {/* EMAIL */}

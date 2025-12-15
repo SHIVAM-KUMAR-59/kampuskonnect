@@ -9,9 +9,9 @@ const messageSchema = new mongoose.Schema(
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
       required: true,
     },
+
     content: {
       type: String,
       required: true,
@@ -21,6 +21,10 @@ const messageSchema = new mongoose.Schema(
       default: false,
     },
     edited: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
       type: Boolean,
       default: false,
     },

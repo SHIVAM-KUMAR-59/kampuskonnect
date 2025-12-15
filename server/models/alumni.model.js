@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Branch, UserRole, VerificationStatus } from "../config/enums.config.js";
+import { Branch, Domains, UserRole, VerificationStatus } from "../config/enums.config.js";
 
 const alumniSchema = new mongoose.Schema(
   {
@@ -53,7 +53,15 @@ const alumniSchema = new mongoose.Schema(
     },
     skills: {
       type: [String],
-      default: [],
+      enum: Object.values(Domains),
+      default: [], // Allow empty array by default
+      validate: {
+        validator: function (arr) {
+          // Allow empty array OR 1-10 items
+          return arr.length === 0 || (arr.length >= 1 && arr.length <= 10);
+        },
+        message: "Please select between 1 and 10 skills, or leave empty.",
+      },
     },
     city: {
       type: String,
