@@ -7,7 +7,7 @@ const alumniCredentialRegisterController = async (req, res, next) => {
       return res.status(400).json({ message: "Name, email, and password are required" });
     }
 
-    const user = await alumniCredentialRegisterService(name, email.trim(), password, trim());
+    const user = await alumniCredentialRegisterService(name, email.trim(), password.trim());
     return res.status(201).json({ success: true, message: "Alumni registered successfully", user });
   } catch (err) {
     next(err);
