@@ -86,10 +86,10 @@ export const authOptions = {
         console.log(credentials);
 
         if (credentials.isSignup === "true") {
-          url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/register`;
+          url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/credentials/register`;
           requestBody.name = credentials.name;
         } else {
-          url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentialslogin`;
+          url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`;
         }
 
         console.log("Auth URL:", url);
@@ -241,6 +241,7 @@ export const authOptions = {
 
   pages: {
     signIn: "/auth/login",
+    error: "/auth/signup",
   },
 };
 

@@ -1,14 +1,14 @@
 "use client";
 import { ToastProvider } from "@/context/ToastContext";
-import { Suspense } from "react";
+import { SessionProvider } from "next-auth/react";
 
-export default function AuthLayout({ children }) {
+export default function OnboardingLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Suspense fallback={<div>Loading...</div>}>
+        <SessionProvider>
         <ToastProvider>{children}</ToastProvider>
-        </Suspense>
+        </SessionProvider>
       </body>
     </html>
   );
