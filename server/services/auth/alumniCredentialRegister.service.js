@@ -49,7 +49,6 @@ const alumniCredentialRegisterService = async (name, email, password) => {
       password: hashedPassword,
     });
 
-    console.log("alumni", alumni);
     const token = await generateAuthToken(alumni._id, UserRole.ALUMNI);
     if (!token) {
       throw new ApiError(500, "Failed to generate authentication token");
