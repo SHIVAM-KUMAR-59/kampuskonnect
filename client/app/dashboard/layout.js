@@ -1,15 +1,14 @@
-"use client";
-
 import Sidebar from "@/component/Sidebar";
 import Topbar from "@/component/Topbar";
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="min-h-screen flex bg-neutral-100">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
+
+      <div className="flex flex-col flex-1">
         <Topbar />
-        <main className="flex-1 p-6">{children}</main>
+        <main className="p-6 md:p-8">{children}</main>
       </div>
     </div>
   );

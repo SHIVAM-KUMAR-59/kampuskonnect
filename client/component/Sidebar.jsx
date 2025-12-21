@@ -1,45 +1,37 @@
-"use client";
-
-import Link from "next/link";
-import { useSession } from "next-auth/react";
 import {
   LayoutDashboard,
   Users,
+  Calendar,
   User,
-  CalendarPlus,
+  LogOut,
 } from "lucide-react";
 
 export default function Sidebar() {
-  const { data: session } = useSession();
-  const role = session?.user?.role;
-
   return (
-    <aside className="w-64 bg-white border-r min-h-screen px-4 py-6">
-      <h2 className="text-xl font-semibold text-green-600 mb-8">
+    <aside className="w-64 bg-white border-r px-6 py-8 hidden md:block">
+      <h1 className="text-xl font-bold text-green-600 mb-10">
         KampusKonnect
-      </h2>
+      </h1>
 
       <nav className="space-y-2">
-        <SidebarItem icon={LayoutDashboard} label="Dashboard" href="/dashboard" />
-        <SidebarItem icon={Users} label="Connections" href="/dashboard/connections" />
-        <SidebarItem icon={User} label="Profile" href="/dashboard/profile" />
-
-        {role === "ALUMNI" && (
-          <SidebarItem icon={CalendarPlus} label="Post Event" href="/dashboard/events" />
-        )}
+        <Item icon={<LayoutDashboard />} label="Dashboard" />
+        <Item icon={<Users />} label="Connections" />
+        <Item icon={<Calendar />} label="Events" />
+        <Item icon={<User />} label="Profile" />
       </nav>
+
+      <div className="absolute bottom-8">
+        <Item icon={<LogOut />} label="Logout" />
+      </div>
     </aside>
   );
 }
 
-function SidebarItem({ icon: Icon, label, href }) {
+function Item({ icon, label }) {
   return (
-    <Link
-      href={href}
-      className="flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-600 hover:bg-green-50 hover:text-green-600 transition"
-    >
-      <Icon className="w-5 h-5" />
-      <span className="text-sm font-medium">{label}</span>
-    </Link>
+    <div className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-green-50 cursor-pointer">
+      {icon}
+      <span>{label}</span>
+    </div>
   );
 }

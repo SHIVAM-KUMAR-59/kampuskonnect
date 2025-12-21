@@ -1,24 +1,22 @@
-"use client";
-
-import { useSession, signOut } from "next-auth/react";
+import { Bell } from "lucide-react";
 
 export default function Topbar() {
-  const { data: session } = useSession();
-
   return (
-    <header className="h-16 bg-white border-b flex items-center justify-between px-6">
-      <p className="text-sm text-neutral-600">
-        {session?.user?.role === "STUDENT"
-          ? "Student Dashboard"
-          : "Alumni Dashboard"}
-      </p>
+    <header className="h-16 bg-white border-b px-6 flex items-center justify-between">
+      <h2 className="text-lg font-semibold text-gray-800">
+        Dashboard
+      </h2>
 
-      <button
-        onClick={() => signOut()}
-        className="text-sm text-red-500 hover:underline"
-      >
-        Logout
-      </button>
+      <div className="flex items-center gap-4">
+        <input
+          placeholder="Search mentors or events"
+          className="border rounded-lg px-3 py-1.5 text-sm focus:outline-none"
+        />
+
+        <Bell className="text-gray-600 cursor-pointer" />
+
+        <div className="w-9 h-9 bg-green-600 rounded-full" />
+      </div>
     </header>
   );
 }
