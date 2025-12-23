@@ -7,7 +7,7 @@ export default function DashboardLayout({ children }) {
       <Sidebar />
 
       <div className="flex flex-col flex-1">
-        <Topbar />
+        {/* <Topbar /> */}
         <main className="p-6 md:p-8">{children}</main>
       </div>
     </div>
