@@ -8,7 +8,9 @@ export default function DashboardLayout({ children }) {
 
       <div className="flex flex-col flex-1">
         <Topbar />
-        <main className="p-6 md:p-8">{children}</main>
+        <main className="px-4 py-6 md:px-8 md:py-10">
+          {children}
+        </main>
       </div>
     </div>
   );

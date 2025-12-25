@@ -1,10 +1,10 @@
 export default function StatCard({ label, value, context }) {
   return (
-    <div className="bg-white border rounded-xl px-6 py-7">
+    <div className="bg-white border border-gray-200 rounded-xl px-6 py-7">
       <p className="text-xs uppercase tracking-wide text-gray-400">
         {label}
       </p>
-      <p className="text-3xl font-semibold text-gray-900 mt-2">
+      <p className="text-2xl font-semibold text-gray-900 mt-2">
         {value}
       </p>
       {context && (

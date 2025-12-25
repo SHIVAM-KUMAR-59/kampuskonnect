@@ -10,7 +10,7 @@ export default function Topbar() {
       <div className="flex items-center gap-4">
         <input
           placeholder="Search mentors or events"
-          className="border rounded-lg px-3 py-1.5 text-sm focus:outline-none"
+          className="hidden md:block border rounded-lg px-3 py-1.5 text-sm focus:outline-none"
         />
 
         <Bell className="text-gray-600 cursor-pointer" />

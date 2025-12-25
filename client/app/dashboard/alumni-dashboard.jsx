@@ -5,7 +5,7 @@ import ProfileCard from "@/component/ProfileCard";
 
 export default function AlumniDashboard() {
   return (
-    <div className="space-y-14">
+    <div className="space-y-16">
       <PageIntro
         title="Welcome back, Shivam"
         subtitle="Your mentorship and experience are shaping the next generation of KIIT professionals."
@@ -22,24 +22,14 @@ export default function AlumniDashboard() {
         subtitle="Students seeking guidance aligned with your expertise"
       >
         <div className="space-y-4">
-          <ProfileCard
-            name="Rohan Singh"
-            role="B.Tech CSE"
-            org="3rd Year"
-            action="Accept"
-          />
-          <ProfileCard
-            name="Ananya Patel"
-            role="B.Tech IT"
-            org="Final Year"
-            action="Accept"
-          />
+          <ProfileCard name="Rohan Singh" role="B.Tech CSE" org="3rd Year" action="Accept" />
+          <ProfileCard name="Ananya Patel" role="B.Tech IT" org="Final Year" action="Accept" />
         </div>
       </SectionCard>
 
       <SectionCard
-        title="Your Recent Contributions"
-        subtitle="How you’ve engaged with the KIIT community"
+        title="Your Contributions"
+        subtitle="Recent engagement with the KIIT community"
       >
         <ul className="text-sm text-gray-600 space-y-2 list-disc pl-5">
           <li>Hosted alumni session on careers in Big Tech</li>
