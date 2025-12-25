@@ -12,7 +12,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    // Common fields
+    // Common
     phoneNumber: "",
     bio: "",
     linkedinUrl: "",
