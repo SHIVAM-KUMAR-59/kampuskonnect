@@ -51,7 +51,7 @@ const MatchedAlumnis = () => {
     return <ConnectionSkeleton />;
   }
 
-  if (!matches.length) {
+  if (!matches || !matches.length || matches.length === 0) {
     return (
       <div className="text-center py-16 text-gray-500">No alumni matched your interests yet.</div>
     );
@@ -111,12 +111,12 @@ const MatchedAlumnis = () => {
                 {match.experience} years experience
               </div>
 
-              <div className="flex items-center gap-2">
+              {match.linkedinUrl && <div className="flex items-center gap-2">
                 <Linkedin className="w-4 h-4" />
                 <Link href={match.linkedinUrl} className="max-w-sm truncate line-clamp-1">
                   {match.linkedinUrl}
                 </Link>
-              </div>
+              </div>}
             </div>
 
             {/* Action */}

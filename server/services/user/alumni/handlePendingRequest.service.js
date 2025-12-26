@@ -17,7 +17,8 @@ const handlePendingRequestService = async (action, requestId, user) => {
     if (!request) {
       throw new ApiError(404, "Request not found");
     }
-    if (request.status !== RequestStatus.PENDING || request.status !== RequestStatus.REJECTED) {
+
+    if (request.status !== RequestStatus.PENDING && request.status !== RequestStatus.REJECTED) {
       throw new ApiError(400, "Request already processed");
     }
 
