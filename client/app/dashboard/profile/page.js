@@ -105,7 +105,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <>
+    <main className="max-w-7xl mx-auto">
       <PageIntro
         title={<>
             <span className="flex flex-col md:flex-row md:items-center gap-3">Hello, {user.name.split(" ")[0]} {isAlumni && getVerificationStatus(user.verificationStatus)}</span>
@@ -262,6 +262,6 @@ export default function ProfilePage() {
           />
         </div>
       </SectionCard>
-    </>
+    </main>
   );
 }

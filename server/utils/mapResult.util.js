@@ -9,6 +9,7 @@ export const mapAlumni = (alumni) => {
     phoneNumber: alumni.phoneNumber,
     linkedinUrl: alumni.linkedinUrl,
     currentCompany: alumni.currentCompany,
+    experience: alumni.experience,
     passoutYear: alumni.passoutYear,
     branch: alumni.branch,
     skills: alumni.skills,
