@@ -22,19 +22,19 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const { success, error } = useToast();
 
-    const fetchUser = async () => {
-      try {
-        const res = await api.get("/user");
-        setUser(res.data.user);
-        setForm(res.data.user);
-        setSkills(res.data.user.skills || res.data.user.interests || []);
-      } catch (err) {
-        const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
-        error(errorMessage);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchUser = async () => {
+    try {
+      const res = await api.get("/user");
+      setUser(res.data.user);
+      setForm(res.data.user);
+      setSkills(res.data.user.skills || res.data.user.interests || []);
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
+      error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchUser();
   }, []);
@@ -42,8 +42,8 @@ export default function ProfilePage() {
   const isAlumni = user?.role === "ALUMNI";
 
   const isFormChanged = (original, updated) => {
-  return JSON.stringify(original) !== JSON.stringify(updated);
-};
+    return JSON.stringify(original) !== JSON.stringify(updated);
+  };
 
   const handleChange = (key, value) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -65,24 +65,24 @@ export default function ProfilePage() {
       return;
     } // minimum 1 skill
     setSkills((prev) => {
-    const updated = prev.filter((s) => s !== skill);
-    return updated;
-  });
+      const updated = prev.filter((s) => s !== skill);
+      return updated;
+    });
   };
 
   const handleSave = async () => {
     try {
-      setSaving(true)
+      setSaving(true);
       if (!isFormChanged(user, form) && !isFormChanged(user?.skills || user?.interests, skills)) {
         error("No changes made");
-        return
+        return;
       }
 
       const payload = {
-      ...form,
-      ...(isAlumni ? { skills } : { interests: skills }),
-    };
-      
+        ...form,
+        ...(isAlumni ? { skills } : { interests: skills }),
+      };
+
       await api.put(`${isAlumni ? "/alumni" : "/student"}/profile`, payload);
       success("Profile updated successfully");
       await fetchUser();
@@ -107,9 +107,14 @@ export default function ProfilePage() {
   return (
     <main className="max-w-7xl mx-auto">
       <PageIntro
-        title={<>
-            <span className="flex flex-col md:flex-row md:items-center gap-3">Hello, {user.name.split(" ")[0]} {isAlumni && getVerificationStatus(user.verificationStatus)}</span>
-          </>}
+        title={
+          <>
+            <span className="flex flex-col md:flex-row md:items-center gap-3">
+              Hello, {user.name.split(" ")[0]}{" "}
+              {isAlumni && getVerificationStatus(user.verificationStatus)}
+            </span>
+          </>
+        }
         subtitle="Manage, update, and personalize your profile."
       />
 
@@ -126,7 +131,7 @@ export default function ProfilePage() {
               className="rounded-full border"
             />
           ) : (
-            <div className="w-20 h-20 rounded-full flex items-center justify-center bg-green-50 text-green-700 border border-green-500" >
+            <div className="w-20 h-20 rounded-full flex items-center justify-center bg-green-50 text-green-700 border border-green-500">
               <p className="text-center text-2xl font-bold">{getAvatar(user.name)}</p>
             </div>
           )}
@@ -186,9 +191,10 @@ export default function ProfilePage() {
 
         {/* Meta */}
         <div className="mt-6 text-sm text-gray-600 flex flex-wrap gap-6">
-
           <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-700">{isAlumni ? "Skills" : "Interests"} (min 1, max 10)</label>
+            <label className="text-sm font-medium text-gray-700">
+              {isAlumni ? "Skills" : "Interests"} (min 1, max 10)
+            </label>
 
             {/* Skill Chips */}
             <div className="flex flex-wrap gap-2 mt-2">
@@ -258,7 +264,9 @@ export default function ProfilePage() {
                 "Save Changes"
               )
             }
-            classname={"w-full md:w-fit px-6 py-3 shadow-md hover:shadow-lg transition-all duration-200"}
+            classname={
+              "w-full md:w-fit px-6 py-3 shadow-md hover:shadow-lg transition-all duration-200"
+            }
           />
         </div>
       </SectionCard>
