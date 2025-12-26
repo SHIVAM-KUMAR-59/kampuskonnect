@@ -22,12 +22,12 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const { success, error } = useToast();
 
-      const fetchUser = async () => {
+    const fetchUser = async () => {
       try {
         const res = await api.get("/user");
         setUser(res.data.user);
         setForm(res.data.user);
-        setSkills(res.data.user.skills);
+        setSkills(res.data.user.skills || res.data.user.interests || []);
         console.log(res.data.user);
       } catch (err) {
         console.error(err);
@@ -55,7 +55,7 @@ export default function ProfilePage() {
       return;
     }
 
-    setSkills((prev) => [...prev, selectedSkill]);
+    setSkills((prev) => [...prev, selectedSkill.toUpperCase()]);
     setSelectedSkill("");
   };
 
@@ -64,19 +64,29 @@ export default function ProfilePage() {
       error(`You must have at least 1 ${isAlumni ? "skill" : "interest"}`);
       return;
     } // minimum 1 skill
-    setSkills((prev) => prev.filter((s) => s !== skill));
+    setSkills((prev) => {
+    const updated = prev.filter((s) => s !== skill);
+    console.log("Updated skills:", updated);
+    return updated;
+  });
   };
 
   const handleSave = async () => {
     try {
       setSaving(true)
-      if (!isFormChanged(user, form)) {
+      if (!isFormChanged(user, form) && !isFormChanged(user?.skills || user?.interests, skills)) {
         error("No changes made");
         return
       }
-      await api.put(`${isAlumni ? "/alumni" : "/student"}/profile`, form);
+
+      const payload = {
+      ...form,
+      ...(isAlumni ? { skills } : { interests: skills }),
+    };
+      
+      await api.put(`${isAlumni ? "/alumni" : "/student"}/profile`, payload);
       success("Profile updated successfully");
-      fetchUser();
+      await fetchUser();
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
@@ -99,7 +109,7 @@ export default function ProfilePage() {
     <>
       <PageIntro
         title={<>
-            <span className="flex flex-col md:flex-row md:items-center gap-3">Hello, {user.name.split(" ")[0]} {getVerificationStatus(user.verificationStatus)}</span>
+            <span className="flex flex-col md:flex-row md:items-center gap-3">Hello, {user.name.split(" ")[0]} {isAlumni && getVerificationStatus(user.verificationStatus)}</span>
           </>}
         subtitle="Manage, update, and personalize your profile."
       />
