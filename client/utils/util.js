@@ -24,3 +24,29 @@ export const getVerificationStatus = (status) => {
     );
   }
 };
+
+export const formatDate = (iso) =>
+  new Date(iso).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+export const formatDateWithDay = (iso) =>
+  new Date(iso).toLocaleDateString("en-IN", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+export const formatTime = (time) => {
+  const [h, m] = time.split(":");
+  const date = new Date();
+  date.setHours(h, m);
+  return date.toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};

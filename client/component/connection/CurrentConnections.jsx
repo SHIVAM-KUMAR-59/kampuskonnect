@@ -12,11 +12,11 @@ import PrimaryButton from "../PrimaryButton";
 
 const CurrentConnections = ({ role }) => {
   const [connections, setConnections] = useState([]);
-  const [fetching, setFetching] = useState(false)
-  const { error } = useToast()
+  const [fetching, setFetching] = useState(false);
+  const { error } = useToast();
   const fetchConnections = async () => {
     try {
-      setFetching(true)
+      setFetching(true);
       const response = await api.get(`/${role}/connections`);
       setConnections(response.data.connections);
       console.log(response.data);
@@ -24,7 +24,7 @@ const CurrentConnections = ({ role }) => {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
     } finally {
-        setFetching(false)
+      setFetching(false);
     }
   };
 
@@ -33,19 +33,21 @@ const CurrentConnections = ({ role }) => {
   }, []);
 
   if (fetching) {
-    <ConnectionSkeleton/>
+    <ConnectionSkeleton />;
   }
 
-     if (!connections || !connections.length || connections.length === 0) {
-      return (
-        <div className="text-center py-16 text-gray-500">
-          You have no connections yet, connect with an alumni to grow your network.
-        </div>
-      );
-    }
+  if (!connections || !connections.length || connections.length === 0) {
+    return (
+      <div className="text-center py-16 text-gray-500">
+        You have no connections yet, connect with an alumni to grow your network.
+      </div>
+    );
+  }
   return (
     <section className="space-y-6 mt-8">
-      <h1 className="text-2xl font-semibold text-gray-900">You have {connections.length} Connections</h1>
+      <h1 className="text-2xl font-semibold text-gray-900">
+        You have {connections.length} Connections
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {connections.map((connection) => (
           <div
@@ -75,49 +77,58 @@ const CurrentConnections = ({ role }) => {
             </div>
 
             {/* Bio */}
-            {connection.bio && <p className="text-sm text-gray-600 mt-3 line-clamp-3">{connection.bio}</p>}
+            {connection.bio && (
+              <p className="text-sm text-gray-600 mt-3 line-clamp-3">{connection.bio}</p>
+            )}
 
             {/* Meta */}
             <div className="mt-4 space-y-2 text-sm text-gray-600">
-              {connection.role === "ALUMNI" && <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                Passout Year: {connection.passoutYear}
-              </div>}
+              {connection.role === "ALUMNI" && (
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Passout Year: {connection.passoutYear}
+                </div>
+              )}
 
-              {connection.role === "ALUMNI" && <div className="flex items-center gap-2">
-                <Briefcase className="w-4 h-4" />
-                {connection.currentCompany || "Not specified"}
-              </div>}
+              {connection.role === "ALUMNI" && (
+                <div className="flex items-center gap-2">
+                  <Briefcase className="w-4 h-4" />
+                  {connection.currentCompany || "Not specified"}
+                </div>
+              )}
 
-             {connection.role === "ALUMNI" && <div className="flex items-center gap-2">
-                <UserPlus className="w-4 h-4" />
-                {connection.experience} years experience
-              </div>}
+              {connection.role === "ALUMNI" && (
+                <div className="flex items-center gap-2">
+                  <UserPlus className="w-4 h-4" />
+                  {connection.experience} years experience
+                </div>
+              )}
 
-              {connection.linkedinUrl && <div className="flex items-center gap-2">
-                <Linkedin className="w-4 h-4" />
-                <Link href={connection.linkedinUrl} className="max-w-sm truncate line-clamp-1">
-                  {connection.linkedinUrl}
-                </Link>
-              </div>}
-              
-              {connection.role === "STUDENT" && <div className="flex flex-wrap gap-2 mt-2">
-              {connection.interests.map((interest, idx) => (
-                <span
-                  key={idx}
-                  className="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm border border-green-200"
-                >
-                  {interest}
-                </span>
-              ))}
-            </div>}
+              {connection.linkedinUrl && (
+                <div className="flex items-center gap-2">
+                  <Linkedin className="w-4 h-4" />
+                  <Link href={connection.linkedinUrl} className="max-w-sm truncate line-clamp-1">
+                    {connection.linkedinUrl}
+                  </Link>
+                </div>
+              )}
+
+              {connection.role === "STUDENT" && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {connection.interests.map((interest, idx) => (
+                    <span
+                      key={idx}
+                      className="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm border border-green-200"
+                    >
+                      {interest}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Action */}
-            <PrimaryButton
-              classname={`mt-5 w-full py-2.5 rounded-xl transition`}
-              text="Message"
-            />
+            <PrimaryButton classname={`mt-5 w-full py-2.5 rounded-xl transition`} text="Message" />
           </div>
         ))}
       </div>

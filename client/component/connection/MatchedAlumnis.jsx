@@ -111,12 +111,14 @@ const MatchedAlumnis = () => {
                 {match.experience} years experience
               </div>
 
-              {match.linkedinUrl && <div className="flex items-center gap-2">
-                <Linkedin className="w-4 h-4" />
-                <Link href={match.linkedinUrl} className="max-w-sm truncate line-clamp-1">
-                  {match.linkedinUrl}
-                </Link>
-              </div>}
+              {match.linkedinUrl && (
+                <div className="flex items-center gap-2">
+                  <Linkedin className="w-4 h-4" />
+                  <Link href={match.linkedinUrl} className="max-w-sm truncate line-clamp-1">
+                    {match.linkedinUrl}
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Action */}

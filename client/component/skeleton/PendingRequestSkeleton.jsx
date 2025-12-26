@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const PendingRequestSkeleton = () => {
   return (
@@ -22,14 +22,14 @@ const PendingRequestSkeleton = () => {
             <div className="h-5 w-32 bg-gray-200 rounded-md" />
             <div className="h-5 w-32 bg-gray-200 rounded-md" />
             <div className="flex gap-3">
-            <div className="h-10 w-36 bg-gray-200 rounded-md" />
-            <div className="h-10 w-36 bg-gray-200 rounded-md" />
+              <div className="h-10 w-36 bg-gray-200 rounded-md" />
+              <div className="h-10 w-36 bg-gray-200 rounded-md" />
             </div>
           </div>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PendingRequestSkeleton
+export default PendingRequestSkeleton;

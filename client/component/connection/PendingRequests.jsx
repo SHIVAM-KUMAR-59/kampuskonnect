@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import api from "@/utils/axios";
 import React, { useEffect, useState } from "react";
@@ -13,27 +13,27 @@ const PendingRequests = () => {
   const [fetching, setFetching] = useState(false);
   const [handlingRequest, sethandlingRequest] = useState({
     acceptingRequest: false,
-    rejectingRequest: false
+    rejectingRequest: false,
   });
   const [pendingRequests, setPendingRequests] = useState([]);
-  const { success, error } = useToast()
+  const { success, error } = useToast();
 
   const fetchPendingRequests = async () => {
     try {
-      setFetching(true)
-      const response = await api.get("/alumni/requests")
-      console.log(response)
-      setPendingRequests(response.data.requests)
+      setFetching(true);
+      const response = await api.get("/alumni/requests");
+      console.log(response);
+      setPendingRequests(response.data.requests);
     } catch (err) {
       console.error(err);
     } finally {
-      setFetching(false)
+      setFetching(false);
     }
   };
 
   useEffect(() => {
     fetchPendingRequests();
-  }, [])
+  }, []);
 
   const handleRequest = async (requestId, action) => {
     try {
@@ -42,18 +42,18 @@ const PendingRequests = () => {
         await api.patch("/alumni/requests/handle", {
           requestId,
           action,
-        })
-        success("Request accepted successfully")
+        });
+        success("Request accepted successfully");
       } else if (action === "REJECTED") {
         sethandlingRequest({ ...handlingRequest, rejectingRequest: true });
         await api.patch("/alumni/requests/handle", {
           requestId,
           action,
-        })
-        success("Request rejected successfully")
-      }else {
-        error("Invalid action")
-        return
+        });
+        success("Request rejected successfully");
+      } else {
+        error("Invalid action");
+        return;
       }
 
       fetchPendingRequests();
@@ -63,20 +63,14 @@ const PendingRequests = () => {
     } finally {
       sethandlingRequest({ acceptingRequest: false, rejectingRequest: false });
     }
-  }
+  };
 
   if (fetching) {
-    return (
-     <PendingRequestSkeleton/>
-    )
+    return <PendingRequestSkeleton />;
   }
 
   if (!pendingRequests || !pendingRequests.length || pendingRequests.length === 0) {
-    return (
-      <div className="text-center py-16 text-gray-500">
-        You have no pending requests
-      </div>
-    );
+    return <div className="text-center py-16 text-gray-500">You have no pending requests</div>;
   }
   return (
     <section className="space-y-6 mt-8">
@@ -113,21 +107,28 @@ const PendingRequests = () => {
             </div>
 
             {/* Bio */}
-            {request.sender.bio && <p className="text-sm text-gray-600 mt-3 line-clamp-3">{request.sender.bio}</p>}
+            {request.sender.bio && (
+              <p className="text-sm text-gray-600 mt-3 line-clamp-3">{request.sender.bio}</p>
+            )}
 
             {/* Meta */}
             <div className="mt-4 space-y-2 text-sm text-gray-600">
               <div className="flex items-center gap-2">
                 <Linkedin className="w-4 h-4" />
                 {request.sender.linkedinUrl ? (
-                  <Link href={request.sender.linkedinUrl} className="max-w-sm truncate line-clamp-1">{request.sender.linkedinUrl}</Link>
+                  <Link
+                    href={request.sender.linkedinUrl}
+                    className="max-w-sm truncate line-clamp-1"
+                  >
+                    {request.sender.linkedinUrl}
+                  </Link>
                 ) : (
                   "Not Specified"
                 )}
               </div>
             </div>
 
-             <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {request.sender.interests.map((interest, idx) => (
                 <span
                   key={idx}
@@ -141,18 +142,35 @@ const PendingRequests = () => {
             {/* Action */}
             <div className="flex flex-col md:flex-row gap-3 items-center mt-5 w-full">
               <PrimaryButton
-              disabled={handlingRequest.acceptingRequest || handlingRequest.rejectingRequest}
-              onClick={() => handleRequest(request.id, "ACCEPTED")}
-              classname={`w-full px-5 py-2.5 rounded-xl transition`}
-              text={handlingRequest.acceptingRequest ? <>Processing... <Loader2 className="animate-spin" /></> : "Accept"}
-            />
+                disabled={handlingRequest.acceptingRequest || handlingRequest.rejectingRequest}
+                onClick={() => handleRequest(request.id, "ACCEPTED")}
+                classname={`w-full px-5 py-2.5 rounded-xl transition`}
+                text={
+                  handlingRequest.acceptingRequest ? (
+                    <>
+                      Processing... <Loader2 className="animate-spin" />
+                    </>
+                  ) : (
+                    "Accept"
+                  )
+                }
+              />
 
-            <button disabled={handlingRequest.acceptingRequest || handlingRequest.rejectingRequest} onClick={() => handleRequest(request.id, "REJECT")} className="w-full px-5 py-2.5 rounded-xl border border-red-600 text-red-600 font-medium hover:bg-red-100 hover:cursor-pointer transition-all duration-200">
-            {handlingRequest.rejectingRequest ? <>Processing... <Loader2 className="animate-spin" /></> : "REJECTED"}
-          </button>
+              <button
+                disabled={handlingRequest.acceptingRequest || handlingRequest.rejectingRequest}
+                onClick={() => handleRequest(request.id, "REJECT")}
+                className="w-full px-5 py-2.5 rounded-xl border border-red-600 text-red-600 font-medium hover:bg-red-100 hover:cursor-pointer transition-all duration-200"
+              >
+                {handlingRequest.rejectingRequest ? (
+                  <>
+                    Processing... <Loader2 className="animate-spin" />
+                  </>
+                ) : (
+                  "REJECTED"
+                )}
+              </button>
             </div>
           </div>
-          
         ))}
       </div>
     </section>
