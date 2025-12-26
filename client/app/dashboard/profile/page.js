@@ -28,9 +28,9 @@ export default function ProfilePage() {
         setUser(res.data.user);
         setForm(res.data.user);
         setSkills(res.data.user.skills || res.data.user.interests || []);
-        console.log(res.data.user);
       } catch (err) {
-        console.error(err);
+        const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
+        error(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -66,7 +66,6 @@ export default function ProfilePage() {
     } // minimum 1 skill
     setSkills((prev) => {
     const updated = prev.filter((s) => s !== skill);
-    console.log("Updated skills:", updated);
     return updated;
   });
   };
