@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const PendingRequests = () => {
-  return (
-    <div>PendingRequests</div>
-  )
-}
+  return <div>PendingRequests</div>;
+};
 
-export default PendingRequests
+export default PendingRequests;

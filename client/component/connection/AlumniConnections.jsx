@@ -26,14 +26,12 @@ const AlumniConnections = () => {
       </div>
 
       <Activity mode={activeTab === "current" ? "visible" : "hidden"}>
-  <CurrentConnections role={"alumni"} />
-</Activity>
+        <CurrentConnections role={"alumni"} />
+      </Activity>
 
-<Activity mode={activeTab === "pending" ? "visible" : "hidden"}>
-  <PendingRequests />
-</Activity>
-
-      
+      <Activity mode={activeTab === "pending" ? "visible" : "hidden"}>
+        <PendingRequests />
+      </Activity>
     </SectionCard>
   );
 };

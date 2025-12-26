@@ -32,11 +32,7 @@ const MatchedAlumnis = () => {
     try {
       setSendingId(alumniId);
       await api.post(`/student/connect/${alumniId}`);
-      setMatches((prev) =>
-        prev.map((m) =>
-          m._id === alumniId ? { ...m, requested: true } : m
-        )
-      );
+      setMatches((prev) => prev.map((m) => (m._id === alumniId ? { ...m, requested: true } : m)));
       success("Request sent successfully");
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
@@ -52,16 +48,12 @@ const MatchedAlumnis = () => {
   }, []);
 
   if (loading) {
-    return (
-      <ConnectionSkeleton/>
-    );
+    return <ConnectionSkeleton />;
   }
 
   if (!matches.length) {
     return (
-      <div className="text-center py-16 text-gray-500">
-        No alumni matched your interests yet.
-      </div>
+      <div className="text-center py-16 text-gray-500">No alumni matched your interests yet.</div>
     );
   }
 
@@ -100,11 +92,7 @@ const MatchedAlumnis = () => {
             </div>
 
             {/* Bio */}
-            {match.bio && (
-              <p className="text-sm text-gray-600 mt-3 line-clamp-3">
-                {match.bio}
-              </p>
-            )}
+            {match.bio && <p className="text-sm text-gray-600 mt-3 line-clamp-3">{match.bio}</p>}
 
             {/* Meta */}
             <div className="mt-4 space-y-2 text-sm text-gray-600">
@@ -125,7 +113,9 @@ const MatchedAlumnis = () => {
 
               <div className="flex items-center gap-2">
                 <Linkedin className="w-4 h-4" />
-                <Link href={match.linkedinUrl} className="max-w-sm truncate line-clamp-1">{match.linkedinUrl}</Link>
+                <Link href={match.linkedinUrl} className="max-w-sm truncate line-clamp-1">
+                  {match.linkedinUrl}
+                </Link>
               </div>
             </div>
 
@@ -134,10 +124,9 @@ const MatchedAlumnis = () => {
               disabled={match.requested || sendingId === match.id}
               onClick={() => sendRequest(match.id)}
               classname={`mt-5 w-full py-2.5 rounded-xl transition
-                ${
-                  match.requested && "bg-gray-100 text-gray-400 cursor-not-allowed"}
+                ${match.requested && "bg-gray-100 text-gray-400 cursor-not-allowed"}
               `}
-              text = {
+              text={
                 sendingId === match.id ? (
                   <span className="flex items-center justify-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" />

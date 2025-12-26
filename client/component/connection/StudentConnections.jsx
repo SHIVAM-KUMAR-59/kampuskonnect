@@ -26,13 +26,11 @@ const StudentConnections = () => {
       </div>
 
       <Activity mode={activeTab === "match" ? "visible" : "hidden"}>
-  <MatchedAlumnis />
-</Activity>
+        <MatchedAlumnis />
+      </Activity>
       <Activity mode={activeTab === "current" ? "visible" : "hidden"}>
-  <CurrentConnections role={"student"} />
-</Activity>
-
-      
+        <CurrentConnections role={"student"} />
+      </Activity>
     </SectionCard>
   );
 };
