@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 export default function PageIntro({ title, subtitle }) {
   return (
@@ -8,5 +8,5 @@ export default function PageIntro({ title, subtitle }) {
         <p className="text-lg text-gray-600 leading-relaxed max-w-2xl font-light">{subtitle}</p>
       </div>
     </div>
-  )
+  );
 }

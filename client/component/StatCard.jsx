@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 export default function StatCard({ label, value, context }) {
   return (
@@ -14,5 +14,5 @@ export default function StatCard({ label, value, context }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

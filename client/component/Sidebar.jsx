@@ -1,29 +1,30 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { LayoutDashboard, Users, Calendar, User, LogOut, Menu, X } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { LayoutDashboard, Users, Calendar, User, LogOut, Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import PrimaryButton from "./PrimaryButton";
 
 export default function Sidebar({ onLogout }) {
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-    { label: "Connections", icon: Users, href: "/connections" },
-    { label: "Events", icon: Calendar, href: "/events" },
-    { label: "Profile", icon: User, href: "/profile" },
-  ]
+    { label: "Connections", icon: Users, href: "/dashboard/connections" },
+    { label: "Events", icon: Calendar, href: "/dashboard/events" },
+    { label: "Profile", icon: User, href: "/dashboard/profile" },
+  ];
 
   const handleNavClick = (href) => {
-    router.push(href)
-    setIsOpen(false)
-  }
+    router.push(href);
+    setIsOpen(false);
+  };
 
   const handleLogout = () => {
-    onLogout?.()
-    setIsOpen(false)
-  }
+    onLogout?.();
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function Sidebar({ onLogout }) {
         }`}
       >
         {/* Logo/Brand */}
-        <div className="px-6 py-6 border-b border-gray-200 flex-shrink-0">
+        <div className="px-6 py-6 border-b border-gray-200 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
               KK
@@ -65,34 +66,37 @@ export default function Sidebar({ onLogout }) {
         {/* Navigation Items */}
         <nav className="px-4 py-6 space-y-2 flex-1 overflow-y-auto">
           {navItems.map((item) => {
-            const Icon = item.icon
+            const Icon = item.icon;
             return (
               <button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 hover:text-green-700 hover:bg-green-50 text-left group"
               >
-                <Icon className="w-5 h-5 flex-shrink-0 group-hover:text-green-600 transition-colors duration-200" />
+                <Icon className="w-5 h-5 shrink-0 group-hover:text-green-600 transition-colors duration-200" />
                 <span className="text-sm font-medium">{item.label}</span>
               </button>
-            )
+            );
           })}
         </nav>
 
         {/* Signout Button - Sticky at Bottom */}
-        <div className="p-4 border-t border-gray-200 bg-gray-50 flex-shrink-0">
-          <button
+        <div className="p-4 border-t border-gray-200 bg-gray-50 shrink-0">
+          <PrimaryButton
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-all duration-200 shadow-md hover:shadow-lg"
-          >
-            <LogOut className="w-5 h-5 flex-shrink-0" />
-            <span className="text-sm">Sign Out</span>
-          </button>
+            classname={"w-full gap-2 px-4 py-3 shadow-md hover:shadow-lg"}
+            text={
+              <>
+                <LogOut className="w-5 h-5 shrink-0" />
+                <span className="text-sm">Sign Out</span>
+              </>
+            }
+          />
         </div>
       </aside>
 
       {/* Spacer for lg screens */}
-      <div className="hidden lg:block w-64 flex-shrink-0" />
+      <div className="hidden lg:block w-64 shrink-0" />
     </>
-  )
+  );
 }

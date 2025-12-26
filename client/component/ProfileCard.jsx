@@ -1,15 +1,16 @@
-import { ChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react";
+import PrimaryButton from "./PrimaryButton";
 
 export default function ProfileCard({ name, role, org, skills = [], action }) {
   return (
     <div className="group cursor-pointer animate-in fade-in duration-300">
       <div className="relative bg-white border border-gray-200 rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:border-green-300 hover:shadow-lg hover:scale-105 hover:-translate-y-1">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-linear-to-r from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute top-0 right-0 w-24 h-24 bg-green-100 rounded-full -mr-12 -mt-12 opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
 
         <div className="relative flex justify-between items-start gap-4">
           <div className="flex gap-4 flex-1">
-            <div className="w-14 h-14 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg transition-transform duration-300 group-hover:scale-110">
+            <div className="w-14 h-14 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-lg transition-transform duration-300 group-hover:scale-110">
               {name[0]}
             </div>
 
@@ -35,13 +36,31 @@ export default function ProfileCard({ name, role, org, skills = [], action }) {
           </div>
 
           {action && (
-            <button className="flex items-center gap-0 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0 hover:gap-1">
-              <span>{action}</span>
-              <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </button>
+            <PrimaryButton
+              classname="px-4 py-2.5 font-semibold text-sm shadow-md hover:shadow-lg group relative overflow-hidden"
+              text={
+                <div className="relative flex items-center">
+                  <span className="transition-transform duration-300 group-hover:-translate-x-1">
+                    {action}
+                  </span>
+
+                  <ChevronRight
+                    className="
+            absolute -right-3
+            w-4 h-4
+            opacity-0
+            translate-x-8
+            transition-all duration-300
+            group-hover:opacity-100
+            group-hover:translate-x-0
+          "
+                  />
+                </div>
+              }
+            />
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -3,12 +3,22 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Loader2, User, Briefcase, Heart, ArrowLeft, ArrowRight, Check, Sparkles, ChevronDown } from "lucide-react";
+import {
+  Loader2,
+  User,
+  Briefcase,
+  Heart,
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Sparkles,
+  ChevronDown,
+} from "lucide-react";
 
 export default function OnboardingPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  
+
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,11 +27,11 @@ export default function OnboardingPage() {
     bio: "",
     linkedinUrl: "",
     branch: "",
-    
+
     // Student specific
     graduationYear: "",
     interests: [],
-    
+
     // Alumni specific
     currentCompany: "",
     passoutYear: "",
@@ -41,17 +51,7 @@ export default function OnboardingPage() {
   const totalSteps = 3;
 
   // Branches available
-  const branches = [
-    "CSE",
-    "CSCE", 
-    "CSSE",
-    "ECE",
-    "EEE",
-    "MECH",
-    "CIVIL",
-    "IT",
-    "OTHER"
-  ];
+  const branches = ["CSE", "CSCE", "CSSE", "ECE", "EEE", "MECH", "CIVIL", "IT", "OTHER"];
 
   // Domain/Skills options
   const domainOptions = [
@@ -78,7 +78,7 @@ export default function OnboardingPage() {
     "Business Analytics",
     "Product Management",
     "Digital Marketing",
-    "Content Writing"
+    "Content Writing",
   ];
 
   // Redirect if not authenticated
@@ -89,16 +89,16 @@ export default function OnboardingPage() {
   }, [status, router]);
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const toggleSelection = (field, value) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const current = prev[field] || [];
       const isSelected = current.includes(value);
-      
+
       if (isSelected) {
-        return { ...prev, [field]: current.filter(item => item !== value) };
+        return { ...prev, [field]: current.filter((item) => item !== value) };
       } else {
         const limit = field === "interests" ? 5 : 10;
         if (current.length >= limit) return prev;
@@ -109,11 +109,11 @@ export default function OnboardingPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       // Redirect to dashboard
       router.push("/dashboard");
     } catch (error) {
@@ -173,7 +173,7 @@ export default function OnboardingPage() {
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-40 h-40 bg-green-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-100/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-        
+
         <div className="relative z-10">
           {/* Header */}
           <div className="mb-8 text-center">
@@ -189,7 +189,7 @@ export default function OnboardingPage() {
               </h1>
             </div>
             <p className="text-base sm:text-lg text-neutral-600 mt-2 leading-relaxed">
-              {isStudent 
+              {isStudent
                 ? "Let's set up your profile to connect with amazing alumni"
                 : "Help students discover your expertise and experience"}
             </p>
@@ -203,8 +203,12 @@ export default function OnboardingPage() {
           {/* Progress Bar */}
           <div className="mb-10">
             <div className="flex justify-between items-center text-sm font-medium text-neutral-500 mb-3">
-              <span>Step {step} of {totalSteps}</span>
-              <span className="text-green-600">{Math.round((step / totalSteps) * 100)}% Complete</span>
+              <span>
+                Step {step} of {totalSteps}
+              </span>
+              <span className="text-green-600">
+                {Math.round((step / totalSteps) * 100)}% Complete
+              </span>
             </div>
             <div className="h-2.5 w-full bg-neutral-100 rounded-full overflow-hidden">
               <div
@@ -232,8 +236,8 @@ export default function OnboardingPage() {
                     <select
                       value={formData.branch}
                       onChange={(e) => handleInputChange("branch", e.target.value)}
-                      onFocus={() => setIsSelectOpen(prev => ({ ...prev, branch: true }))}
-                      onBlur={() => setIsSelectOpen(prev => ({ ...prev, branch: false }))}
+                      onFocus={() => setIsSelectOpen((prev) => ({ ...prev, branch: true }))}
+                      onBlur={() => setIsSelectOpen((prev) => ({ ...prev, branch: false }))}
                       className="w-full border-2 border-neutral-200 rounded-xl px-4 py-3.5 pr-12 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all appearance-none bg-white text-neutral-800 font-medium cursor-pointer"
                     >
                       <option value="">Select your branch</option>
@@ -243,7 +247,7 @@ export default function OnboardingPage() {
                         </option>
                       ))}
                     </select>
-                    <ChevronDown 
+                    <ChevronDown
                       className={`absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500 pointer-events-none transition-transform duration-200`}
                     />
                   </div>
@@ -318,20 +322,26 @@ export default function OnboardingPage() {
                         <select
                           value={formData.graduationYear}
                           onChange={(e) => handleInputChange("graduationYear", e.target.value)}
-                          onFocus={() => setIsSelectOpen(prev => ({ ...prev, graduationYear: true }))}
-                          onBlur={() => setIsSelectOpen(prev => ({ ...prev, graduationYear: false }))}
+                          onFocus={() =>
+                            setIsSelectOpen((prev) => ({ ...prev, graduationYear: true }))
+                          }
+                          onBlur={() =>
+                            setIsSelectOpen((prev) => ({ ...prev, graduationYear: false }))
+                          }
                           className="w-full border-2 border-neutral-200 rounded-xl px-4 py-3.5 pr-12 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all appearance-none bg-white text-neutral-800 font-medium cursor-pointer"
                         >
                           <option value="">Select year</option>
-                          {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i).map((year) => (
-                            <option key={year} value={year}>
-                              {year}
-                            </option>
-                          ))}
+                          {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i).map(
+                            (year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            )
+                          )}
                         </select>
-                        <ChevronDown 
+                        <ChevronDown
                           className={`absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500 pointer-events-none transition-transform duration-200 ${
-                            isSelectOpen.graduationYear ? 'rotate-180' : ''
+                            isSelectOpen.graduationYear ? "rotate-180" : ""
                           }`}
                         />
                       </div>
@@ -360,20 +370,26 @@ export default function OnboardingPage() {
                         <select
                           value={formData.passoutYear}
                           onChange={(e) => handleInputChange("passoutYear", e.target.value)}
-                          onFocus={() => setIsSelectOpen(prev => ({ ...prev, passoutYear: true }))}
-                          onBlur={() => setIsSelectOpen(prev => ({ ...prev, passoutYear: false }))}
+                          onFocus={() =>
+                            setIsSelectOpen((prev) => ({ ...prev, passoutYear: true }))
+                          }
+                          onBlur={() =>
+                            setIsSelectOpen((prev) => ({ ...prev, passoutYear: false }))
+                          }
                           className="w-full border-2 border-neutral-200 rounded-xl px-4 py-3.5 pr-12 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all appearance-none bg-white text-neutral-800 font-medium cursor-pointer"
                         >
                           <option value="">Select year</option>
-                          {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map((year) => (
-                            <option key={year} value={year}>
-                              {year}
-                            </option>
-                          ))}
+                          {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(
+                            (year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            )
+                          )}
                         </select>
-                        <ChevronDown 
+                        <ChevronDown
                           className={`absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500 pointer-events-none transition-transform duration-200 ${
-                            isSelectOpen.passoutYear ? 'rotate-180' : ''
+                            isSelectOpen.passoutYear ? "rotate-180" : ""
                           }`}
                         />
                       </div>
@@ -420,17 +436,15 @@ export default function OnboardingPage() {
                     {isStudent ? "Areas of Interest" : "Your Expertise"}
                   </h2>
                   <p className="text-sm text-neutral-500 mb-2">
-                    {isStudent 
+                    {isStudent
                       ? "Select domains you're passionate about"
-                      : "Showcase your professional skills"
-                    }
+                      : "Showcase your professional skills"}
                   </p>
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full">
                     <span className="text-sm font-medium text-green-700">
-                      {isStudent 
+                      {isStudent
                         ? `${formData.interests.length}/5 selected`
-                        : `${formData.skills.length}/10 selected`
-                      }
+                        : `${formData.skills.length}/10 selected`}
                     </span>
                   </div>
                   {!isStudent && formData.skills.length === 0 && (
@@ -442,7 +456,7 @@ export default function OnboardingPage() {
                   {domainOptions.map((domain) => {
                     const field = isStudent ? "interests" : "skills";
                     const isSelected = formData[field].includes(domain);
-                    
+
                     return (
                       <button
                         key={domain}
@@ -455,14 +469,14 @@ export default function OnboardingPage() {
                         }`}
                       >
                         <span className={isSelected ? "font-semibold" : ""}>{domain}</span>
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                          isSelected 
-                            ? "border-green-500 bg-green-500" 
-                            : "border-neutral-300 group-hover:border-green-300"
-                        }`}>
-                          {isSelected && (
-                            <Check className="w-4 h-4 text-white" />
-                          )}
+                        <div
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                            isSelected
+                              ? "border-green-500 bg-green-500"
+                              : "border-neutral-300 group-hover:border-green-300"
+                          }`}
+                        >
+                          {isSelected && <Check className="w-4 h-4 text-white" />}
                         </div>
                       </button>
                     );

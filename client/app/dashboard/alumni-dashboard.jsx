@@ -1,9 +1,9 @@
-"use client"
-import PageIntro from "@/component/PageIntro"
-import StatCard from "@/component/StatCard"
-import SectionCard from "@/component/SectionCard"
-import ProfileCard from "@/component/ProfileCard"
-import Sidebar from "@/component/Sidebar"
+"use client";
+import PageIntro from "@/component/PageIntro";
+import StatCard from "@/component/StatCard";
+import SectionCard from "@/component/SectionCard";
+import ProfileCard from "@/component/ProfileCard";
+import Sidebar from "@/component/Sidebar";
 
 export default function AlumniDashboard() {
   return (
@@ -38,7 +38,10 @@ export default function AlumniDashboard() {
 
             {/* Mentorship Requests Section */}
             <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
-              <SectionCard title="Mentorship Requests" subtitle="Students seeking guidance aligned with your expertise">
+              <SectionCard
+                title="Mentorship Requests"
+                subtitle="Students seeking guidance aligned with your expertise"
+              >
                 <div className="space-y-4">
                   <div className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
                     <ProfileCard
@@ -64,7 +67,10 @@ export default function AlumniDashboard() {
 
             {/* Recent Contributions Section */}
             <div className="animate-fade-in" style={{ animationDelay: "0.7s" }}>
-              <SectionCard title="Your Recent Contributions" subtitle="How you've engaged with the KIIT community">
+              <SectionCard
+                title="Your Recent Contributions"
+                subtitle="How you've engaged with the KIIT community"
+              >
                 <ul className="text-base text-gray-700 space-y-3 list-none">
                   {[
                     "Hosted alumni session on careers in Big Tech",
@@ -87,5 +93,5 @@ export default function AlumniDashboard() {
         </div>
       </main>
     </div>
-  )
+  );
 }

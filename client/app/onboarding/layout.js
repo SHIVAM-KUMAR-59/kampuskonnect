@@ -7,7 +7,7 @@ export default function OnboardingLayout({ children }) {
     <html lang="en">
       <body>
         <SessionProvider>
-        <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>{children}</ToastProvider>
         </SessionProvider>
       </body>
     </html>

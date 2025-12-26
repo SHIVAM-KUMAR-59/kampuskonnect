@@ -124,7 +124,6 @@ export default function Home() {
           <p className="text-gray-600">Choose how you want to continue</p>
         </div>
 
-
         {/* Login Section */}
         {!showStudentRegister && !showAlumniRegister && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">

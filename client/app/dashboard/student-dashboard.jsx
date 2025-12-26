@@ -13,9 +13,13 @@ export default function StudentDashboard() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <StatCard label="Available Mentors" value="42" context="Across domains" />
-        <StatCard label="Upcoming Events" value="6" context="Next 30 days" />
-        <StatCard label="Your Interests" value="5" context="Used for matching" />
+        <StatCard label="Your Connections" value="42" context="Across domains" />
+        <StatCard
+          label="Upcoming Events"
+          value="6"
+          context="Workshops, talks, and alumni sessions"
+        />
+        <StatCard label="Pending Requests" value="5" context="Connect with people" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -43,16 +47,11 @@ export default function StudentDashboard() {
           </SectionCard>
         </div>
 
-        <SectionCard
-          title="Upcoming Events"
-          subtitle="Workshops, talks, and alumni sessions"
-        >
+        <SectionCard title="Upcoming Events" subtitle="Workshops, talks, and alumni sessions">
           <div className="space-y-3">
             <EventCard title="Alumni Tech Talk" date="25 Sept 2025" />
             <EventCard title="Resume Review Workshop" date="2 Oct 2025" />
-            <p className="text-sm text-green-700 cursor-pointer">
-              View all events →
-            </p>
+            <p className="text-sm text-green-700 cursor-pointer">View all events →</p>
           </div>
         </SectionCard>
       </div>
