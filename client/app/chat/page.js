@@ -7,6 +7,7 @@ import { mockMessages } from "@/component/chat/mockData";
 import api from "@/utils/axios";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/context/ToastContext";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [selectedChat, setSelectedChat] = useState(null);
@@ -17,6 +18,7 @@ export default function Page() {
   const [connections, setConnections] = useState([]);
   const [fetching, setFetching] = useState(false);
   const { error } = useToast();
+  const router = useRouter();
 
   const fetchData = async () => {
     try {
@@ -27,13 +29,31 @@ export default function Page() {
       ]);
       setConversations(conversationsRes.data.chats);
       setConnections(connectionsRes.data.connections);
-      console.log("data", conversationsRes.data, connectionsRes.data);
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
     } finally {
       setFetching(false);
     }
+  };
+
+  const handleStartChat = async (user) => {
+    try {
+      const response = await api.post("/chat", {
+        targetUserId: user.id,
+        targetUserRole: user.role, 
+      })
+      console.log(response.data);
+      router.push(`/chat/${response.data.chat.id}`);
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
+      error(errorMessage);
+    }
+  }
+
+  const handleSelectChat = (chatId) => {
+    console.log(chatId);
+    router.push(`/chat/${chatId}`);
   };
 
   useEffect(() => {
@@ -53,8 +73,9 @@ export default function Page() {
         setShowSearch={setShowSearch}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        onSelectChat={setSelectedChat}
-        onStartChat={(user) => setSelectedChat({ user, lastMessage: null })}
+        onSelectChat={handleSelectChat}
+        onStartChat={handleStartChat}
+        role={session?.user?.role}
       />
 
       {selectedChat && (

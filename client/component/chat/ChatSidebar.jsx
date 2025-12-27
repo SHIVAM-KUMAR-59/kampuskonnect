@@ -15,11 +15,12 @@ export default function ChatSidebar({
   setSearchQuery,
   onSelectChat,
   onStartChat,
+  role
 }) {
   const filteredConnections = connections.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  console.log("conversations", conversations);
   return (
     <div className="flex flex-col w-full lg:w-96 border-r bg-white">
       <div className="p-4 border-b">
@@ -47,12 +48,13 @@ export default function ChatSidebar({
               <ConnectionItem key={c.id} user={c} onClick={() => onStartChat(c)} />
             ))
           ) : conversations.length > 0 ? (
-            conversations.map((c) => (
+            conversations.map((c, idx) => (
               <ConversationItem
-                key={c.user.id}
-                convo={c}
-                selected={selectedChat?.user.id === c.user.id}
-                onClick={() => onSelectChat(c)}
+                key={idx}
+                convo={role === "ALUMNI" ? c.student : c.alumni}
+                selected={false}
+                lastMessage = {c.lastMessage}
+                onClick={() => onSelectChat(c.id)}
               />
             ))
           ) : (
