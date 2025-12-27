@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import PrimaryButton from "./PrimaryButton";
 
-export default function ProfileCard({ name, role, org, skills = [], action }) {
+export default function ProfileCard({ name, experience, org, skills = [], action }) {
   return (
     <div className="group cursor-pointer animate-in fade-in duration-300">
       <div className="relative bg-white border border-gray-200 rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:border-green-300 hover:shadow-lg hover:scale-105 hover:-translate-y-1">
@@ -17,7 +17,7 @@ export default function ProfileCard({ name, role, org, skills = [], action }) {
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-gray-900 text-lg">{name}</p>
               <p className="text-sm text-gray-600 mt-0.5">
-                {role} <span className="text-gray-400">·</span> {org}
+                {org} <span className="text-gray-400">·</span> {experience} years of experience
               </p>
 
               {skills.length > 0 && (
