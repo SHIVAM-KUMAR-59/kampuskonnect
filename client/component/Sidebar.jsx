@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { LayoutDashboard, Users, Calendar, User, LogOut, Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  Calendar,
+  User,
+  LogOut,
+  Menu,
+  X,
+  MessageCircle,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import PrimaryButton from "./PrimaryButton";
 
@@ -13,6 +22,7 @@ export default function Sidebar({ onLogout }) {
     { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
     { label: "Connections", icon: Users, href: "/dashboard/connections" },
     { label: "Events", icon: Calendar, href: "/dashboard/events" },
+    { label: "Chat", icon: MessageCircle, href: "/chat" },
     { label: "Profile", icon: User, href: "/dashboard/profile" },
   ];
 
