@@ -123,29 +123,40 @@ export const mapEvent = (event) => {
 export const mapChat = (chat) => {
   return {
     id: chat._id,
-    student: {
-      id: chat.student._id,
-      name: chat.student.name,
-      profileImage: chat.student.profileImage,
-      email: chat.student.email,
-      bio: chat.student.bio,
-    },
-    alumni: {
-      id: chat.alumni._id,
-      name: chat.alumni.name,
-      profileImage: chat.alumni.profileImage,
-      email: chat.alumni.email,
-      bio: chat.alumni.bio,
-    },
-    lastMessage: {
-      id: chat.lastMessage._id,
-      sender: chat.lastMessage.sender,
-      content: chat.lastMessage.content,
-      isRead: chat.lastMessage.isRead,
-      isEdited: chat.lastMessage.edited,
-      timestamp: chat.lastMessage.timestamp,
-    },
+
+    student: chat.student
+      ? {
+          id: chat.student._id,
+          name: chat.student.name,
+          profileImage: chat.student.profileImage,
+          email: chat.student.email,
+          bio: chat.student.bio,
+        }
+      : null,
+
+    alumni: chat.alumni
+      ? {
+          id: chat.alumni._id,
+          name: chat.alumni.name,
+          profileImage: chat.alumni.profileImage,
+          email: chat.alumni.email,
+          bio: chat.alumni.bio,
+        }
+      : null,
+
+    lastMessage: chat.lastMessage
+      ? {
+          id: chat.lastMessage._id,
+          sender: chat.lastMessage.sender,
+          content: chat.lastMessage.content,
+          isRead: chat.lastMessage.isRead,
+          isEdited: chat.lastMessage.edited,
+          timestamp: chat.lastMessage.timestamp,
+        }
+      : null,
+
     createdAt: chat.createdAt,
     updatedAt: chat.updatedAt,
   };
 };
+
