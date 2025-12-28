@@ -12,7 +12,7 @@ export default function ChatMessages({ messages, myId }) {
                 isMe ? "bg-green-600 text-white" : "bg-white border"
               }`}
             >
-              <p>{msg.message}</p>
+              <p>{msg.content}</p>
               <span className="text-xs opacity-70">
                 {new Date(msg.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",

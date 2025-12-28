@@ -216,3 +216,17 @@ export const mapOneChat = (chat, userId) => {
     updatedAt: chat.updatedAt,
   };
 };
+
+
+export const mapMessage = (message) => {
+  return {
+    id: message._id,
+    sender: message.sender,
+    content: message.content,
+    chatId: message.chatId,
+    isRead: message.isRead,
+    isEdited: message.edited,
+    createdAt: message.createdAt,
+    updatedAt: message.updatedAt,
+  }
+}

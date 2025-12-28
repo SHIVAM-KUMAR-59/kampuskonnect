@@ -6,6 +6,7 @@ import { PORT } from "./config/init.config.js";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import sendMessageService from "./services/chat/sendMessage.service.js";
 
 dotenv.config();
 
@@ -37,10 +38,12 @@ io.on("connection", (socket) => {
   });
 
   // SEND MESSAGE
-  socket.on("send-message", (data) => {
+  socket.on("send-message", async (data) => {
     const { chatId, message, sender } = data;
 
     console.log("Message received:", data);
+    try {
+      await sendMessageService(data.sender, data.chatId, data.message);
 
     // send to everyone in the room EXCEPT sender
     socket.to(chatId).emit("receive-message", {
@@ -49,6 +52,10 @@ io.on("connection", (socket) => {
       chatId,
       createdAt: new Date(),
     });
+    } catch (err) {
+      console.error("Error in sendMessageService:", err);
+      handleServerError(err);
+    }
   });
 
   socket.on("disconnect", () => {
