@@ -39,19 +39,14 @@ io.on("connection", (socket) => {
 
   // SEND MESSAGE
   socket.on("send-message", async (data) => {
-    const { chatId, message, sender } = data;
+    const { chatId } = data;
 
     console.log("Message received:", data);
     try {
-      await sendMessageService(data.sender, data.chatId, data.message);
+      const message = await sendMessageService(data.sender, data.chatId, data.message);
 
     // send to everyone in the room EXCEPT sender
-    socket.to(chatId).emit("receive-message", {
-      message,
-      sender,
-      chatId,
-      createdAt: new Date(),
-    });
+    socket.to(chatId).emit("receive-message", message);
     } catch (err) {
       console.error("Error in sendMessageService:", err);
       handleServerError(err);

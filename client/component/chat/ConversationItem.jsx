@@ -32,7 +32,7 @@ export default function ConversationItem({ convo, lastMessage, selected = false,
             })}
           </span> */}
         </div>
-        <p className="text-sm text-gray-500 truncate">{lastMessage.content}</p>
+        {/* {lastMessage && <p className="text-sm text-gray-500 truncate">{lastMessage.content}</p>} */}
       </div>
     </button>
   );

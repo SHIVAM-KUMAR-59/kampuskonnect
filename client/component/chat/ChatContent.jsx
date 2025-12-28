@@ -50,6 +50,7 @@ export default function ChatContent() {
     });
 
     socket.on("receive-message", (data) => {
+      console.log("receive-message", data);
       setMessages((prev) => [...prev, data]);
     });
 
@@ -73,7 +74,7 @@ export default function ChatContent() {
     setMessages((prev) => [
       ...prev,
       {
-        message,
+        content: message,
         sender: session.user.id,
         createdAt: new Date(),
       },
