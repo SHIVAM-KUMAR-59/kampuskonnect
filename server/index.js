@@ -30,9 +30,9 @@ app.use("/api/v1", routes);
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  socket.on("join", (userId) => {
+  socket.on("join", (userId, chatId) => {
     socket.join(userId);
-    console.log(`User ${userId} joined room`);
+    console.log(`User ${userId} joined the chat ${chatId}`);
   });
 
   socket.on("disconnect", () => {
