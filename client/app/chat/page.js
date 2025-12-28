@@ -1,14 +1,32 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import ChatContent from "@/component/chat/ChatContent";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { getSocket } from "@/utils/socket";
 
 function ChatPageContent() {
   const searchParams = useSearchParams();
   const chatId = searchParams.get("id");
+  const { data: session } = useSession()
+
+  const socket = getSocket()
+  
+  useEffect(() => {
+    if (!session?.user?.id) {
+      return;
+    }
+
+    socket.connect();
+    socket.emit("connection", session?.user?.id);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [session])
 
   return (
     <>
