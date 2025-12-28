@@ -17,9 +17,7 @@ function ChatPageContent() {
         <div className="hidden lg:flex h-full items-center justify-center">
           <div className="text-center">
             <MessageCircle className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Select a conversation
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Select a conversation</h3>
             <p className="text-gray-500">
               Choose a conversation from the sidebar to start chatting
             </p>

@@ -28,8 +28,7 @@ export default function ChatContent() {
       setSelectedChat(response.data.chat.chat);
       setMessages(response.data.chat.messages);
     } catch (err) {
-      const errorMessage =
-        err?.response?.data?.message || err?.message || "Failed to load chat";
+      const errorMessage = err?.response?.data?.message || err?.message || "Failed to load chat";
       error(errorMessage);
       router.push("/chat");
     } finally {

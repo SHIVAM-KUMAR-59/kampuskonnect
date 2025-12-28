@@ -39,6 +39,7 @@ export default function ChatLayout({ children }) {
         api.get("/chat"),
         api.get(`/${session?.user?.role.toLowerCase()}/connections`),
       ]);
+      console.log(conversationsRes.data, connectionsRes.data);
 
       // Cache the data
       cachedConversations = conversationsRes.data.chats;
@@ -47,8 +48,7 @@ export default function ChatLayout({ children }) {
       setConversations(cachedConversations);
       setConnections(cachedConnections);
     } catch (err) {
-      const errorMessage =
-        err?.response?.data?.message || err?.message || "Something went wrong";
+      const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
     } finally {
       setFetching(false);
@@ -70,8 +70,7 @@ export default function ChatLayout({ children }) {
       // Navigate with search params
       router.push(`/chat?id=${response.data.chat.id}`);
     } catch (err) {
-      const errorMessage =
-        err?.response?.data?.message || err?.message || "Something went wrong";
+      const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
     }
   };
@@ -116,9 +115,7 @@ export default function ChatLayout({ children }) {
       />
 
       {/* Main content area */}
-      <div className="flex-1">
-        {children}
-      </div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 }

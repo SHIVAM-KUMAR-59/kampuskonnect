@@ -120,7 +120,7 @@ export const mapEvent = (event) => {
   };
 };
 
-export const mapChat = (chat) => {
+export const mapChat = (chat, userId) => {
   return {
     id: chat._id,
 
@@ -160,3 +160,59 @@ export const mapChat = (chat) => {
   };
 };
 
+export const mapOneChat = (chat, userId) => {
+  const student = chat.student
+    ? {
+        id: chat.student._id.toString(),
+        name: chat.student.name,
+        profileImage: chat.student.profileImage,
+        email: chat.student.email,
+        bio: chat.student.bio,
+        role: "STUDENT",
+      }
+    : null;
+
+  const alumni = chat.alumni
+    ? {
+        id: chat.alumni._id.toString(),
+        name: chat.alumni.name,
+        profileImage: chat.alumni.profileImage,
+        email: chat.alumni.email,
+        bio: chat.alumni.bio,
+        role: "ALUMNI",
+      }
+    : null;
+
+  // determine who is logged-in user & who is receiver
+  let user = null;
+  let receiver = null;
+
+  if (student && student.id === userId) {
+    user = student;
+    receiver = alumni;
+  } else if (alumni && alumni.id === userId) {
+    user = alumni;
+    receiver = student;
+  }
+
+  return {
+    id: chat._id.toString(),
+
+    user,
+    receiver,
+
+    lastMessage: chat.lastMessage
+      ? {
+          id: chat.lastMessage._id.toString(),
+          sender: chat.lastMessage.sender.toString(),
+          content: chat.lastMessage.content,
+          isRead: chat.lastMessage.isRead,
+          isEdited: chat.lastMessage.edited,
+          timestamp: chat.lastMessage.timestamp,
+        }
+      : null,
+
+    createdAt: chat.createdAt,
+    updatedAt: chat.updatedAt,
+  };
+};

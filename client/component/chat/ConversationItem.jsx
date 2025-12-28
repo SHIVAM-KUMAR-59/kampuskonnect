@@ -5,15 +5,18 @@ export default function ConversationItem({ convo, lastMessage, selected = false,
     <button
       onClick={onClick}
       className={`w-full flex items-center gap-3 p-3 rounded-lg transition ${
-        selected ? "bg-green-50 border-l-4 border-green-600" : "hover:bg-gray-50"}`}
+        selected ? "bg-green-50 border-l-4 border-green-600" : "hover:bg-gray-50"
+      }`}
     >
-      {convo.profileImage ? <Image
-      height={48}
-      width={48}
-        alt="profile"
-        src={convo.profileImage || "/default-avatar.png"}
-        className="w-12 h-12 rounded-full"
-      /> : (
+      {convo.profileImage ? (
+        <Image
+          height={48}
+          width={48}
+          alt="profile"
+          src={convo.profileImage || "/default-avatar.png"}
+          className="w-12 h-12 rounded-full"
+        />
+      ) : (
         <p className="w-8 h-8 xl:w-10 xl:h-10 p-2 rounded-full bg-green-50 border border-green-300 flex items-center justify-center text-green-700 font-bold">
           {getAvatar(convo.name)}
         </p>
