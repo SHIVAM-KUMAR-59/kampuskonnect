@@ -30,15 +30,32 @@ app.use("/api/v1", routes);
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  socket.on("join", (userId, chatId) => {
-    socket.join(userId);
-    console.log(`User ${userId} joined the chat ${chatId}`);
+  // JOIN CHAT ROOM
+  socket.on("join-chat", ({ chatId, userId }) => {
+    socket.join(chatId);
+    console.log(`User ${userId} joined chat ${chatId}`);
+  });
+
+  // SEND MESSAGE
+  socket.on("send-message", (data) => {
+    const { chatId, message, sender } = data;
+
+    console.log("Message received:", data);
+
+    // send to everyone in the room EXCEPT sender
+    socket.to(chatId).emit("receive-message", {
+      message,
+      sender,
+      chatId,
+      createdAt: new Date(),
+    });
   });
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
   });
 });
+
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

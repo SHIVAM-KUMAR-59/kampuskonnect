@@ -6,61 +6,101 @@ import ChatLayout from "@/component/chat/ChatLayout";
 import api from "@/utils/axios";
 import { useToast } from "@/context/ToastContext";
 import { Loader2 } from "lucide-react";
+import { getSocket } from "@/utils/socket";
+import { useSession } from "next-auth/react";
 
 export default function ChatContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const chatId = searchParams.get("id");
 
+  const { data: session } = useSession();
+  const { error } = useToast();
+
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { error } = useToast();
 
+  const socket = getSocket();
+
+  // Fetch chat + messages
   const fetchChatDetails = async () => {
-    if (!chatId) return;
-
     try {
       setLoading(true);
       const response = await api.get(`/chat/${chatId}`);
-      console.log("Chat details:", response.data);
-
       setSelectedChat(response.data.chat.chat);
       setMessages(response.data.chat.messages);
     } catch (err) {
-      const errorMessage = err?.response?.data?.message || err?.message || "Failed to load chat";
-      error(errorMessage);
+      error("Failed to load chat");
       router.push("/chat");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleBack = () => {
-    router.push("/chat");
+  // CONNECT SOCKET + JOIN ROOM
+  useEffect(() => {
+    if (!chatId || !session?.user?.id) return;
+
+    socket.connect();
+
+    socket.emit("join-chat", {
+      chatId,
+      userId: session.user.id,
+    });
+
+    socket.on("receive-message", (data) => {
+      setMessages((prev) => [...prev, data]);
+    });
+
+    return () => {
+      socket.off("receive-message");
+      socket.disconnect();
+    };
+  }, [chatId, session?.user?.id]);
+
+  // Send message
+  const onSend = (message) => {
+    const payload = {
+      chatId,
+      sender: session.user.id,
+      message,
+    };
+
+    socket.emit("send-message", payload);
+
+    // optimistic update
+    setMessages((prev) => [
+      ...prev,
+      {
+        message,
+        sender: session.user.id,
+        createdAt: new Date(),
+      },
+    ]);
   };
 
   useEffect(() => {
-    if (chatId) {
-      fetchChatDetails();
-    }
+    if (chatId) fetchChatDetails();
   }, [chatId]);
-
-  if (!chatId) {
-    return null;
-  }
 
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <Loader2 className="w-8 h-8 text-green-600 animate-spin" />
+        <Loader2 className="animate-spin" />
       </div>
     );
   }
 
-  if (!selectedChat) {
-    return null;
-  }
+  if (!selectedChat) return null;
 
-  return <ChatLayout chat={selectedChat} messages={messages} onBack={handleBack} />;
+  return (
+    <ChatLayout
+      chat={selectedChat}
+      messages={messages}
+      onBack={() => router.push("/chat")}
+      onSend={onSend}
+      userId={session.user.id}
+    />
+  );
 }

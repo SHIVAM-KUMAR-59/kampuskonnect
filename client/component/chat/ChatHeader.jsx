@@ -3,7 +3,6 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
 export default function ChatHeader({ user, onBack }) {
-  console.log(user);
   return (
     <div className="border-b bg-white p-4 flex items-center gap-3">
       <button onClick={onBack} className="lg:hidden">

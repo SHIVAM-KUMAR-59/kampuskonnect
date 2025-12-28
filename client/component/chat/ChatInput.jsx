@@ -13,10 +13,9 @@ export default function ChatInput({ onSend }) {
 
   return (
     <div className="border-t bg-white p-4 flex gap-2">
-      <textarea
+      <input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        rows={1}
         className="flex-1 border rounded-xl px-3 py-2"
         placeholder="Type a message..."
         onKeyDown={(e) => e.key === "Enter" && submit()}

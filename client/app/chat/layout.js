@@ -99,15 +99,15 @@ export default function ChatLayout({ children }) {
       fetchData();
     }
 
-    if (!session) {
-      return;
-    }
-    socket.connect();
-    socket.emit("connection", session?.user?.id);
+    // if (!session) {
+    //   return;
+    // }
+    // socket.connect();
+    // socket.emit("connection", session?.user?.id);
 
-    return () => {
-      socket.disconnect();
-    }
+    // return () => {
+    //   socket.disconnect();
+    // }
   }, [session]);
 
   return (
