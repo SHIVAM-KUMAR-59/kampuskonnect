@@ -1,6 +1,6 @@
 export default function ChatMessages({ messages, myId }) {
-  console.log("messages", messages)
-  console.log("my ID", myId)
+  console.log("messages", messages);
+  console.log("my ID", myId);
   return (
     <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
       {messages.map((msg) => {

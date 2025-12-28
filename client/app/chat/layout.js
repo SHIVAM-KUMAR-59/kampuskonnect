@@ -23,7 +23,7 @@ export default function ChatLayout({ children }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hasFetched = useRef(false);
-  const socket = getSocket()
+  const socket = getSocket();
 
   const selectedChatId = searchParams.get("id");
 
@@ -68,7 +68,7 @@ export default function ChatLayout({ children }) {
       cachedConversations = [newChat, ...(cachedConversations || [])];
       setConversations(cachedConversations);
 
-      socket.emit("join", session?.user?.id, chatId)
+      socket.emit("join", session?.user?.id, chatId);
       // Navigate with search params
       router.push(`/chat?id=${response.data.chat.id}`);
     } catch (err) {
@@ -78,7 +78,7 @@ export default function ChatLayout({ children }) {
   };
 
   const handleSelectChat = (chatId) => {
-    socket.emit("join", session?.user?.id, chatId)
+    socket.emit("join", session?.user?.id, chatId);
     router.push(`/chat?id=${chatId}`);
   };
 

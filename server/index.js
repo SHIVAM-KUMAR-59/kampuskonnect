@@ -45,8 +45,8 @@ io.on("connection", (socket) => {
     try {
       const message = await sendMessageService(data.sender, data.chatId, data.message);
 
-    // send to everyone in the room EXCEPT sender
-    socket.to(chatId).emit("receive-message", message);
+      // send to everyone in the room EXCEPT sender
+      socket.to(chatId).emit("receive-message", message);
     } catch (err) {
       console.error("Error in sendMessageService:", err);
       handleServerError(err);
@@ -57,7 +57,6 @@ io.on("connection", (socket) => {
     console.log("User disconnected:", socket.id);
   });
 });
-
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

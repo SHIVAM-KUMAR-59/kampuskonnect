@@ -217,7 +217,6 @@ export const mapOneChat = (chat, userId) => {
   };
 };
 
-
 export const mapMessage = (message) => {
   return {
     id: message._id,
@@ -228,5 +227,5 @@ export const mapMessage = (message) => {
     isEdited: message.edited,
     createdAt: message.createdAt,
     updatedAt: message.updatedAt,
-  }
-}
+  };
+};
