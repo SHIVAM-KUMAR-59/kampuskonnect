@@ -22,7 +22,6 @@ const PendingRequests = () => {
     try {
       setFetching(true);
       const response = await api.get("/alumni/requests");
-      console.log(response);
       setPendingRequests(response.data.requests);
     } catch (err) {
       console.error(err);

@@ -19,7 +19,6 @@ const CurrentConnections = ({ role }) => {
       setFetching(true);
       const response = await api.get(`/${role}/connections`);
       setConnections(response.data.connections);
-      console.log(response.data);
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);

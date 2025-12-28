@@ -39,7 +39,6 @@ const createChatService = async (currentUserId, currentUserRole, targetUserId, t
       .populate("alumni", "-password")
       .populate("lastMessage");
 
-    console.log("chat", chat)
     if (chat) {
       return mapChat(chat);
     }
@@ -55,10 +54,8 @@ const createChatService = async (currentUserId, currentUserRole, targetUserId, t
       .populate("student", "-password")
       .populate("alumni", "-password");
 
-    console.log("populatedChat", populatedChat)
     return mapChat(populatedChat);
   } catch (err) {
-    console.log(err)
     handleServerError(err);
   }
 };

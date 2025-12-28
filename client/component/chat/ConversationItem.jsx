@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 export default function ConversationItem({ convo, lastMessage, selected = false, onClick }) {
-  console.log("Convo", convo)
   return (
     <button
       onClick={onClick}

@@ -16,21 +16,21 @@ export default function ChatSidebar({
   onStartChat,
   onRefresh,
   role,
+  selectedChatId, // Add this prop
 }) {
   const filteredConnections = connections.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Clear search query when closing search
   const handleToggleSearch = () => {
     if (showSearch) {
-      setSearchQuery(""); // Clear search when closing
+      setSearchQuery("");
     }
     setShowSearch(!showSearch);
   };
 
   return (
-    <div className="flex flex-col w-full lg:w-96 border-r bg-white">
+    <div className="flex flex-col w-full lg:w-96 border-r bg-white h-full">
       <div className="p-4 border-b">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">Messages</h1>
@@ -65,7 +65,6 @@ export default function ChatSidebar({
       {!fetching ? (
         <div className="flex-1 overflow-y-auto p-2">
           {showSearch ? (
-            // Show search results
             filteredConnections.length > 0 ? (
               filteredConnections.map((c) => (
                 <ConnectionItem key={c.id} user={c} onClick={() => onStartChat(c)} />
@@ -76,18 +75,16 @@ export default function ChatSidebar({
               </div>
             )
           ) : conversations.length > 0 ? (
-            // Show conversations
             conversations.map((c) => (
               <ConversationItem
                 key={c.id}
                 convo={role === "ALUMNI" ? c.student : c.alumni}
-                selected={false}
+                selected={c.id === selectedChatId} // Highlight selected chat
                 lastMessage={c.lastMessage}
                 onClick={() => onSelectChat(c.id)}
               />
             ))
           ) : (
-            // Empty state
             <div className="flex flex-col items-center justify-center h-full px-4">
               <p className="text-gray-500 text-center">No conversations found</p>
               <p className="text-sm text-gray-400 mt-2 text-center">

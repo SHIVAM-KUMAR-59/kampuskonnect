@@ -13,7 +13,6 @@ const userGoogleLoginService = async (email) => {
 
     // Determine the actual user
     const existingUser = student || alumni;
-    console.log(existingUser);
 
     if (!existingUser) {
       throw new ApiError(404, "User with this email does not exist");
@@ -33,7 +32,6 @@ const userGoogleLoginService = async (email) => {
       token,
     };
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

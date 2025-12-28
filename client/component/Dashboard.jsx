@@ -22,7 +22,6 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const response = await api.get("/user/overview");
-      console.log(response.data.user);
       setOverview(response.data.user);
     } catch (err) {
       console.error("Error fetching overview:", err);

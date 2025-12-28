@@ -20,7 +20,6 @@ const MatchedAlumnis = () => {
     try {
       const response = await api.get("/student/match");
       setMatches(response.data?.data || []);
-      console.log(response.data);
     } catch (err) {
       console.error(err);
     } finally {

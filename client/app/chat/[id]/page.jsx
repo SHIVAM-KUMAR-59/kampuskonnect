@@ -29,8 +29,6 @@ export default function ChatPage() {
   const [loadingChat, setLoadingChat] = useState(true);
   const { error } = useToast();
 
-  console.log("Chat ID:", chatId);
-
   const fetchData = async () => {
     if (cachedConversations && cachedConnections) {
       return;
@@ -59,13 +57,11 @@ export default function ChatPage() {
   const fetchChatDetails = async () => {
     try {
       setLoadingChat(true);
-      const [chatRes, messagesRes] = await Promise.all([
-        api.get(`/chat/${chatId}`),
-        api.get(`/chat/${chatId}/messages`),
-      ]);
-      
-      setSelectedChat(chatRes.data.chat);
-      setMessages(messagesRes.data.messages);
+      const response = await api.get(`/chat/${chatId}`)
+      console.log(response)
+
+      setSelectedChat(response.data.chat.chat);
+      setMessages(response.data.chat.messages);
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Failed to load chat";
       error(errorMessage);
