@@ -7,7 +7,7 @@ export default function AuthLayout({ children }) {
     <html lang="en">
       <body>
         <Suspense fallback={<div>Loading...</div>}>
-        <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>{children}</ToastProvider>
         </Suspense>
       </body>
     </html>

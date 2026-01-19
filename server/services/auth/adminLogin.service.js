@@ -30,7 +30,6 @@ const adminLoginService = async (email, password) => {
       token,
     };
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

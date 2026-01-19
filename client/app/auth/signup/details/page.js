@@ -68,7 +68,6 @@ export default function SignupDetailsPage() {
         }, 1000);
       }
     } catch (err) {
-      console.log(err);
       error("An error occurred during login");
     } finally {
       setLoading(false);

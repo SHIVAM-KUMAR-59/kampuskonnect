@@ -44,7 +44,7 @@ export default function LoginPage() {
       success("Logged in successfully!");
       setInterval(() => {
         window.location.href = "/dashboard";
-      }, 2000);
+      }, 1000);
     }
   };
 

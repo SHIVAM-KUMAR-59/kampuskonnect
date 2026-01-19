@@ -83,7 +83,6 @@ export const authOptions = {
           email: credentials.email,
           password: credentials.password,
         };
-        console.log(credentials);
 
         if (credentials.isSignup === "true") {
           url = `${process.env.BACKEND_URL}/api/v1/auth/${credentials.role.toLowerCase()}/credentials/register`;
@@ -92,14 +91,9 @@ export const authOptions = {
           url = `${process.env.BACKEND_URL}/api/v1/auth/user/credentials/login`;
         }
 
-        console.log("Auth URL:", url);
-        console.log("Auth Request Body:", requestBody);
-
         try {
           const res = await axios.post(url, requestBody);
           const data = res.data;
-
-          console.log("Auth API Response:", data);
 
           // Normalize alumni or user response
           const authContainer = data.alumni || data.user;
