@@ -1,8 +1,5 @@
-import StudentDashboard from "./student-dashboard";
-import AlumniDashboard from "./alumni-dashboard";
-
-const role = "STUDENT"; // replace with session.role later
+import Dashboard from "@/component/Dashboard";
 
 export default function DashboardPage() {
-  return role === "STUDENT" ? <StudentDashboard /> : <AlumniDashboard />;
+  return <Dashboard />;
 }

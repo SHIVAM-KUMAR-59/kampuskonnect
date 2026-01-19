@@ -6,7 +6,6 @@ import { ApiError, handleServerError } from "../../utils/error.util.js";
 const deleteUserService = async (user, userId) => {
   try {
     if (user._id.toString() !== userId && user.role !== UserRole.ADMIN) {
-      console.log("UserID", user._id, userId);
       throw new ApiError(401, "You are not authorized to delete this user");
     }
     if (user.role === UserRole.STUDENT) {

@@ -3,9 +3,7 @@ import { Bell } from "lucide-react";
 export default function Topbar() {
   return (
     <header className="h-16 bg-white border-b px-6 flex items-center justify-between">
-      <h2 className="text-lg font-semibold text-gray-800">
-        Dashboard
-      </h2>
+      <h2 className="text-lg font-semibold text-gray-800">Dashboard</h2>
 
       <div className="flex items-center gap-4">
         <input

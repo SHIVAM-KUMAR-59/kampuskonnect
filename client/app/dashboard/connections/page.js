@@ -1,32 +1,27 @@
 "use client";
 
+import AlumniConnections from "@/component/connection/AlumniConnections";
+import StudentConnections from "@/component/connection/StudentConnections";
+import PageIntro from "@/component/PageIntro";
+import { useSession } from "next-auth/react";
+
 export default function ConnectionsPage() {
-  const dummyConnections = [
-    { name: "Amit Kumar", role: "Alumni", domain: "Backend Developer" },
-    { name: "Sneha Singh", role: "Student", domain: "AI / ML" },
-  ];
+  const { data: session } = useSession();
+  const isAlumni = session?.user?.role === "ALUMNI";
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Connections</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          People you are connected with on KampusKonnect
-        </p>
-      </div>
+    <main className="max-w-7xl mx-auto overflow-hidden">
+      <PageIntro
+        title="Network & Connections"
+        subtitle={
+          isAlumni
+            ? "Manage and grow your professional student network"
+            : "Connect with alumni and expand your professional network"
+        }
+      />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {dummyConnections.map((user, i) => (
-          <div
-            key={i}
-            className="bg-white border rounded-xl p-6 hover:shadow-sm transition"
-          >
-            <p className="font-medium text-gray-900">{user.name}</p>
-            <p className="text-sm text-gray-500 mt-1">{user.role}</p>
-            <p className="text-sm text-green-600 mt-2">{user.domain}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+      {isAlumni && <AlumniConnections />}
+      {!isAlumni && <StudentConnections />}
+    </main>
   );
 }
