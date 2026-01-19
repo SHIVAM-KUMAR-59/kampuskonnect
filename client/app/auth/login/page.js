@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
-import { Eye, EyeClosed, KeyRound, Mail } from "lucide-react";
+import { Eye, EyeClosed, KeyRound, Loader2, Mail } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
+import { useSearchParams } from "next/navigation";
+import PrimaryButton from "@/component/PrimaryButton";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -15,6 +17,14 @@ export default function LoginPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const { success, error } = useToast();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const err = searchParams.get("error");
+    if (err) {
+      error(decodeURIComponent(err));
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,7 +44,7 @@ export default function LoginPage() {
       success("Logged in successfully!");
       setInterval(() => {
         window.location.href = "/dashboard";
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -119,12 +129,29 @@ export default function LoginPage() {
             </div>
 
             {/* LOGIN BUTTON */}
-            <button
+            {/* <button
               type="submit"
-              className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
+              className="w-full flex items-center justify-center gap-3 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
             >
-              {loading ? "Logging in..." : "Login"}
-            </button>
+              {
+                loading ? <><div className="w-5 h-5 border-2 border-gray-100 border-t-transparent rounded-full animate-spin"></div> Logging in... </> : "Login"
+              }
+            </button> */}
+            <PrimaryButton
+              text={
+                loading ? (
+                  <>
+                    {" "}
+                    <Loader2 className="mr-2 animate-spin" /> Logging in...{" "}
+                  </>
+                ) : (
+                  "Login"
+                )
+              }
+              onClick={handleLogin}
+              classname="w-full py-3"
+              disabled={loading || googleLoading}
+            />
           </form>
 
           {/* SIGNUP LINK */}

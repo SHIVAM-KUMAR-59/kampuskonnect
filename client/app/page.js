@@ -2,10 +2,8 @@
 import { signIn } from "next-auth/react";
 import { LogIn, UserPlus, GraduationCap, Briefcase, Mail, AlertCircle } from "lucide-react";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 export default function Home() {
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,8 +20,6 @@ export default function Home() {
     confirmPassword: "",
   });
   const [registerLoading, setRegisterLoading] = useState(false);
-
-  const urlError = searchParams.get("error");
 
   const handleCredentialsLogin = async (e) => {
     e.preventDefault();
@@ -128,16 +124,6 @@ export default function Home() {
           <p className="text-gray-600">Choose how you want to continue</p>
         </div>
 
-        {/* Global Error Banner */}
-        {urlError && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
-              <p className="text-sm text-red-700">{decodeURIComponent(urlError)}</p>
-            </div>
-          </div>
-        )}
-
         {/* Login Section */}
         {!showStudentRegister && !showAlumniRegister && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">
@@ -147,7 +133,7 @@ export default function Home() {
             </div>
 
             <form onSubmit={handleCredentialsLogin} className="space-y-4">
-              {error && !urlError && (
+              {error && (
                 <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
                   <div className="flex items-center gap-3">
                     <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
