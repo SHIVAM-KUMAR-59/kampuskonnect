@@ -14,10 +14,14 @@ import {
   Sparkles,
   ChevronDown,
 } from "lucide-react";
+import api from "@/utils/axios";
+import { useToast } from "@/context/ToastContext";
 
 export default function OnboardingPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
+
+  const { error, success } = useToast();
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -111,12 +115,16 @@ export default function OnboardingPage() {
     setLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
+      const response = await api.put(`/${isStudent ? "student" : "alumni"}/profile`, formData);
+      console.log("Profile updated successfully:", response.data);
+      if (response.status === 200) {
+        success("Profile updated successfully");
+      }
       // Redirect to dashboard
       router.push("/dashboard");
-    } catch (error) {
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      error(errorMessage);
       console.error("Failed to update profile:", error);
     } finally {
       setLoading(false);
