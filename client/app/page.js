@@ -1,620 +1,210 @@
-"use client";
-import { signIn } from "next-auth/react";
-import { LogIn, UserPlus, GraduationCap, Briefcase, Mail, AlertCircle } from "lucide-react";
-import { useState } from "react";
+'use client';
+
+import React, { useState } from 'react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import PrimaryButton from '@/component/PrimaryButton';
+import Image from 'next/image';
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [googleLoading, setGoogleLoading] = useState(null);
-
-  // Registration states
-  const [showStudentRegister, setShowStudentRegister] = useState(false);
-  const [showAlumniRegister, setShowAlumniRegister] = useState(false);
-  const [registerData, setRegisterData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [registerLoading, setRegisterLoading] = useState(false);
-
-  const handleCredentialsLogin = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-        isSignup: false,
-      });
-
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.ok) {
-        window.location.href = "/dashboard";
-      }
-    } catch (err) {
-      setError("An error occurred during login");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCredentialsRegister = async (e, type) => {
-    e.preventDefault();
-    setError("");
-
-    // Validation
-    if (registerData.password !== registerData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    if (registerData.password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
-
-    setRegisterLoading(true);
-
-    try {
-      // const provider = type === "student"
-      //   ? "credentials-register-student"
-      //   : "credentials-register-alumni";
-
-      const result = await signIn("credentials", {
-        name: registerData.name,
-        email: registerData.email,
-        password: registerData.password,
-        role: "ALUMNI",
-        isSignup: true,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.ok) {
-        window.location.href = "/dashboard";
-      }
-    } catch (err) {
-      setError("Registration failed");
-    } finally {
-      setRegisterLoading(false);
-    }
-  };
-
-  const handleGoogleSignIn = async (provider, type) => {
-    setGoogleLoading(type);
-    setError("");
-
-    try {
-      await signIn(provider, { callbackUrl: "/dashboard" });
-    } catch (err) {
-      setError("Failed to initiate Google sign in");
-      setGoogleLoading(null);
-    }
-  };
-
-  const handleShowRegister = (type) => {
-    setRegisterData({ name: "", email: "", password: "", confirmPassword: "" });
-    setError("");
-    if (type === "student") {
-      setShowStudentRegister(true);
-      setShowAlumniRegister(false);
-    } else {
-      setShowAlumniRegister(true);
-      setShowStudentRegister(false);
-    }
-  };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-8">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Welcome to <span className="text-blue-600">Alumni Konnect</span>
-          </h1>
-          <p className="text-gray-600">Choose how you want to continue</p>
-        </div>
+    <main className="font-sans text-gray-800 overflow-x-hidden">
 
-        {/* Login Section */}
-        {!showStudentRegister && !showAlumniRegister && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <LogIn className="w-5 h-5 text-blue-600" />
-              <h2 className="text-xl font-semibold text-gray-900">Login</h2>
-            </div>
+{/* ================= NAVBAR ================= */}
+<nav className="w-full bg-white shadow-sm relative">
+  <div className="flex justify-between items-center px-4 md:px-10 py-4">
+    
+    {/* Left: Logo + Divider + Title */}
+    <div className="flex items-center gap-4">
+      <Image
+        height={50}
+        width={150}
+        src="/kiitformallogo.png"
+        alt="KIIT Logo"
+        className="h-10 md:h-[50px] w-auto"
+      />
 
-            <form onSubmit={handleCredentialsLogin} className="space-y-4">
-              {error && (
-                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
-                    <p className="text-sm text-red-700">{error}</p>
-                  </div>
-                </div>
-              )}
+      <div className="h-8 md:h-10 w-px bg-gray-300"></div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading || googleLoading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              >
-                {loading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Logging in...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="w-5 h-5" />
-                    Login with Email
-                  </>
-                )}
-              </button>
-            </form>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => handleGoogleSignIn("google-login", "login")}
-              disabled={loading || googleLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-            >
-              {googleLoading === "login" ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-gray-700 border-t-transparent rounded-full animate-spin"></div>
-                  Connecting...
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path
-                      fill="#4285F4"
-                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                    />
-                    <path
-                      fill="#34A853"
-                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    />
-                    <path
-                      fill="#FBBC05"
-                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                    />
-                    <path
-                      fill="#EA4335"
-                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                    />
-                  </svg>
-                  Continue with Google
-                </>
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Student Registration Form */}
-        {showStudentRegister && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="w-5 h-5 text-blue-600" />
-                <h2 className="text-xl font-semibold text-gray-900">Register as Student</h2>
-              </div>
-              <button
-                onClick={() => setShowStudentRegister(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <form onSubmit={(e) => handleCredentialsRegister(e, "student")} className="space-y-4">
-              {error && (
-                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
-                    <p className="text-sm text-red-700">{error}</p>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                <input
-                  type="text"
-                  value={registerData.name}
-                  onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                  required
-                  placeholder="Enter your full name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input
-                  type="email"
-                  value={registerData.email}
-                  onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                  required
-                  placeholder="your.email@kiit.ac.in"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <input
-                  type="password"
-                  value={registerData.password}
-                  onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                  required
-                  minLength={6}
-                  placeholder="Minimum 6 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  value={registerData.confirmPassword}
-                  onChange={(e) =>
-                    setRegisterData({ ...registerData, confirmPassword: e.target.value })
-                  }
-                  required
-                  placeholder="Re-enter your password"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={registerLoading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              >
-                {registerLoading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Creating Account...
-                  </>
-                ) : (
-                  "Create Student Account"
-                )}
-              </button>
-            </form>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => handleGoogleSignIn("google-register-student", "student")}
-              disabled={registerLoading || googleLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-            >
-              {googleLoading === "student" ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-gray-700 border-t-transparent rounded-full animate-spin"></div>
-                  Connecting...
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path
-                      fill="#4285F4"
-                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                    />
-                    <path
-                      fill="#34A853"
-                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    />
-                    <path
-                      fill="#FBBC05"
-                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                    />
-                    <path
-                      fill="#EA4335"
-                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                    />
-                  </svg>
-                  Register with Google
-                </>
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Alumni Registration Form */}
-        {showAlumniRegister && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-gray-600" />
-                <h2 className="text-xl font-semibold text-gray-900">Register as Alumni</h2>
-              </div>
-              <button
-                onClick={() => setShowAlumniRegister(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <form onSubmit={(e) => handleCredentialsRegister(e, "alumni")} className="space-y-4">
-              {error && (
-                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
-                    <p className="text-sm text-red-700">{error}</p>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                <input
-                  type="text"
-                  value={registerData.name}
-                  onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                  required
-                  placeholder="Enter your full name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input
-                  type="email"
-                  value={registerData.email}
-                  onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                  required
-                  placeholder="your.email@example.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <input
-                  type="password"
-                  value={registerData.password}
-                  onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                  required
-                  minLength={6}
-                  placeholder="Minimum 6 characters"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  value={registerData.confirmPassword}
-                  onChange={(e) =>
-                    setRegisterData({ ...registerData, confirmPassword: e.target.value })
-                  }
-                  required
-                  placeholder="Re-enter your password"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:outline-none transition"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={registerLoading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              >
-                {registerLoading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Creating Account...
-                  </>
-                ) : (
-                  "Create Alumni Account"
-                )}
-              </button>
-            </form>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => handleGoogleSignIn("google-register-alumni", "alumni")}
-              disabled={registerLoading || googleLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-            >
-              {googleLoading === "alumni" ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-gray-700 border-t-transparent rounded-full animate-spin"></div>
-                  Connecting...
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path
-                      fill="#4285F4"
-                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                    />
-                    <path
-                      fill="#34A853"
-                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    />
-                    <path
-                      fill="#FBBC05"
-                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                    />
-                    <path
-                      fill="#EA4335"
-                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                    />
-                  </svg>
-                  Register with Google
-                </>
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Register Section */}
-        {!showStudentRegister && !showAlumniRegister && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <UserPlus className="w-5 h-5 text-blue-600" />
-              <h2 className="text-xl font-semibold text-gray-900">Register</h2>
-            </div>
-
-            <div className="space-y-3">
-              <button
-                onClick={() => handleShowRegister("student")}
-                disabled={loading || googleLoading}
-                className="w-full flex items-center justify-between px-6 py-4 bg-blue-50 border-2 border-blue-200 text-blue-700 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-all font-medium group disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                    <GraduationCap className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-semibold">Register as Student</div>
-                    <div className="text-sm text-blue-600">Current students only</div>
-                  </div>
-                </div>
-                <svg
-                  className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-
-              <button
-                onClick={() => handleShowRegister("alumni")}
-                disabled={loading || googleLoading}
-                className="w-full flex items-center justify-between px-6 py-4 bg-gray-50 border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-all font-medium group disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center">
-                    <Briefcase className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-semibold">Register as Alumni</div>
-                    <div className="text-sm text-gray-600">Graduated students</div>
-                  </div>
-                </div>
-                <svg
-                  className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-500">
-          By continuing, you agree to our{" "}
-          <a href="/terms" className="text-blue-600 hover:underline font-medium">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="/privacy" className="text-blue-600 hover:underline font-medium">
-            Privacy Policy
-          </a>
-        </p>
-      </div>
+      <span className="text-green-600 font-semibold text-lg md:text-xl hidden sm:inline-block">
+        Alumni Konnect
+      </span>
     </div>
+
+    {/* Desktop Menu */}
+    <ul className="hidden lg:flex items-center gap-8 text-green-600 text-base font-medium">
+      <li className="cursor-pointer hover:underline">Home</li>
+      <li className="cursor-pointer hover:underline">Directory</li>
+      <li className="cursor-pointer hover:underline">Events</li>
+      <li>
+        <PrimaryButton
+          text={
+            <div className="flex items-center justify-center gap-2">
+              Get Started
+              <ArrowRight className="h-5 w-5" />
+            </div>
+          } 
+          classname="px-4 py-2 font-medium" 
+        />
+      </li>
+    </ul>
+
+    {/* Mobile Hamburger Button */}
+    <button 
+      className="lg:hidden text-green-600 p-2"
+      onClick={() => setIsMenuOpen(!isMenuOpen)}
+      aria-label="Toggle menu"
+    >
+      {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+    </button>
+  </div>
+
+  {/* Mobile Menu */}
+  <div 
+    className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+      isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+    }`}
+  >
+    <ul className="flex flex-col items-center gap-4 py-4 text-green-600 text-base font-medium bg-white border-t border-gray-200">
+      <li className="cursor-pointer hover:underline">Home</li>
+      <li className="cursor-pointer hover:underline">Directory</li>
+      <li className="cursor-pointer hover:underline">Events</li>
+      <li>
+        <PrimaryButton 
+          text={
+            <div className="flex items-center justify-center gap-2">
+              Get Started
+              <ArrowRight className="h-5 w-5" />
+            </div>
+          } 
+          classname="px-4 py-2 font-medium" 
+        />
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{/* ================= HERO SECTION ================= */}
+<section
+  className="relative min-h-[460px] md:min-h-[560px] bg-cover bg-center"
+  style={{ backgroundImage: "url('/kiit.png')" }}
+>
+  <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/40 to-transparent"></div>
+
+  <div className="relative z-10 h-full flex items-start pt-28 md:pt-36 px-6 md:px-14">
+    <div className="max-w-xl text-white">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4">
+        Connect with KIIT Alumni. <br /> Shape Your Career.
+      </h1>
+
+      <p className="text-gray-200 mb-6 text-sm sm:text-base">
+        Discover alumni from your field of interest, seek guidance,
+        and connect directly through secure messaging.
+      </p>
+
+      <PrimaryButton 
+        text={
+          <div className="flex items-center justify-center gap-2">
+            Explore Alumni
+            <ArrowRight className="h-5 w-5" />
+          </div>
+        } 
+        classname="px-6 py-3 font-medium text-lg" 
+      />
+    </div>
+  </div>
+</section>
+
+
+{/* ================= STATS ================= */}
+<section className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center py-12 bg-gray-100 px-4">
+  <div>
+    <h2 className="text-3xl font-bold text-green-600">10K+</h2>
+    <p className="mt-1">Students Connected</p>
+  </div>
+  <div>
+    <h2 className="text-3xl font-bold text-green-600">10K+</h2>
+    <p className="mt-1">Verified Alumni</p>
+  </div>
+  <div>
+    <h2 className="text-3xl font-bold text-green-600">10K+</h2>
+    <p className="mt-1">Messages Exchanged</p>
+  </div>
+</section>
+
+{/* ================= EXPLORE SECTION ================= */}
+<section className="py-14 text-center px-4 md:px-6">
+  <h2 className="text-2xl font-bold mb-2">
+    Explore Alumni by Domain
+  </h2>
+  <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+    Browse alumni across engineering, management, research,
+    entrepreneurship, higher studies, and more.
+  </p>
+</section>
+
+{/* ================= STUDENT CONNECTION ================= */}
+<section className="py-14 bg-gray-100 px-4 md:px-10">
+  <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 items-start md:items-center">
+    
+    <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
+
+    <div className="w-full md:w-1/2">
+      <h3 className="text-xl font-bold mb-3">
+        Meaningful Student–Alumni Connections
+      </h3>
+      <p className="text-gray-600 text-sm sm:text-base">
+        Students can directly interact with alumni, gain insights
+        into career paths, placements, higher studies, and industry
+        expectations through one-on-one conversations.
+      </p>
+    </div>
+  </div>
+</section>
+
+{/* ================= DISTINGUISHED ALUMNI ================= */}
+<section className="py-16 text-center px-4 md:px-10">
+  <h2 className="text-2xl font-bold mb-8">
+    Distinguished Alumni
+  </h2>
+
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+    {[1,2,3,4].map((_, i) => (
+      <div key={i} className="flex flex-col items-center">
+        <div className="w-20 h-20 bg-gray-300 rounded-full mb-2"></div>
+        <p className="font-medium">Alumni Name</p>
+        <p className="text-sm text-gray-600">Company / Role</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+{/* ================= CTA ================= */}
+<section className="py-16 text-center bg-green-50 px-4 md:px-6">
+  <h2 className="text-2xl font-bold mb-2">
+    Build the Perfect Roadmap for Your Career
+  </h2>
+  <p className="text-gray-700 mb-6 max-w-2xl mx-auto text-sm sm:text-base">
+    Learn from alumni experiences, understand industry expectations,
+    and make informed career decisions with confidence.
+  </p>
+  <PrimaryButton 
+    text={
+      <div className="flex items-center justify-center gap-2">
+        Start Connecting
+        <ArrowRight className="h-5 w-5" />
+      </div>
+    } 
+    classname="px-8 py-3 font-medium text-lg mx-auto" 
+  />
+</section>
+
+{/* ================= FOOTER ================= */}
+<footer className="bg-green-600 text-white text-center py-4 text-sm">
+  © 2026 Alumni Konnect | For KIIT Students & Alumni
+</footer>
+
+</main>
   );
 }
