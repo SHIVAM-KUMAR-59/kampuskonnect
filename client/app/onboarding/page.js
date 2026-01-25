@@ -125,7 +125,7 @@ export default function OnboardingPage() {
         if (formData.bio) payload.bio = formData.bio;
         if (formData.linkedinUrl) payload.linkedinUrl = formData.linkedinUrl;
         if (formData.graduationYear) payload.graduationYear = formData.graduationYear;
-        
+
         // Only send interests if at least 1 is selected
         if (formData.interests.length > 0) {
           payload.interests = formData.interests;
@@ -139,7 +139,7 @@ export default function OnboardingPage() {
         if (formData.passoutYear) payload.passoutYear = formData.passoutYear;
         if (formData.experience) payload.experience = formData.experience;
         if (formData.city) payload.city = formData.city;
-        
+
         // Skills are required for alumni (at least 1)
         if (formData.skills.length > 0) {
           payload.skills = formData.skills;
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
       }
 
       const response = await api.put(`/${isStudent ? "student" : "alumni"}/profile`, payload);
-      
+
       if (response.status === 200) {
         success("Profile updated successfully");
         // Redirect to dashboard
@@ -308,7 +308,8 @@ export default function OnboardingPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    LinkedIn Profile <span className="text-neutral-400 font-normal">(Optional)</span>
+                    LinkedIn Profile{" "}
+                    <span className="text-neutral-400 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="url"
