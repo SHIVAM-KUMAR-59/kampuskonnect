@@ -9,11 +9,13 @@ import ProfileCard from "@/component/ProfileCard";
 import EventCard from "@/component/EventCard";
 import api from "@/utils/axios";
 import Link from "next/link";
+import { useToast } from "@/context/ToastContext";
 
 export default function Dashboard() {
   const { data: session } = useSession();
   const [overview, setOverview] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { error, success } = useToast()
 
   const isAlumni = session?.user?.role === "ALUMNI";
   const isStudent = session?.user?.role === "STUDENT";
@@ -22,6 +24,7 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const response = await api.get("/user/overview");
+      console.log("Overview data:", response.data);
       setOverview(response.data.user);
     } catch (err) {
       console.error("Error fetching overview:", err);
@@ -38,6 +41,30 @@ export default function Dashboard() {
 
   if (loading) {
     return <DashboardSkeleton />;
+  }
+
+  const handlePrimaryClick = async (id) => {
+    console.log("Primary action clicked for ID:", id);
+    try {
+      if (isAlumni) {
+        await api.patch("/alumni/requests/handle", {
+          requestId: id,
+          action: "ACCEPTED"
+        })
+
+        success("Mentorship request accepted.")
+        fetchOverview()
+      }
+
+      if (isStudent) {
+        await api.post(`/student/connect/${id}`)
+        success("Connection request sent.")
+        fetchOverview()
+      }
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || "An error occurred. Please try again.";
+      error(errorMessage)
+    }
   }
 
   return (
@@ -89,6 +116,8 @@ export default function Dashboard() {
                 <>
                   {overview?.recommendedMentorsTop2?.mentor1 && (
                     <ProfileCard
+                      id={overview.recommendedMentorsTop2.mentor1.id}
+                      handlePrimaryClick={handlePrimaryClick}
                       name={overview.recommendedMentorsTop2.mentor1.name}
                       experience={overview.recommendedMentorsTop2.mentor1.experience}
                       org={overview.recommendedMentorsTop2.mentor1.currentCompany}
@@ -101,6 +130,8 @@ export default function Dashboard() {
 
                   {overview?.recommendedMentorsTop2?.mentor2 && (
                     <ProfileCard
+                      id={overview.recommendedMentorsTop2.mentor2.id}
+                      handlePrimaryClick={handlePrimaryClick}
                       name={overview.recommendedMentorsTop2.mentor2.name}
                       experience={overview.recommendedMentorsTop2.mentor2.experience}
                       org={overview.recommendedMentorsTop2.mentor2.currentCompany}
@@ -129,6 +160,8 @@ export default function Dashboard() {
                 <>
                   {overview?.studentRequestsTop2?.student1 && (
                     <ProfileCard
+                      id={overview.studentRequestsTop2.student1.id}
+                      handlePrimaryClick={handlePrimaryClick}
                       name={overview.studentRequestsTop2.student1.name}
                       role="Student"
                       org="KIIT"
@@ -141,6 +174,8 @@ export default function Dashboard() {
 
                   {overview?.studentRequestsTop2?.student2 && (
                     <ProfileCard
+                      id={overview.studentRequestsTop2.student2.id}
+                      handlePrimaryClick={handlePrimaryClick}
                       name={overview.studentRequestsTop2.student2.name}
                       role="Student"
                       org="KIIT"
