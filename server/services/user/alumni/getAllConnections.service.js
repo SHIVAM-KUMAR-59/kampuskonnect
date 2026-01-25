@@ -9,9 +9,12 @@ const getAllConnectionsService = async (userId) => {
       throw new ApiError("User not found");
     }
 
-    const connections = user.studentConnections.map((connection) => {
+    let connections = user.studentConnections.map((connection) => {
       return mapStudent(connection);
     });
+    connections = connections.filter((conn, index, self) =>
+      index === self.findIndex((c) => c.id === conn.id)
+    );
     return connections;
   } catch (err) {
     console.log(err);

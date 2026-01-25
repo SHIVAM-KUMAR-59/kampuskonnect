@@ -7,10 +7,10 @@ export default function ConnectionItem({ user, onClick }) {
       onClick={onClick}
       className="w-full flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
     >
-      {user.profile ? (
+      {user.profileImage ? (
         <Image
           alt="profile"
-          src={user.profile}
+          src={user.profileImage}
           width={48}
           height={48}
           className="w-12 h-12 rounded-full"
