@@ -41,8 +41,6 @@ export default function ChatLayout({ children }) {
         api.get("/chat"),
         api.get(`/${session?.user?.role.toLowerCase()}/connections`),
       ]);
-      console.log("Fetched conversations:", conversationsRes.data.chats);
-      console.log("Fetched connections:", connectionsRes.data.connections);
 
       // Cache the data
       cachedConversations = conversationsRes.data.chats;
