@@ -12,8 +12,8 @@ const getAllConnectionsService = async (userId) => {
     let connections = user.studentConnections.map((connection) => {
       return mapStudent(connection);
     });
-    connections = connections.filter((conn, index, self) =>
-      index === self.findIndex((c) => c.id === conn.id)
+    connections = connections.filter(
+      (conn, index, self) => index === self.findIndex((c) => c.id === conn.id)
     );
     return connections;
   } catch (err) {

@@ -15,7 +15,7 @@ export default function Dashboard() {
   const { data: session } = useSession();
   const [overview, setOverview] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { error, success } = useToast()
+  const { error, success } = useToast();
 
   const isAlumni = session?.user?.role === "ALUMNI";
   const isStudent = session?.user?.role === "STUDENT";
@@ -49,23 +49,23 @@ export default function Dashboard() {
       if (isAlumni) {
         await api.patch("/alumni/requests/handle", {
           requestId: id,
-          action: "ACCEPTED"
-        })
+          action: "ACCEPTED",
+        });
 
-        success("Mentorship request accepted.")
-        fetchOverview()
+        success("Mentorship request accepted.");
+        fetchOverview();
       }
 
       if (isStudent) {
-        await api.post(`/student/connect/${id}`)
-        success("Connection request sent.")
-        fetchOverview()
+        await api.post(`/student/connect/${id}`);
+        success("Connection request sent.");
+        fetchOverview();
       }
     } catch (err) {
       const errorMessage = err?.response?.data?.message || "An error occurred. Please try again.";
-      error(errorMessage)
+      error(errorMessage);
     }
-  }
+  };
 
   return (
     <div className="space-y-14 max-w-7xl mx-auto">
