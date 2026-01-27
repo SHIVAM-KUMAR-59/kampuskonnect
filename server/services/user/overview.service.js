@@ -53,11 +53,23 @@ const getUserOverviewService = async (userId, role) => {
         status: RequestStatus.PENDING,
       });
 
+      // Get all alumni IDs to which student has sent requests (pending or accepted)
+      const sentRequestsAlumniIds = await Request.find({
+        sender: userId,
+        status: { $in: [RequestStatus.PENDING, RequestStatus.ACCEPTED] },
+      }).distinct("receiver");
+
       // Get recommended mentors (alumni with matching skills to student interests)
+      // Exclude: already connected alumni + alumni with pending/accepted requests
       const recommendedMentors = await Alumni.find({
         verificationStatus: "APPROVED",
         skills: { $in: student.interests || [] },
-        _id: { $nin: student.alumniConnections }, // Exclude already connected
+        _id: {
+          $nin: [
+            ...student.alumniConnections, // Exclude connected alumni
+            ...sentRequestsAlumniIds, // Exclude alumni with sent requests
+          ],
+        },
       })
         .limit(2)
         .select("name profileImage linkedinUrl skills currentCompany experience");
