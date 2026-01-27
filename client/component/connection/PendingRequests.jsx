@@ -72,7 +72,7 @@ const PendingRequests = () => {
   if (!pendingRequests || !pendingRequests.length || pendingRequests.length === 0) {
     return <div className="text-center py-16 text-gray-500">You have no pending requests</div>;
   }
-  
+
   return (
     <section className="space-y-6 mt-8">
       <h1 className="text-2xl font-semibold text-gray-900">
@@ -117,8 +117,8 @@ const PendingRequests = () => {
               <div className="flex items-center gap-2">
                 <Linkedin className="w-4 h-4 hrink-0" />
                 {request.sender.linkedinUrl ? (
-                  
-                   <Link href={request.sender.linkedinUrl}
+                  <Link
+                    href={request.sender.linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="max-w-sm truncate line-clamp-1 hover:text-blue-600 transition-all duration-200"
