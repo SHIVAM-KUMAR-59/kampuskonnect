@@ -6,11 +6,13 @@ import { GraduationCap, User } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 import PrimaryButton from "@/component/PrimaryButton";
+import { useSession } from "next-auth/react";
 
 export default function SignupRolePage() {
   const [role, setRole] = useState(null);
   const router = useRouter();
-  const { success, error } = useToast();
+  const { error } = useToast();
+  const { status } = useSession();
 
   const handleContinue = () => {
     if (!role) return;
@@ -24,7 +26,20 @@ export default function SignupRolePage() {
     if (err) {
       error(decodeURIComponent(err));
     }
-  }, [searchParams]);
+
+    if (status === "authenticated") {
+      error("You are already logged in.");
+      router.push("/dashboard");
+    }
+  }, [searchParams, status]);
+
+  if (status === "loading") {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen flex overflow-hidden">

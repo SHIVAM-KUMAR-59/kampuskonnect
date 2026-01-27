@@ -2,21 +2,22 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Eye, EyeClosed, KeyRound, Loader2, Mail } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PrimaryButton from "@/component/PrimaryButton";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
   const [googleLoading, setGoogleLoading] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { status } = useSession();
 
   const { success, error } = useToast();
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -24,7 +25,20 @@ export default function LoginPage() {
     if (err) {
       error(decodeURIComponent(err));
     }
-  }, [searchParams]);
+
+    if (status === "authenticated") {
+      error("You are already logged in.");
+      router.push("/dashboard");
+    }
+  }, [searchParams, status]);
+
+  if (status === "loading") {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
