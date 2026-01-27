@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import PrimaryButton from "@/component/PrimaryButton";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,15 +37,17 @@ export default function Home() {
             <li className="cursor-pointer hover:underline">Directory</li>
             <li className="cursor-pointer hover:underline">Events</li>
             <li>
-              <PrimaryButton
-                text={
-                  <div className="flex items-center justify-center gap-2">
-                    Get Started
-                    <ArrowRight className="h-5 w-5" />
-                  </div>
-                }
-                classname="px-4 py-2 font-medium"
-              />
+              <Link href={"/auth/login"}>
+                <PrimaryButton
+                  text={
+                    <div className="flex items-center justify-center gap-2">
+                      Get Started
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  }
+                  classname="px-4 py-2 font-medium"
+                />
+              </Link>
             </li>
           </ul>
 
@@ -69,15 +72,17 @@ export default function Home() {
             <li className="cursor-pointer hover:underline">Directory</li>
             <li className="cursor-pointer hover:underline">Events</li>
             <li>
-              <PrimaryButton
-                text={
-                  <div className="flex items-center justify-center gap-2">
-                    Get Started
-                    <ArrowRight className="h-5 w-5" />
-                  </div>
-                }
-                classname="px-4 py-2 font-medium"
-              />
+              <Link href={"/auth/login"}>
+                <PrimaryButton
+                  text={
+                    <div className="flex items-center justify-center gap-2">
+                      Get Started
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  }
+                  classname="px-4 py-2 font-medium"
+                />
+              </Link>
             </li>
           </ul>
         </div>
@@ -101,15 +106,17 @@ export default function Home() {
               through secure messaging.
             </p>
 
-            <PrimaryButton
-              text={
-                <div className="flex items-center justify-center gap-2">
-                  Explore Alumni
-                  <ArrowRight className="h-5 w-5" />
-                </div>
-              }
-              classname="px-6 py-3 font-medium text-lg"
-            />
+            <Link href={"/auth/login"}>
+              <PrimaryButton
+                text={
+                  <div className="flex items-center justify-center gap-2">
+                    Explore Alumni
+                    <ArrowRight className="h-5 w-5" />
+                  </div>
+                }
+                classname="px-6 py-3 font-medium text-lg"
+              />
+            </Link>
           </div>
         </div>
       </section>
@@ -177,15 +184,17 @@ export default function Home() {
           Learn from alumni experiences, understand industry expectations, and make informed career
           decisions with confidence.
         </p>
-        <PrimaryButton
-          text={
-            <div className="flex items-center justify-center gap-2">
-              Start Connecting
-              <ArrowRight className="h-5 w-5" />
-            </div>
-          }
-          classname="px-8 py-3 font-medium text-lg mx-auto"
-        />
+        <Link href={"/auth/login"}>
+          <PrimaryButton
+            text={
+              <div className="flex items-center justify-center gap-2">
+                Start Connecting
+                <ArrowRight className="h-5 w-5" />
+              </div>
+            }
+            classname="px-8 py-3 font-medium text-lg mx-auto"
+          />
+        </Link>
       </section>
 
       {/* ================= FOOTER ================= */}

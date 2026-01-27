@@ -33,8 +33,8 @@ const CurrentConnections = ({ role }) => {
       setMessageLoading(true);
       const response = await api.post("/chat", {
         targetUserId: id,
-        targetUserRole: role
-      })
+        targetUserRole: role,
+      });
       window.location.href = `/chat?id=${response.data.chat.id}`;
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
@@ -42,7 +42,7 @@ const CurrentConnections = ({ role }) => {
     } finally {
       setMessageLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchConnections();
@@ -148,7 +148,12 @@ const CurrentConnections = ({ role }) => {
             </div>
 
             {/* Action */}
-            <PrimaryButton onClick={() => handleMessageClick(connection.id, connection.role)} classname={`mt-5 w-full py-2.5 rounded-xl transition`} disabled={messageLoading} text={messageLoading ? "Loading.." : "Message"} />
+            <PrimaryButton
+              onClick={() => handleMessageClick(connection.id, connection.role)}
+              classname={`mt-5 w-full py-2.5 rounded-xl transition`}
+              disabled={messageLoading}
+              text={messageLoading ? "Loading.." : "Message"}
+            />
           </div>
         ))}
       </div>
