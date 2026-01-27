@@ -106,7 +106,7 @@ const CurrentConnections = ({ role }) => {
               {connection.linkedinUrl && (
                 <div className="flex items-center gap-2">
                   <Linkedin className="w-4 h-4" />
-                  <Link href={connection.linkedinUrl} className="max-w-sm truncate line-clamp-1">
+                  <Link target="_blank" href={connection.linkedinUrl} className="max-w-sm truncate line-clamp-1 hover:text-blue-600 transition-all duration-200">
                     {connection.linkedinUrl}
                   </Link>
                 </div>

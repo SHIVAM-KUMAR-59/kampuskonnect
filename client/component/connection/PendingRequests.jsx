@@ -3,11 +3,12 @@
 import api from "@/utils/axios";
 import React, { useEffect, useState } from "react";
 import PrimaryButton from "../PrimaryButton";
-import { Briefcase, Calendar, Link, Linkedin, Loader2, UserPlus } from "lucide-react";
+import { Briefcase, Calendar, Linkedin, Loader2, UserPlus } from "lucide-react";
 import Image from "next/image";
 import { getAvatar } from "@/utils/util";
 import PendingRequestSkeleton from "../skeleton/PendingRequestSkeleton";
 import { useToast } from "@/context/ToastContext";
+import Link from "next/link";
 
 const PendingRequests = () => {
   const [fetching, setFetching] = useState(false);
@@ -71,6 +72,7 @@ const PendingRequests = () => {
   if (!pendingRequests || !pendingRequests.length || pendingRequests.length === 0) {
     return <div className="text-center py-16 text-gray-500">You have no pending requests</div>;
   }
+  
   return (
     <section className="space-y-6 mt-8">
       <h1 className="text-2xl font-semibold text-gray-900">
@@ -113,16 +115,18 @@ const PendingRequests = () => {
             {/* Meta */}
             <div className="mt-4 space-y-2 text-sm text-gray-600">
               <div className="flex items-center gap-2">
-                <Linkedin className="w-4 h-4" />
+                <Linkedin className="w-4 h-4 hrink-0" />
                 {request.sender.linkedinUrl ? (
-                  <Link
-                    href={request.sender.linkedinUrl}
-                    className="max-w-sm truncate line-clamp-1"
+                  
+                   <Link href={request.sender.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="max-w-sm truncate line-clamp-1 hover:text-blue-600 transition-all duration-200"
                   >
                     {request.sender.linkedinUrl}
                   </Link>
                 ) : (
-                  "Not Specified"
+                  <span>Not Specified</span>
                 )}
               </div>
             </div>
@@ -143,12 +147,13 @@ const PendingRequests = () => {
               <PrimaryButton
                 disabled={handlingRequest.acceptingRequest || handlingRequest.rejectingRequest}
                 onClick={() => handleRequest(request.id, "ACCEPTED")}
-                classname={`w-full px-5 py-2.5 rounded-xl transition`}
+                classname="w-full px-5 py-2.5 rounded-xl transition"
                 text={
                   handlingRequest.acceptingRequest ? (
-                    <>
-                      Processing... <Loader2 className="animate-spin" />
-                    </>
+                    <div className="flex items-center justify-center gap-2">
+                      <span>Processing...</span>
+                      <Loader2 className="animate-spin w-4 h-4" />
+                    </div>
                   ) : (
                     "Accept"
                   )
@@ -157,15 +162,16 @@ const PendingRequests = () => {
 
               <button
                 disabled={handlingRequest.acceptingRequest || handlingRequest.rejectingRequest}
-                onClick={() => handleRequest(request.id, "REJECT")}
-                className="w-full px-5 py-2.5 rounded-xl border border-red-600 text-red-600 font-medium hover:bg-red-100 hover:cursor-pointer transition-all duration-200"
+                onClick={() => handleRequest(request.id, "REJECTED")}
+                className="w-full px-5 py-2.5 rounded-xl border border-red-600 text-red-600 font-medium hover:bg-red-100 hover:cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {handlingRequest.rejectingRequest ? (
-                  <>
-                    Processing... <Loader2 className="animate-spin" />
-                  </>
+                  <div className="flex items-center justify-center gap-2">
+                    <span>Processing...</span>
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  </div>
                 ) : (
-                  "REJECTED"
+                  "Reject"
                 )}
               </button>
             </div>
