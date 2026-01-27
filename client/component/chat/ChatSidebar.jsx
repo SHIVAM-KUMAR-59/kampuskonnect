@@ -16,7 +16,7 @@ export default function ChatSidebar({
   onStartChat,
   onRefresh,
   role,
-  selectedChatId, // Add this prop
+  selectedChatId,
 }) {
   const filteredConnections = connections.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -79,7 +79,7 @@ export default function ChatSidebar({
               <ConversationItem
                 key={c.id}
                 convo={role === "ALUMNI" ? c.student : c.alumni}
-                selected={c.id === selectedChatId} // Highlight selected chat
+                selected={c.id === selectedChatId}
                 lastMessage={c.lastMessage}
                 onClick={() => onSelectChat(c.id)}
               />

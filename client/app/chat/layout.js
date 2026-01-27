@@ -58,7 +58,23 @@ export default function ChatLayout({ children }) {
 
   const handleStartChat = async (user) => {
     try {
-      const response = await api.post("/chat", {
+      // Check if chat already exists with this user
+      const existingChat = conversations.find((chat) => {
+        const chatUser = session?.user?.role === "ALUMNI" ? chat.student : chat.alumni;
+        return chatUser?.id === user.id;
+      });
+
+      // If chat exists, just navigate to it
+      if (existingChat) {
+        setShowSearch(false);
+        setSearchQuery("");
+        socket.emit("join", session?.user?.id, existingChat.id);
+        router.push(`/chat?id=${existingChat.id}`);
+        return;
+      }
+
+      // Create new chat if doesn't exist
+      const response = await api.post("/chat/", {
         targetUserId: user.id,
         targetUserRole: user.role,
       });
@@ -68,10 +84,14 @@ export default function ChatLayout({ children }) {
       cachedConversations = [newChat, ...(cachedConversations || [])];
       setConversations(cachedConversations);
 
-      socket.emit("join", session?.user?.id, chatId);
-      // Navigate with search params
+      // Clear search state
+      setShowSearch(false);
+      setSearchQuery("");
+
+      socket.emit("join", session?.user?.id, newChat.id);
       router.push(`/chat?id=${response.data.chat.id}`);
     } catch (err) {
+      console.log("Error starting chat:", err);
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
     }

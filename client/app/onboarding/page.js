@@ -14,10 +14,14 @@ import {
   Sparkles,
   ChevronDown,
 } from "lucide-react";
+import api from "@/utils/axios";
+import { useToast } from "@/context/ToastContext";
 
 export default function OnboardingPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
+
+  const { error, success } = useToast();
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -55,30 +59,30 @@ export default function OnboardingPage() {
 
   // Domain/Skills options
   const domainOptions = [
-    "Web Development",
-    "Mobile Development",
-    "Data Science",
-    "Machine Learning",
-    "Artificial Intelligence",
-    "Cyber Security",
-    "Cloud Computing",
-    "DevOps",
-    "Blockchain",
-    "UI/UX Design",
-    "Game Development",
-    "Internet of Things",
-    "Software Testing",
-    "Database Management",
-    "Backend Development",
-    "Frontend Development",
-    "Full Stack Development",
-    "Robotics",
-    "Embedded Systems",
-    "Network Engineering",
-    "Business Analytics",
-    "Product Management",
-    "Digital Marketing",
-    "Content Writing",
+    "WEB DEVELOPMENT",
+    "MOBILE DEVELOPMENT",
+    "DATA SCIENCE",
+    "MACHINE LEARNING",
+    "ARTIFICIAL INTELLIGENCE",
+    "CYBER SECURITY",
+    "CLOUD COMPUTING",
+    "DEVOPS",
+    "BLOCKCHAIN",
+    "UI/UX DESIGN",
+    "GAME DEVELOPMENT",
+    "INTERNET OF THINGS",
+    "SOFTWARE TESTING",
+    "DATABASE MANAGEMENT",
+    "BACKEND DEVELOPMENT",
+    "FRONTEND DEVELOPMENT",
+    "FULL STACK DEVELOPMENT",
+    "ROBOTICS",
+    "EMBEDDED SYSTEMS",
+    "NETWORK ENGINEERING",
+    "BUSINESS ANALYTICS",
+    "PRODUCT MANAGEMENT",
+    "DIGITAL MARKETING",
+    "CONTENT WRITING",
   ];
 
   // Redirect if not authenticated
@@ -111,13 +115,48 @@ export default function OnboardingPage() {
     setLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Prepare payload based on role
+      const payload = {};
 
-      // Redirect to dashboard
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Failed to update profile:", error);
+      if (isStudent) {
+        // Student payload
+        if (formData.branch) payload.branch = formData.branch;
+        if (formData.phoneNumber) payload.phoneNumber = formData.phoneNumber;
+        if (formData.bio) payload.bio = formData.bio;
+        if (formData.linkedinUrl) payload.linkedinUrl = formData.linkedinUrl;
+        if (formData.graduationYear) payload.graduationYear = formData.graduationYear;
+
+        // Only send interests if at least 1 is selected
+        if (formData.interests.length > 0) {
+          payload.interests = formData.interests;
+        }
+      } else {
+        // Alumni payload
+        if (formData.branch) payload.branch = formData.branch;
+        if (formData.bio) payload.bio = formData.bio;
+        if (formData.linkedinUrl) payload.linkedinUrl = formData.linkedinUrl;
+        if (formData.currentCompany) payload.currentCompany = formData.currentCompany;
+        if (formData.passoutYear) payload.passoutYear = formData.passoutYear;
+        if (formData.experience) payload.experience = formData.experience;
+        if (formData.city) payload.city = formData.city;
+
+        // Skills are required for alumni (at least 1)
+        if (formData.skills.length > 0) {
+          payload.skills = formData.skills;
+        }
+      }
+
+      const response = await api.put(`/${isStudent ? "student" : "alumni"}/profile`, payload);
+
+      if (response.status === 200) {
+        success("Profile updated successfully");
+        // Redirect to dashboard
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      error(errorMessage);
+      console.error("Failed to update profile:", err);
     } finally {
       setLoading(false);
     }
@@ -129,11 +168,8 @@ export default function OnboardingPage() {
 
   const canProceed = () => {
     if (step === 1) {
-      // Students can proceed with just branch, Alumni need more
-      if (isStudent) {
-        return formData.branch;
-      }
-      return formData.branch && formData.phoneNumber;
+      // Both need branch
+      return formData.branch;
     }
     if (step === 2) {
       if (isStudent) {
@@ -143,10 +179,11 @@ export default function OnboardingPage() {
       return formData.currentCompany && formData.passoutYear && formData.experience;
     }
     if (step === 3) {
-      // Students can skip this, Alumni need at least 1 skill
+      // Students can skip interests (0 is allowed)
       if (isStudent) {
-        return true; // Students can proceed even with 0 interests
+        return true;
       }
+      // Alumni need at least 1 skill
       return formData.skills.length > 0;
     }
     return true;
@@ -253,25 +290,26 @@ export default function OnboardingPage() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    Phone Number {!isStudent && <span className="text-red-500">*</span>}
-                    {isStudent && <span className="text-neutral-400 font-normal">(Optional)</span>}
-                  </label>
-                  <input
-                    type="tel"
-                    value={formData.phoneNumber}
-                    onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                    className="w-full border-2 border-neutral-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all"
-                    placeholder="Enter your phone number"
-                    maxLength="10"
-                  />
-                </div>
+                {isStudent && (
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                      Phone Number <span className="text-neutral-400 font-normal">(Optional)</span>
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phoneNumber}
+                      onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                      className="w-full border-2 border-neutral-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all"
+                      placeholder="Enter your phone number"
+                      maxLength="10"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    LinkedIn Profile {!isStudent && <span className="text-red-500">*</span>}
-                    {isStudent && <span className="text-neutral-400 font-normal">(Optional)</span>}
+                    LinkedIn Profile{" "}
+                    <span className="text-neutral-400 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="url"
@@ -290,11 +328,11 @@ export default function OnboardingPage() {
                     value={formData.bio}
                     onChange={(e) => handleInputChange("bio", e.target.value)}
                     className="w-full border-2 border-neutral-200 rounded-xl px-4 py-3.5 h-32 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all resize-none"
-                    maxLength="200"
+                    maxLength={isStudent ? "500" : "1000"}
                     placeholder="Tell us a bit about yourself..."
                   />
                   <p className="text-xs text-neutral-400 mt-2 text-right">
-                    {formData.bio.length}/200 characters
+                    {formData.bio.length}/{isStudent ? "500" : "1000"} characters
                   </p>
                 </div>
               </div>
@@ -437,8 +475,8 @@ export default function OnboardingPage() {
                   </h2>
                   <p className="text-sm text-neutral-500 mb-2">
                     {isStudent
-                      ? "Select domains you're passionate about"
-                      : "Showcase your professional skills"}
+                      ? "Select domains you're passionate about (optional)"
+                      : "Showcase your professional skills (at least 1 required)"}
                   </p>
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full">
                     <span className="text-sm font-medium text-green-700">

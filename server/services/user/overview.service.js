@@ -53,11 +53,23 @@ const getUserOverviewService = async (userId, role) => {
         status: RequestStatus.PENDING,
       });
 
+      // Get all alumni IDs to which student has sent requests (pending or accepted)
+      const sentRequestsAlumniIds = await Request.find({
+        sender: userId,
+        status: { $in: [RequestStatus.PENDING, RequestStatus.ACCEPTED] },
+      }).distinct("receiver");
+
       // Get recommended mentors (alumni with matching skills to student interests)
+      // Exclude: already connected alumni + alumni with pending/accepted requests
       const recommendedMentors = await Alumni.find({
         verificationStatus: "APPROVED",
         skills: { $in: student.interests || [] },
-        _id: { $nin: student.alumniConnections }, // Exclude already connected
+        _id: {
+          $nin: [
+            ...student.alumniConnections, // Exclude connected alumni
+            ...sentRequestsAlumniIds, // Exclude alumni with sent requests
+          ],
+        },
       })
         .limit(2)
         .select("name profileImage linkedinUrl skills currentCompany experience");
@@ -71,6 +83,7 @@ const getUserOverviewService = async (userId, role) => {
         recommendedMentorsTop2: {
           mentor1: recommendedMentors[0]
             ? {
+                id: recommendedMentors[0]._id,
                 name: recommendedMentors[0].name,
                 profileImage: recommendedMentors[0].profileImage,
                 linkedinUrl: recommendedMentors[0].linkedinUrl,
@@ -81,6 +94,7 @@ const getUserOverviewService = async (userId, role) => {
             : null,
           mentor2: recommendedMentors[1]
             ? {
+                id: recommendedMentors[1]._id,
                 name: recommendedMentors[1].name,
                 profileImage: recommendedMentors[1].profileImage,
                 linkedinUrl: recommendedMentors[1].linkedinUrl,
@@ -122,6 +136,7 @@ const getUserOverviewService = async (userId, role) => {
         studentRequestsTop2: {
           student1: pendingRequests[0]
             ? {
+                id: pendingRequests[0]._id,
                 name: pendingRequests[0].sender.name,
                 profileImage: pendingRequests[0].sender.profileImage,
                 linkedinUrl: pendingRequests[0].sender.linkedinUrl,
@@ -130,6 +145,7 @@ const getUserOverviewService = async (userId, role) => {
             : null,
           student2: pendingRequests[1]
             ? {
+                id: pendingRequests[1]._id,
                 name: pendingRequests[1].sender.name,
                 profileImage: pendingRequests[1].sender.profileImage,
                 linkedinUrl: pendingRequests[1].sender.linkedinUrl,

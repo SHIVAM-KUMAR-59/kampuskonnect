@@ -13,6 +13,7 @@ import PrimaryButton from "../PrimaryButton";
 const CurrentConnections = ({ role }) => {
   const [connections, setConnections] = useState([]);
   const [fetching, setFetching] = useState(false);
+  const [messageLoading, setMessageLoading] = useState(false);
   const { error } = useToast();
   const fetchConnections = async () => {
     try {
@@ -24,6 +25,22 @@ const CurrentConnections = ({ role }) => {
       error(errorMessage);
     } finally {
       setFetching(false);
+    }
+  };
+
+  const handleMessageClick = async (id, role) => {
+    try {
+      setMessageLoading(true);
+      const response = await api.post("/chat", {
+        targetUserId: id,
+        targetUserRole: role,
+      });
+      window.location.href = `/chat?id=${response.data.chat.id}`;
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
+      error(errorMessage);
+    } finally {
+      setMessageLoading(false);
     }
   };
 
@@ -106,7 +123,11 @@ const CurrentConnections = ({ role }) => {
               {connection.linkedinUrl && (
                 <div className="flex items-center gap-2">
                   <Linkedin className="w-4 h-4" />
-                  <Link href={connection.linkedinUrl} className="max-w-sm truncate line-clamp-1">
+                  <Link
+                    target="_blank"
+                    href={connection.linkedinUrl}
+                    className="max-w-sm truncate line-clamp-1 hover:text-blue-600 transition-all duration-200"
+                  >
                     {connection.linkedinUrl}
                   </Link>
                 </div>
@@ -127,7 +148,12 @@ const CurrentConnections = ({ role }) => {
             </div>
 
             {/* Action */}
-            <PrimaryButton classname={`mt-5 w-full py-2.5 rounded-xl transition`} text="Message" />
+            <PrimaryButton
+              onClick={() => handleMessageClick(connection.id, connection.role)}
+              classname={`mt-5 w-full py-2.5 rounded-xl transition`}
+              disabled={messageLoading}
+              text={messageLoading ? "Loading.." : "Message"}
+            />
           </div>
         ))}
       </div>
