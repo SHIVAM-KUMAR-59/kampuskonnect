@@ -48,7 +48,6 @@ const customFormat = printf(({ level, message, stack }) => {
 const consoleFormat = combine(errors({ stack: true }), customFormat, colorize({ all: true }));
 
 // Format for files (without colors)
-const fileFormat = combine(errors({ stack: true }), customFormat);
 
 // Create the logger
 const logger = createLogger({
@@ -57,15 +56,6 @@ const logger = createLogger({
   transports: [
     new transports.Console({
       format: consoleFormat,
-    }),
-    new transports.File({
-      filename: "logs/error.log",
-      level: "error",
-      format: fileFormat,
-    }),
-    new transports.File({
-      filename: "logs/combined.log",
-      format: fileFormat,
     }),
   ],
 });
