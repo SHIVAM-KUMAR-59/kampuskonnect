@@ -11,11 +11,12 @@ import {
   X,
   MessageCircle,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import PrimaryButton from "./PrimaryButton";
 
 export default function Sidebar({ onLogout }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
@@ -34,6 +35,13 @@ export default function Sidebar({ onLogout }) {
   const handleLogout = () => {
     onLogout?.();
     setIsOpen(false);
+  };
+
+  const isActive = (href) => {
+    if (href === "/dashboard") {
+      return pathname === "/dashboard";
+    }
+    return pathname.startsWith(href);
   };
 
   return (
@@ -77,13 +85,22 @@ export default function Sidebar({ onLogout }) {
         <nav className="px-4 py-6 space-y-2 flex-1 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
+            const active = isActive(item.href);
             return (
               <button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 hover:text-green-700 hover:bg-green-50 text-left group"
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-left group ${
+                  active
+                    ? "bg-green-100 text-green-700 font-semibold"
+                    : "text-gray-700 hover:text-green-700 hover:bg-green-50"
+                }`}
               >
-                <Icon className="w-5 h-5 shrink-0 group-hover:text-green-600 transition-colors duration-200" />
+                <Icon
+                  className={`w-5 h-5 shrink-0 transition-colors duration-200 ${
+                    active ? "text-green-600" : "group-hover:text-green-600"
+                  }`}
+                />
                 <span className="text-sm font-medium">{item.label}</span>
               </button>
             );
@@ -96,10 +113,10 @@ export default function Sidebar({ onLogout }) {
             onClick={handleLogout}
             classname={"w-full gap-2 px-4 py-3 shadow-md hover:shadow-lg"}
             text={
-              <>
+              <div className="flex items-center gap-2 justify-center">
                 <LogOut className="w-5 h-5 shrink-0" />
                 <span className="text-sm">Sign Out</span>
-              </>
+              </div>
             }
           />
         </div>

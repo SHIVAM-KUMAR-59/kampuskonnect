@@ -16,3 +16,13 @@
 [2026-01-31 09:58:01] [DEBUG]: Server is running on port 8000
 [2026-01-31 09:58:05] [SUCCESS]: Connected to MongoDB successfully
 [2026-01-31 10:15:07] [DEBUG]: Server is running on port 8000
+[2026-01-31 10:15:10] [SUCCESS]: Connected to MongoDB successfully
+[2026-01-31 10:18:43] [DEBUG]: /user/overview
+[2026-01-31 10:19:10] [DEBUG]: /user/overview
+[2026-01-31 10:19:58] [DEBUG]: /user/overview
+[2026-01-31 10:20:01] [DEBUG]: /alumni/connections
+[2026-01-31 10:20:01] [DEBUG]: /alumni/connections
+[2026-01-31 10:20:04] [DEBUG]: /event
+[2026-01-31 10:20:04] [DEBUG]: /event
+[2026-01-31 10:20:05] [DEBUG]: /user/overview
+[2026-01-31 10:20:06] [DEBUG]: /user/overview
