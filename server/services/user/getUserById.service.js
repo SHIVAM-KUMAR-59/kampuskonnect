@@ -31,7 +31,6 @@ const getUserByIdService = async (userId) => {
 
     return result;
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

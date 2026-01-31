@@ -156,7 +156,6 @@ export default function OnboardingPage() {
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || "An error occurred";
       error(errorMessage);
-      console.error("Failed to update profile:", err);
     } finally {
       setLoading(false);
     }

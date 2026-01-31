@@ -47,7 +47,6 @@ const alumniRegisterService = async (name, email, profileImage) => {
       token,
     };
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

@@ -142,7 +142,6 @@ const updateStudentProfileService = async (user, updateData) => {
     await user.save();
     return mapStudent(user);
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

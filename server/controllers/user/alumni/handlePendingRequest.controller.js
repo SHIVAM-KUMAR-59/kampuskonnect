@@ -3,7 +3,6 @@ import { isValidObjectId } from "../../../utils/common.util.js";
 
 const handlePendingRequestController = async (req, res, next) => {
   const { requestId, action } = req.body;
-  console.log(requestId, action);
   if (!requestId || !action) {
     return res.status(400).json({ message: "All fields are required", success: false });
   }

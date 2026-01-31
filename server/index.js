@@ -29,26 +29,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1", routes);
 
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
 
   // JOIN CHAT ROOM
   socket.on("join-chat", ({ chatId, userId }) => {
     socket.join(chatId);
-    console.log(`User ${userId} joined chat ${chatId}`);
   });
 
   // SEND MESSAGE
   socket.on("send-message", async (data) => {
     const { chatId } = data;
 
-    console.log("Message received:", data);
     try {
       const message = await sendMessageService(data.sender, data.chatId, data.message);
 
       // send to everyone in the room EXCEPT sender
       socket.to(chatId).emit("receive-message", message);
     } catch (err) {
-      console.error("Error in sendMessageService:", err);
       handleServerError(err);
     }
   });

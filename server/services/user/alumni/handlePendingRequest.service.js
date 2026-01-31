@@ -36,7 +36,6 @@ const handlePendingRequestService = async (action, requestId, user) => {
     await request.save();
     return true;
   } catch (err) {
-    console.error("Error in handlePendingRequestService:", err);
     handleServerError(err);
   }
 };
