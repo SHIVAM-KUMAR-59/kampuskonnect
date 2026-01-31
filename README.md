@@ -1,3 +1,5 @@
+![ChatApp Banner](./banner.png)
+
 # Kampus Konnect
 
 A comprehensive platform connecting KIIT alumni with current students for mentorship, networking, and career guidance.
