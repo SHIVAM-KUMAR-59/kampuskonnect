@@ -25,6 +25,7 @@ export default function ProfilePage() {
   const fetchUser = async () => {
     try {
       const res = await api.get("/user");
+      console.log(res.data.user);
       setUser(res.data.user);
       setForm(res.data.user);
       setSkills(res.data.user.skills || res.data.user.interests || []);
@@ -122,12 +123,12 @@ export default function ProfilePage() {
         <h1 className="text-3xl font-bold text-gray-900">Your Profile</h1>
         {/* Avatar */}
         <div className="flex items-center gap-6 mt-3">
-          {!user.profileImage ? (
+          {user.profileImage ? (
             <Image
               src={user.profileImage}
               alt="avatar"
-              width={96}
-              height={96}
+              width={60}
+              height={60}
               className="rounded-full border"
             />
           ) : (
@@ -135,6 +136,7 @@ export default function ProfilePage() {
               <p className="text-center text-2xl font-bold">{getAvatar(user.name)}</p>
             </div>
           )}
+          
           <div>
             <p className="text-xl font-semibold">{user.name}</p>
             <p className="text-gray-500 text-sm">{user.email}</p>

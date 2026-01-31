@@ -15,3 +15,14 @@
 [2026-01-31 09:57:58] [SUCCESS]: Connected to MongoDB successfully
 [2026-01-31 09:58:01] [DEBUG]: Server is running on port 8000
 [2026-01-31 09:58:05] [SUCCESS]: Connected to MongoDB successfully
+[2026-01-31 10:01:59] [DEBUG]: User disconnected: Q3oV3As7UkzivpzCAAAD
+[2026-01-31 10:02:00] [DEBUG]: /user/overview
+[2026-01-31 10:02:00] [DEBUG]: /user/overview
+[2026-01-31 10:02:08] [DEBUG]: User disconnected: hU9CVo6dVEvfOdrxAAAC
+[2026-01-31 10:02:09] [DEBUG]: /user/overview
+[2026-01-31 10:05:27] [DEBUG]: /user/overview
+[2026-01-31 10:05:27] [DEBUG]: /user/overview
+[2026-01-31 10:05:51] [DEBUG]: /user
+[2026-01-31 10:05:51] [DEBUG]: /user
+[2026-01-31 10:06:41] [DEBUG]: /user
+[2026-01-31 10:06:42] [DEBUG]: /user
