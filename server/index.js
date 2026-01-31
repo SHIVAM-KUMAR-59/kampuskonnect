@@ -7,6 +7,7 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import sendMessageService from "./services/chat/sendMessage.service.js";
+import logger from "./config/logger.config.js";
 
 dotenv.config();
 
@@ -49,10 +50,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
+    logger.debug(`User disconnected: ${socket.id}`);
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.debug(`Server is running on port ${PORT}`);
 });
