@@ -1,18 +1,19 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ChatSidebar from "@/component/chat/ChatSidebar";
 import api from "@/utils/axios";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/context/ToastContext";
 import { getSocket } from "@/utils/socket";
+import { Loader2 } from "lucide-react";
 
 // Cache data outside component to persist across navigations
 let cachedConversations = null;
 let cachedConnections = null;
 
-export default function ChatLayout({ children }) {
+function ChatLayoutContent({ children }) {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { data: session } = useSession();
@@ -117,16 +118,6 @@ export default function ChatLayout({ children }) {
       hasFetched.current = true;
       fetchData();
     }
-
-    // if (!session) {
-    //   return;
-    // }
-    // socket.connect();
-    // socket.emit("connection", session?.user?.id);
-
-    // return () => {
-    //   socket.disconnect();
-    // }
   }, [session]);
 
   return (
@@ -149,5 +140,19 @@ export default function ChatLayout({ children }) {
       {/* Main content area */}
       <div className="flex-1">{children}</div>
     </div>
+  );
+}
+
+export default function ChatLayout({ children }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center bg-gray-50">
+          <Loader2 className="w-8 h-8 text-green-600 animate-spin" />
+        </div>
+      }
+    >
+      <ChatLayoutContent>{children}</ChatLayoutContent>
+    </Suspense>
   );
 }
