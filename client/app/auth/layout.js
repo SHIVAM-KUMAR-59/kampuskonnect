@@ -4,8 +4,8 @@ import { Suspense } from "react";
 
 export default function AuthLayout({ children }) {
   return (
-        <Suspense fallback={<div>Loading...</div>}>
-          <ToastProvider>{children}</ToastProvider>
-        </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ToastProvider>{children}</ToastProvider>
+    </Suspense>
   );
 }

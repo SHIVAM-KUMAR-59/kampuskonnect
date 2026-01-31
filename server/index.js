@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1", routes);
 
 io.on("connection", (socket) => {
-
   // JOIN CHAT ROOM
   socket.on("join-chat", ({ chatId, userId }) => {
     socket.join(chatId);

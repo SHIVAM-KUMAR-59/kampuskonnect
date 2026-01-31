@@ -11,7 +11,6 @@ export default function Home() {
 
   return (
     <main className="font-sans text-gray-800 overflow-x-hidden">
-
       <nav className="w-full bg-white shadow-sm relative">
         <div className="flex justify-between items-center px-4 md:px-10 py-4">
           {/* Left: Logo + Divider + Title */}
