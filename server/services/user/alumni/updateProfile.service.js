@@ -175,7 +175,6 @@ const updateAlumniProfileService = async (user, updatedData) => {
     await user.save();
     return mapAlumni(user);
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

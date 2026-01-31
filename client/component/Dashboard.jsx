@@ -24,10 +24,8 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const response = await api.get("/user/overview");
-      console.log("Overview data:", response.data);
       setOverview(response.data.user);
     } catch (err) {
-      console.error("Error fetching overview:", err);
     } finally {
       setLoading(false);
     }
@@ -44,7 +42,6 @@ export default function Dashboard() {
   }
 
   const handlePrimaryClick = async (id) => {
-    console.log("Primary action clicked for ID:", id);
     try {
       if (isAlumni) {
         await api.patch("/alumni/requests/handle", {

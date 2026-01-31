@@ -1,5 +1,8 @@
+import logger from "./logger.middleware.js";
+
 const errorHandlerMiddleware = async (err, req, res, next) => {
   console.log(err);
+  logger.error(JSON.stringify(err));
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode).json({

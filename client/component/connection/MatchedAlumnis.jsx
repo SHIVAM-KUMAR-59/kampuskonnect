@@ -21,7 +21,6 @@ const MatchedAlumnis = () => {
       const response = await api.get("/student/match");
       setMatches(response.data?.data || []);
     } catch (err) {
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -36,7 +35,6 @@ const MatchedAlumnis = () => {
     } catch (err) {
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
-      console.error(err);
     } finally {
       setSendingId(null);
     }

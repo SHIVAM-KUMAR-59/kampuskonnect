@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { DB_URL } from "./init.config.js";
+import logger from "./logger.config.js";
 
 const connectDB = async () => {
   try {
@@ -8,9 +9,10 @@ const connectDB = async () => {
       tls: true,
       tlsAllowInvalidCertificates: false,
     });
-    console.log("Connected to MongoDB successfully");
+
+    logger.success("Connected to MongoDB successfully");
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
+    logger.error(`Error connecting to MongoDB: ${error.message}`);
   }
 };
 

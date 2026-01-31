@@ -11,7 +11,6 @@ export default function Home() {
 
   return (
     <main className="font-sans text-gray-800 overflow-x-hidden">
-      {/* ================= NAVBAR ================= */}
       <nav className="w-full bg-white shadow-sm relative">
         <div className="flex justify-between items-center px-4 md:px-10 py-4">
           {/* Left: Logo + Divider + Title */}
@@ -88,7 +87,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ================= HERO SECTION ================= */}
       <section
         className="relative min-h-[460px] md:min-h-[560px] bg-cover bg-center"
         style={{ backgroundImage: "url('/kiit.png')" }}
@@ -121,7 +119,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= STATS ================= */}
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center py-12 bg-gray-100 px-4">
         <div>
           <h2 className="text-3xl font-bold text-green-600">10K+</h2>
@@ -137,7 +134,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= EXPLORE SECTION ================= */}
       <section className="py-14 text-center px-4 md:px-6">
         <h2 className="text-2xl font-bold mb-2">Explore Alumni by Domain</h2>
         <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
@@ -146,7 +142,6 @@ export default function Home() {
         </p>
       </section>
 
-      {/* ================= STUDENT CONNECTION ================= */}
       <section className="py-14 bg-gray-100 px-4 md:px-10">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 items-start md:items-center">
           <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
@@ -162,7 +157,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= DISTINGUISHED ALUMNI ================= */}
       <section className="py-16 text-center px-4 md:px-10">
         <h2 className="text-2xl font-bold mb-8">Distinguished Alumni</h2>
 
@@ -177,7 +171,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= CTA ================= */}
       <section className="py-16 text-center bg-green-50 px-4 md:px-6">
         <h2 className="text-2xl font-bold mb-2">Build the Perfect Roadmap for Your Career</h2>
         <p className="text-gray-700 mb-6 max-w-2xl mx-auto text-sm sm:text-base">
@@ -197,7 +190,6 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* ================= FOOTER ================= */}
       <footer className="bg-green-600 text-white text-center py-4 text-sm">
         © 2026 Alumni Konnect | For KIIT Students & Alumni
       </footer>

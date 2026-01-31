@@ -66,7 +66,6 @@ const alumniCredentialRegisterService = async (name, email, password) => {
       token,
     };
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

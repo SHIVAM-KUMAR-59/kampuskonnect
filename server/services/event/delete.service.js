@@ -11,7 +11,6 @@ const deleteEventService = async (id) => {
     await event.deleteOne();
     return true;
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

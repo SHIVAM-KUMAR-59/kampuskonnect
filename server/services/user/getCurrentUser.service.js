@@ -32,7 +32,6 @@ const getCurrentUser = async (user) => {
 
     return result;
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

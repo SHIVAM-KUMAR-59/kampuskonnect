@@ -26,7 +26,6 @@ const sendMessageService = async (sender, chatId, content) => {
 
     return mapMessage(newMessage);
   } catch (err) {
-    console.error("Error in sendMessageService:", err);
     handleServerError(err);
   }
 };

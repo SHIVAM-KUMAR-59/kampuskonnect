@@ -91,7 +91,6 @@ export default function ChatLayout({ children }) {
       socket.emit("join", session?.user?.id, newChat.id);
       router.push(`/chat?id=${response.data.chat.id}`);
     } catch (err) {
-      console.log("Error starting chat:", err);
       const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
       error(errorMessage);
     }

@@ -118,7 +118,6 @@ const createEventService = async (eventData, user) => {
 
     return mapEvent(event);
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

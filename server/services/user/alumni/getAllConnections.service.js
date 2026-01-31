@@ -17,7 +17,6 @@ const getAllConnectionsService = async (userId) => {
     );
     return connections;
   } catch (err) {
-    console.log(err);
     handleServerError(err);
   }
 };

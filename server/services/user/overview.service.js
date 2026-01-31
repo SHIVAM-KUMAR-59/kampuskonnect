@@ -158,7 +158,6 @@ const getUserOverviewService = async (userId, role) => {
       throw new ApiError(400, "Invalid user role");
     }
   } catch (err) {
-    console.error("Error in userOverviewService:", err);
     handleServerError(err);
   }
 };
