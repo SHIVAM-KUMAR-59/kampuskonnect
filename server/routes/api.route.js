@@ -6,6 +6,7 @@ import eventRoutes from "./event.route.js";
 import studentRoutes from "./student.route.js";
 import alumniRoutes from "./alumni.route.js";
 import chatRoutes from "./chat.route.js";
+import healthRoutes from "./health.route.js";
 import errorHandlerMiddleware from "../middleware/error.middleware.js";
 import logger from "../middleware/logger.middleware.js";
 
@@ -19,6 +20,7 @@ router.use("/alumni", alumniRoutes);
 router.use("/admin", adminRoutes);
 router.use("/event", eventRoutes);
 router.use("/chat", chatRoutes);
+router.use("/health", healthRoutes);
 router.use(errorHandlerMiddleware);
 
 export default router;
