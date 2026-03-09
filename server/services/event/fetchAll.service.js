@@ -4,7 +4,10 @@ import { mapEvent } from "../../utils/mapResult.util.js";
 
 const fetchAllEventsService = async () => {
   try {
-    const events = await Event.find().populate("createdBy");
+    const events = await Event.find({
+      deadline: { $gte: new Date() }  // only events whose deadline is now or in the future
+    }).populate("createdBy");
+    
     return events.map((event) => mapEvent(event));
   } catch (err) {
     handleServerError(err);
