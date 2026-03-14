@@ -40,7 +40,7 @@ export default function Sidebar({ onLogout }) {
       await signOut();
       setTimeout(() => {
       router.push("/auth/login");
-      })
+      }, 1000)
     } catch (err) {
       console.log(err)
     }
