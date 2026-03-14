@@ -18,7 +18,7 @@ export default function Home() {
             <Image
               height={50}
               width={150}
-              src="/kiitformallogo.png"
+              src="/kiit-logo.png"
               alt="KIIT Logo"
               className="h-10 md:h-[50px] w-auto"
             />
