@@ -16,7 +16,7 @@ export default function ChatInput({ onSend }) {
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="flex-1 border rounded-xl px-3 py-2"
+        className="flex-1 border border-neutral-200 rounded-xl px-3 py-2"
         placeholder="Type a message..."
         onKeyDown={(e) => e.key === "Enter" && submit()}
       />
