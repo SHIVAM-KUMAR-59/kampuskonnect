@@ -30,8 +30,8 @@ export default function ChatSidebar({
   };
 
   return (
-    <div className="flex flex-col w-full lg:w-96 border-r bg-white h-full">
-      <div className="p-4 border-b">
+    <div className="flex flex-col w-full lg:w-96 border-r border-neutral-200 bg-white h-full">
+      <div className="p-4 border-b border-neutral-200">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">Messages</h1>
           <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export default function ChatSidebar({
 
         {showSearch && (
           <input
-            className="w-full mt-3 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full mt-3 px-3 py-2 border border-neutral-200  rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="Search connections..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
