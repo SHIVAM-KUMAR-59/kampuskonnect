@@ -86,7 +86,7 @@ export default function Dashboard() {
         <StatCard
           label="Upcoming Events"
           value={overview?.events?.upcoming || 0}
-          context="Workshops, talks, and alumni sessions"
+          context="Workshops and alumni sessions"
         />
         <StatCard
           label="Pending Requests"
