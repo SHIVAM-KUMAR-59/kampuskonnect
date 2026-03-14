@@ -12,7 +12,7 @@ export default function ChatInput({ onSend }) {
   };
 
   return (
-    <div className="border-t bg-white p-4 flex gap-2">
+    <div className="border-t border-neutral-200 bg-white p-4 flex gap-2">
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}
