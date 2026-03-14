@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function ChatHeader({ user, onBack }) {
   return (
-    <div className="border-b border-neutral-200 bg-white p-4 flex items-center gap-3">
+    <div className="border-b border-neutral-200 bg-white px-4 py-5 flex items-center gap-3">
       <button onClick={onBack} className="lg:hidden">
         <ArrowLeft />
       </button>
