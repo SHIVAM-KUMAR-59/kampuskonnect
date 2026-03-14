@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Menu, User, X } from "lucide-react";
 import PrimaryButton from "@/component/PrimaryButton";
 import Image from "next/image";
 import Link from "next/link";
@@ -144,7 +144,11 @@ export default function Home() {
 
       <section className="py-14 bg-gray-100 px-4 md:px-10">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 items-start md:items-center">
-          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
+          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg">
+          <Image 
+          src="https://vaave.s3.amazonaws.com/assets/site_content/151560837/banners/da324a3d4cc4f4270da3c623513e0d3a.jpg" 
+          alt="image" height={300} width={300} className="w-full h-full object-center object-cover rounded-lg"
+          /></div>
 
           <div className="w-full md:w-1/2">
             <h3 className="text-xl font-bold mb-3">Meaningful Student–Alumni Connections</h3>
@@ -163,7 +167,9 @@ export default function Home() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
           {[1, 2, 3, 4].map((_, i) => (
             <div key={i} className="flex flex-col items-center">
-              <div className="w-20 h-20 bg-gray-300 rounded-full mb-2"></div>
+              <div className="flex items-center justify-center p-4 bg-gray-300 rounded-full mb-2">
+                <User size={30} />
+              </div>
               <p className="font-medium">Alumni Name</p>
               <p className="text-sm text-gray-600">Company / Role</p>
             </div>

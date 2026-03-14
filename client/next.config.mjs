@@ -3,6 +3,7 @@ const nextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
+    domains: ["vaave.s3.amazonaws.com"],
     remotePatterns: [
       {
         protocol: "https",
@@ -11,7 +12,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "encrypted-tbn0.gstatic.com",
-      }
+      },
     ]
   }
 };
