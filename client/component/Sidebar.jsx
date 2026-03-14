@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import PrimaryButton from "./PrimaryButton";
+import { signOut } from "next-auth/react";
 
 export default function Sidebar({ onLogout }) {
   const router = useRouter();
@@ -32,9 +33,17 @@ export default function Sidebar({ onLogout }) {
     setIsOpen(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     onLogout?.();
     setIsOpen(false);
+    try {
+      await signOut();
+      setTimeout(() => {
+      router.push("/auth/login");
+      })
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   const isActive = (href) => {
